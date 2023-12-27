@@ -36,7 +36,6 @@ class PermissionController extends Controller
     {
         //get permissions
         $permissions = Permission::latest()->get();
-        dd($permissions);
 
         //return with Api Resource
         return new PermissionResource(true, 'List Data Permissions', $permissions);

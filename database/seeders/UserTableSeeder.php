@@ -18,6 +18,7 @@ class UserTableSeeder extends Seeder
         //create data user
         User::create([
             'nik'      => '3515082407920001',
+            'nokk'      => '3515082407220001',
             'name'      => 'Administrator',
             'nohp'      => '085633517033',
             'email'     => 'admin@gmail.com',
@@ -27,6 +28,8 @@ class UserTableSeeder extends Seeder
             'rt'     => '10',
             'rw'     => '5',
             'alamat'     => 'testing sidoarjo',
+            'status_terkirim'     => 'false',
+            'status'     => 1,
             'password'  => bcrypt('password')
         ]);
 

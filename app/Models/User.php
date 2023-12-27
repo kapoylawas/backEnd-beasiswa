@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -24,6 +23,7 @@ class User extends Authenticatable implements JWTSubject
      */
     protected $fillable = [
         'nik',
+        'nokk',
         'name',
         'nohp',
         'email',
@@ -33,10 +33,26 @@ class User extends Authenticatable implements JWTSubject
         'rt',
         'rw',
         'alamat',
-        'imageKtp',
-        'imageKk',
+        'imagektp',
+        'imagekk',
         'password',
+        'status',
+        'status_pendaftar',
     ];
+
+    protected function imagektp(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($imagektp) => url('/storage/ktp/' . $imagektp),
+        );
+    }
+
+    protected function imagekk(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($imagekk) => url('/storage/kk/' . $imagekk),
+        );
+    }
 
     /**
      * The attributes that should be hidden for serialization.
@@ -73,19 +89,5 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
-    }
-
-    protected function imageKtp(): Attribute
-    {
-        return Attribute::make(
-            get: fn ($imageKtp) => url('/storage/ktp/' . $imageKtp),
-        );
-    }
-
-    protected function imageKk(): Attribute
-    {
-        return Attribute::make(
-            get: fn ($imageKk) => url('/storage/ktp/' . $imageKk),
-        );
     }
 }
