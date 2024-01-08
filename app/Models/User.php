@@ -38,6 +38,7 @@ class User extends Authenticatable implements JWTSubject
         'password',
         'status',
         'status_pendaftar',
+        'status_terkirim',
     ];
 
     protected function imagektp(): Attribute

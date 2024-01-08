@@ -30,6 +30,7 @@ class AkademikController extends Controller
      public function store(Request $request) 
      {
         $validator = Validator::make($request->all(), [
+            'ipk'         => 'required',
             'universitas'         => 'required',
             'jurusan'   => 'required',
             'semester'       => 'required',
@@ -70,6 +71,7 @@ class AkademikController extends Controller
 
         $akademik = Akademik::create([
             'user_id'     => auth()->guard('api')->user()->id,
+            'ipk'       => $request->ipk,
             'universitas'       => $request->universitas,
             'jurusan'       => $request->jurusan,
             'semester'       => $request->semester,
@@ -78,7 +80,7 @@ class AkademikController extends Controller
             'akredetasi_kampus'       => $request->akredetasi_kampus,
             'akredetasi_jurusan'       => $request->akredetasi_jurusan,
             'progam_pendidikan'       => $request->progam_pendidikan,
-            'imageaktifkampus'       => $imagektm->hashName(),
+            'imageaktifkampus'       => $imageaktifkampus->hashName(),
             'imagesuratpernyataan'       => $imagesuratpernyataan->hashName(),
             'imagetranskrip'       => $imagetranskrip->hashName(),
             'imageketerangan'       => $imageketerangan->hashName(),

@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('akademiks', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->references('id')->on('users')->cascadeOnDelete();
+            $table->string('ipk');
             $table->string('universitas');
             $table->string('jurusan');
             $table->string('semester');

@@ -12,7 +12,8 @@ class Akademik extends Model
 
     protected $fillable = [
         'user_id', 
-        'universitas', 
+        'ipk',
+        'universitas',
         'jurusan', 
         'semester', 
         'nim', 

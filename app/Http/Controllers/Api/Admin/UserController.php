@@ -13,28 +13,28 @@ class UserController extends Controller
     public function index()
     {
         //get users
-        $users = User::when(request()->search, function($users) {
-            $users = $users->where('name', 'like', '%'. request()->search . '%');
+        $users = User::when(request()->search, function ($users) {
+            $users = $users->where('name', 'like', '%' . request()->search . '%');
         })->with('roles')->latest()->paginate(5);
 
         //append query string to pagination links
         $users->appends(['search' => request()->search]);
-        
+
         //return with Api Resource
         return new UserResource(true, 'List Data Users', $users);
     }
 
     public function userbyid()
-     {
+    {
         try {
             $userbyid = User::where('id', auth()->user()->id)->first();
         } catch (\Throwable $th) {
             dd($th);
         }
- 
-         //return with Api Resource
-         return new UserResource(true, 'List Data User', $userbyid);
-     }
+
+        //return with Api Resource
+        return new UserResource(true, 'List Data User', $userbyid);
+    }
 
     public function store(Request $request)
     {
@@ -52,7 +52,7 @@ class UserController extends Controller
             'alamat'     => 'required',
             'imagektp'         => 'required|mimes:pdf|max:2000',
             'imagekk'         => 'required|mimes:pdf|max:2000',
-            'password' => 'required|confirmed' 
+            'password' => 'required|confirmed'
         ]);
 
         if ($validator->fails()) {
@@ -81,6 +81,7 @@ class UserController extends Controller
             'rw'     => $request->rw,
             'alamat'     => $request->alamat,
             'status'     => 2,
+            'status_terkirim'     => 'false',
             'imagektp'       => $imagektp->hashName(),
             'imagekk'       => $imagekk->hashName(),
             'password'  => bcrypt($request->password)
@@ -89,7 +90,7 @@ class UserController extends Controller
         //assign roles to user
         $user->assignRole($request->roles);
 
-        if($user) {
+        if ($user) {
             //return success with Api Resource
             return new UserResource(true, 'Data User Berhasil Disimpan!', $user);
         }
