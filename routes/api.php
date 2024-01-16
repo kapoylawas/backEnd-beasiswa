@@ -59,7 +59,6 @@ Route::prefix('admin')->group(function () {
         ->middleware('permission:akademiks.index|akademiks.store|akademiks.update|akademiks.delete');
 
         // user by id
-        Route::get('/users/byid', [\App\Http\Controllers\Api\Admin\UserController::class, 'userbyid'])
-        ->middleware('permission:akademiks.index');
+        Route::get('/users/byid', [\App\Http\Controllers\Api\Admin\UserController::class, 'userbyid']);
     });
 });

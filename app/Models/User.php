@@ -39,6 +39,16 @@ class User extends Authenticatable implements JWTSubject
         'status',
         'status_pendaftar',
         'status_terkirim',
+        'nim',
+        'ktm',
+        'universitas',
+        'jurusan',
+        'imageaktifkampus',
+        'imagesuratpernyataan',
+        'imageakrekampus',
+        'pilih_universitas',
+        'jenis_universitas',
+        'step',
     ];
 
     protected function imagektp(): Attribute
@@ -52,6 +62,34 @@ class User extends Authenticatable implements JWTSubject
     {
         return Attribute::make(
             get: fn ($imagekk) => url('/storage/kk/' . $imagekk),
+        );
+    }
+
+    protected function ktm(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($ktm) => url('/storage/ktm/' . $ktm),
+        );
+    }
+
+    protected function imageaktifkampus(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($imageaktifkampus) => url('/storage/imageaktifkampus/' . $imageaktifkampus),
+        );
+    }
+
+    protected function imagesuratpernyataan(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($imagesuratpernyataan) => url('/storage/imagesuratpernyataan/' . $imagesuratpernyataan),
+        );
+    }
+
+    protected function imageakrekampus(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($imageakrekampus) => url('/storage/imageakrekampus/' . $imageakrekampus),
         );
     }
 
