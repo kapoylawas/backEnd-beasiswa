@@ -104,12 +104,12 @@ class UserController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'nim'     => 'required',
-            'ktm'    => 'required',
+            'ktm'    => 'required|mimes:pdf|max:2000',
             'universitas' => 'required',
             'jurusan' => 'required',
-            'imageaktifkampus' => 'required',
-            'imagesuratpernyataan' => 'required',
-            'imageakrekampus' => 'required',
+            'imageaktifkampus' => 'required|mimes:pdf|max:2000',
+            'imagesuratpernyataan' => 'required|mimes:pdf|max:2000',
+            'imageakrekampus' => 'required|mimes:pdf|max:2000',
             'pilih_universitas' => 'required',
         ]);
 

@@ -13,16 +13,10 @@ class Akademik extends Model
     protected $fillable = [
         'user_id', 
         'ipk',
-        'universitas',
-        'jurusan', 
         'semester', 
-        'nim', 
-        'imagektm', 
         'akredetasi_kampus', 
         'akredetasi_jurusan',
         'progam_pendidikan',
-        'imageaktifkampus',
-        'imagesuratpernyataan',
         'imagetranskrip',
         'imageketerangan',
     ];
@@ -41,20 +35,6 @@ class Akademik extends Model
     {
         return Attribute::make(
             get: fn ($imagektm) => url('/storage/ktm/' . $imagektm),
-        );
-    }
-
-    protected function imageaktifkampus(): Attribute
-    {
-        return Attribute::make(
-            get: fn ($imageaktifkampus) => url('/storage/suratkampus/' . $imageaktifkampus),
-        );
-    }
-
-    protected function imagesuratpernyataan(): Attribute
-    {
-        return Attribute::make(
-            get: fn ($imagesuratpernyataan) => url('/storage/suratpernyataan/' . $imagesuratpernyataan),
         );
     }
 
