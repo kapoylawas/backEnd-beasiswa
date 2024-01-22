@@ -37,7 +37,7 @@ Route::group(['middleware' => 'auth:api'], function () {
 //group route with prefix "admin"
 Route::prefix('admin')->group(function () {
     //group route with middleware "auth:api"
-    Route::group(['middleware' => ['api', 'cors']], function () {
+    Route::group(['middleware' => 'auth:api'], function () {
 
         Route::get('/dashboard', App\Http\Controllers\Api\Admin\DashboardController::class);
 
