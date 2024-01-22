@@ -27,7 +27,7 @@ class UserController extends Controller
     public function userbyid()
     {
         try {
-            $userbyid = User::where('id', auth()->user()->id)->first();
+            $userbyid = User::with('akademik', 'nonakademik')->where('id', auth()->user()->id)->first();
         } catch (\Throwable $th) {
             dd($th);
         }

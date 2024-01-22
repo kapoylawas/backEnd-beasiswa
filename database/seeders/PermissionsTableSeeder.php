@@ -40,5 +40,11 @@ class PermissionsTableSeeder extends Seeder
         Permission::create(['name' => 'akademiks.create', 'guard_name' => 'api']);
         Permission::create(['name' => 'akademiks.edit', 'guard_name' => 'api']);
         Permission::create(['name' => 'akademiks.delete', 'guard_name' => 'api']);
+
+        //permission for non akademiks
+        Permission::create(['name' => 'nonakademiks.index', 'guard_name' => 'api']);
+        Permission::create(['name' => 'nonakademiks.create', 'guard_name' => 'api']);
+        Permission::create(['name' => 'nonakademiks.edit', 'guard_name' => 'api']);
+        Permission::create(['name' => 'nonakademiks.delete', 'guard_name' => 'api']);
     }
 }

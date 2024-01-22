@@ -93,6 +93,16 @@ class User extends Authenticatable implements JWTSubject
         );
     }
 
+    public function akademik()
+    {
+        return $this->hasOne(Akademik::class);
+    }
+
+    public function nonakademik()
+    {
+        return $this->hasOne(NonAkademik::class);
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *

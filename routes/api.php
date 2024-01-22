@@ -58,6 +58,10 @@ Route::prefix('admin')->group(function () {
         Route::apiResource('/akademiks', App\Http\Controllers\Api\Admin\AkademikController::class)
         ->middleware('permission:akademiks.index|akademiks.store|akademiks.update|akademiks.delete');
 
+        //Non Akademik
+        Route::apiResource('/nonakademiks', App\Http\Controllers\Api\Admin\NonAkademikController::class)
+        ->middleware('permission:nonakademiks.index|nonakademiks.store|nonakademiks.update|nonakademiks.delete');
+
         // user by id
         Route::get('/users/byid', [\App\Http\Controllers\Api\Admin\UserController::class, 'userbyid']);
     });

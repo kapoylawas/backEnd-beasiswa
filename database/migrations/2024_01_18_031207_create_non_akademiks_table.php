@@ -11,18 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('akademiks', function (Blueprint $table) {
+        Schema::create('non_akademiks', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->references('id')->on('users')->cascadeOnDelete();
             $table->string('name');
-            $table->string('ipk');
             $table->string('semester');
-            $table->string('nim');
             $table->string('akredetasi_kampus');
             $table->string('akredetasi_jurusan');
-            $table->string('progam_pendidikan');
-            $table->string('imagetranskrip');
-            $table->string('imageketerangan');
+            $table->string('jenis_sertifikat');
+            $table->string('imagesertifikat');
+            $table->string('tahun');
             $table->timestamps();
         });
     }
@@ -32,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('akademiks');
+        Schema::dropIfExists('non_akademiks');
     }
 };

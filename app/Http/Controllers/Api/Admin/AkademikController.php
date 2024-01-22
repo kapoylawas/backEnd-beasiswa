@@ -18,17 +18,17 @@ class AkademikController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-     public function index()
-     {
-         $akademiks = Akademik::with('user')
-         ->where('user_id', auth()->user()->id)->first();
- 
-         //return with Api Resource
-         return new AkademikResource(true, 'List Data Akademiks', $akademiks);
-     }
+    public function index()
+    {
+        $akademiks = Akademik::with('user')
+            ->where('user_id', auth()->user()->id)->first();
 
-     public function store(Request $request) 
-     {
+        //return with Api Resource
+        return new AkademikResource(true, 'List Data Akademiks', $akademiks);
+    }
+
+    public function store(Request $request)
+    {
         $validator = Validator::make($request->all(), [
             'ipk'         => 'required',
             'semester'       => 'required',
@@ -53,7 +53,9 @@ class AkademikController extends Controller
 
         $akademik = Akademik::create([
             'user_id'     => auth()->guard('api')->user()->id,
-            'ipk'       => $request->ipk,            
+            'name'       => "akademik",
+            'ipk'       => $request->ipk,
+            'semester'       => $request->semester,
             'akredetasi_kampus'       => $request->akredetasi_kampus,
             'akredetasi_jurusan'       => $request->akredetasi_jurusan,
             'progam_pendidikan'       => $request->progam_pendidikan,
@@ -64,6 +66,7 @@ class AkademikController extends Controller
         if ($akademik) {
             User::where('id', auth()->guard('api')->user()->id)->update([
                 'status_pendaftar' => 1,
+                // 'akedemik_id' =>  $akademik->id
             ]);
             //return success with Api Resource
             return new AkademikResource(true, 'Data Post Berhasil Disimpan!', $akademik);
@@ -71,5 +74,5 @@ class AkademikController extends Controller
 
         //return failed with Api Resource
         return new AkademikResource(false, 'Data Post Gagal Disimpan!', null);
-     }
+    }
 }

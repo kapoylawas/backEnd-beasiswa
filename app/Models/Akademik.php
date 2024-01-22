@@ -11,7 +11,8 @@ class Akademik extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id', 
+        'user_id',
+        'name',
         'ipk',
         'semester', 
         'akredetasi_kampus', 
