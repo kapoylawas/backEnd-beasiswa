@@ -49,6 +49,7 @@ class User extends Authenticatable implements JWTSubject
         'pilih_universitas',
         'jenis_universitas',
         'step',
+        'tipe_beasiswa',
     ];
 
     protected function imagektp(): Attribute

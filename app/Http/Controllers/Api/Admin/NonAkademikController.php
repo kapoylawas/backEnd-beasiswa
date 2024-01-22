@@ -53,6 +53,8 @@ class NonAkademikController extends Controller
         if ($nonakademik) {
             User::where('id', auth()->guard('api')->user()->id)->update([
                 'status_pendaftar' => 1,
+                'step'     => 3,
+                'tipe_beasiswa'     => 2,
             ]);
             //return success with Api Resource
             return new NonAkademikResource(true, 'Data Post Berhasil Disimpan!', $nonakademik);

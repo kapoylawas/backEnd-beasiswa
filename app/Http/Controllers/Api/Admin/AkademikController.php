@@ -66,7 +66,8 @@ class AkademikController extends Controller
         if ($akademik) {
             User::where('id', auth()->guard('api')->user()->id)->update([
                 'status_pendaftar' => 1,
-                // 'akedemik_id' =>  $akademik->id
+                'step'     => 3,
+                'tipe_beasiswa'     => 1,
             ]);
             //return success with Api Resource
             return new AkademikResource(true, 'Data Post Berhasil Disimpan!', $akademik);
