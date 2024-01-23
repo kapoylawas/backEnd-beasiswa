@@ -46,5 +46,11 @@ class PermissionsTableSeeder extends Seeder
         Permission::create(['name' => 'nonakademiks.create', 'guard_name' => 'api']);
         Permission::create(['name' => 'nonakademiks.edit', 'guard_name' => 'api']);
         Permission::create(['name' => 'nonakademiks.delete', 'guard_name' => 'api']);
+
+        //permission for kesra
+        Permission::create(['name' => 'kesra.index', 'guard_name' => 'api']);
+        Permission::create(['name' => 'kesra.create', 'guard_name' => 'api']);
+        Permission::create(['name' => 'kesra.edit', 'guard_name' => 'api']);
+        Permission::create(['name' => 'kesra.delete', 'guard_name' => 'api']);
     }
 }

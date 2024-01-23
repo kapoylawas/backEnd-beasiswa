@@ -62,6 +62,10 @@ Route::prefix('admin')->group(function () {
         Route::apiResource('/nonakademiks', App\Http\Controllers\Api\Admin\NonAkademikController::class)
         ->middleware('permission:nonakademiks.index|nonakademiks.store|nonakademiks.update|nonakademiks.delete');
 
+        //Kesra
+        Route::apiResource('/kesra', App\Http\Controllers\Api\Admin\KesraController::class)
+        ->middleware('permission:kesra.index|kesra.store|kesra.update|kesra.delete');
+
         // user by id
         Route::get('/users/byid', [\App\Http\Controllers\Api\Admin\UserController::class, 'userbyid']);
     });
