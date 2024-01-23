@@ -66,6 +66,10 @@ Route::prefix('admin')->group(function () {
         Route::apiResource('/kesra', App\Http\Controllers\Api\Admin\KesraController::class)
         ->middleware('permission:kesra.index|kesra.store|kesra.update|kesra.delete');
 
+        //Dinsos
+        Route::apiResource('/dinsos', App\Http\Controllers\Api\Admin\DinsosController::class)
+        ->middleware('permission:dinsos.index|dinsos.store|dinsos.update|dinsos.delete');
+
         // user by id
         Route::get('/users/byid', [\App\Http\Controllers\Api\Admin\UserController::class, 'userbyid']);
     });

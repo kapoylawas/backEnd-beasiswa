@@ -52,5 +52,11 @@ class PermissionsTableSeeder extends Seeder
         Permission::create(['name' => 'kesra.create', 'guard_name' => 'api']);
         Permission::create(['name' => 'kesra.edit', 'guard_name' => 'api']);
         Permission::create(['name' => 'kesra.delete', 'guard_name' => 'api']);
+
+        //permission for dinsos
+        Permission::create(['name' => 'dinsos.index', 'guard_name' => 'api']);
+        Permission::create(['name' => 'dinsos.create', 'guard_name' => 'api']);
+        Permission::create(['name' => 'dinsos.edit', 'guard_name' => 'api']);
+        Permission::create(['name' => 'dinsos.delete', 'guard_name' => 'api']);
     }
 }
