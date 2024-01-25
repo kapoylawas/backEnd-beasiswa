@@ -11,17 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('akademiks', function (Blueprint $table) {
+        Schema::create('luar_negeris', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->references('id')->on('users')->cascadeOnDelete();
             $table->string('name');
             $table->string('ipk');
             $table->string('semester');
             $table->string('akredetasi_kampus');
-            $table->string('akredetasi_jurusan');
-            $table->string('progam_pendidikan');
             $table->string('imagetranskrip');
-            $table->string('imageketerangan');
             $table->timestamps();
         });
     }
@@ -31,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('akademiks');
+        Schema::dropIfExists('luar_negeris');
     }
 };

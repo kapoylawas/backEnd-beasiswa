@@ -58,5 +58,11 @@ class PermissionsTableSeeder extends Seeder
         Permission::create(['name' => 'dinsos.create', 'guard_name' => 'api']);
         Permission::create(['name' => 'dinsos.edit', 'guard_name' => 'api']);
         Permission::create(['name' => 'dinsos.delete', 'guard_name' => 'api']);
+        
+        //permission for luar negeri
+        Permission::create(['name' => 'luarnegeri.index', 'guard_name' => 'api']);
+        Permission::create(['name' => 'luarnegeri.create', 'guard_name' => 'api']);
+        Permission::create(['name' => 'luarnegeri.edit', 'guard_name' => 'api']);
+        Permission::create(['name' => 'luarnegeri.delete', 'guard_name' => 'api']);
     }
 }

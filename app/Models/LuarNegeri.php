@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 
-class Akademik extends Model
+class LuarNegeri extends Model
 {
     use HasFactory;
 
@@ -17,16 +17,9 @@ class Akademik extends Model
         'semester', 
         'akredetasi_kampus', 
         'akredetasi_jurusan',
-        'progam_pendidikan',
         'imagetranskrip',
-        'imageketerangan',
     ];
 
-    /**
-     * user
-     *
-     * @return void
-     */
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -36,13 +29,6 @@ class Akademik extends Model
     {
         return Attribute::make(
             get: fn ($imagetranskrip) => url('/storage/transkrip/' . $imagetranskrip),
-        );
-    }
-
-    protected function imageketerangan(): Attribute
-    {
-        return Attribute::make(
-            get: fn ($imageketerangan) => url('/storage/suratketerangan/' . $imageketerangan),
         );
     }
 }

@@ -70,6 +70,10 @@ Route::prefix('admin')->group(function () {
         Route::apiResource('/dinsos', App\Http\Controllers\Api\Admin\DinsosController::class)
         ->middleware('permission:dinsos.index|dinsos.store|dinsos.update|dinsos.delete');
 
+        //luar negeri
+        Route::apiResource('/luarnegeri', App\Http\Controllers\Api\Admin\LuarNegeriController::class)
+        ->middleware('permission:luarnegeri.index|luarnegeri.store|luarnegeri.update|luarnegeri.delete');
+
         // user by id
         Route::get('/users/byid', [\App\Http\Controllers\Api\Admin\UserController::class, 'userbyid']);
     });
