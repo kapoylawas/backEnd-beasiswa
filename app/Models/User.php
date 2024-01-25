@@ -42,6 +42,7 @@ class User extends Authenticatable implements JWTSubject
         'nim',
         'ktm',
         'universitas',
+        'alamat_univ',
         'jurusan',
         'imageaktifkampus',
         'imagesuratpernyataan',

@@ -30,21 +30,23 @@ class DinsosController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'tipe_daftar'       => 'required',
+            // 'imagesktm'         => 'mimes:pdf|max:2000',
         ]);
 
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
 
-        //upload image sertifikat
         $imagesktm = $request->file('imagesktm');
-        $imagesktm->storeAs('public/sertifikat/dinsos', $imagesktm->hashName());
+        if ($imagesktm != null) {
+            $imagesktm->storeAs('public/sertifikat/dinsos', $imagesktm->hashName());
+        }
 
         $dinsos = Dinsos::create([
             'user_id'     => auth()->guard('api')->user()->id,
             'name'       => "dinsos",
             'tipe_daftar'       => $request->tipe_daftar,
-            'imagesktm'       => $imagesktm->hashName(),
+            'imagesktm'       => ($imagesktm != null) ? $imagesktm->hashName() : null,
         ]);
 
         if ($dinsos) {

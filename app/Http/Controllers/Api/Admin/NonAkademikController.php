@@ -25,7 +25,6 @@ class NonAkademikController extends Controller
         $validator = Validator::make($request->all(), [
             'semester'         => 'required',
             'akredetasi_kampus'       => 'required',
-            'akredetasi_jurusan'       => 'required',
             'jenis_sertifikat'       => 'required',
             'imagesertifikat'         => 'required|mimes:pdf|max:2000',
             'tahun'       => 'required',
@@ -44,7 +43,6 @@ class NonAkademikController extends Controller
             'name'       => "non akademik",
             'semester'       => $request->semester,
             'akredetasi_kampus'       => $request->akredetasi_kampus,
-            'akredetasi_jurusan'       => $request->akredetasi_jurusan,
             'jenis_sertifikat'       => $request->jenis_sertifikat,
             'imagesertifikat'       => $imagesertifikat->hashName(),
             'tahun'       => $request->tahun,

@@ -16,7 +16,6 @@ class Akademik extends Model
         'ipk',
         'semester', 
         'akredetasi_kampus', 
-        'akredetasi_jurusan',
         'progam_pendidikan',
         'imagetranskrip',
         'imageketerangan',

@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string('semester');
             $table->string('nim');
             $table->string('akredetasi_kampus');
-            $table->string('akredetasi_jurusan');
             $table->string('progam_pendidikan');
             $table->string('imagetranskrip');
             $table->string('imageketerangan');

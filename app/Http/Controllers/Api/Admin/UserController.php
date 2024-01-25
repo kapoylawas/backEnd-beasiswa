@@ -104,11 +104,12 @@ class UserController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'nim'     => 'required',
-            'ktm'    => 'required|mimes:pdf|max:2000',
+            'ktm'    => 'required|mimes:pdf|max:2048',
             'universitas' => 'required',
+            'alamat_univ' => 'required',
             'jurusan' => 'required',
-            'imageaktifkampus' => 'required|mimes:pdf|max:2000',
-            'imagesuratpernyataan' => 'required|mimes:pdf|max:2000',
+            'imageaktifkampus' => 'required|mimes:pdf|max:2048',
+            'imagesuratpernyataan' => 'required|mimes:pdf|max:2048',
             'imageakrekampus' => 'required|mimes:pdf|max:2000',
             'pilih_universitas' => 'required',
         ]);
@@ -137,6 +138,7 @@ class UserController extends Controller
             'nim'       => $request->nim,
             'ktm'       => $ktm->hashName(),
             'universitas'       => $request->universitas,
+            'alamat_univ'       => $request->alamat_univ,
             'jurusan'       => $request->jurusan,
             'imageaktifkampus'       => $imageaktifkampus->hashName(),
             'imagesuratpernyataan'       => $imagesuratpernyataan->hashName(),

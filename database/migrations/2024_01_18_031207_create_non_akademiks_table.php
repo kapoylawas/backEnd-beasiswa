@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('name');
             $table->string('semester');
             $table->string('akredetasi_kampus');
-            $table->string('akredetasi_jurusan');
             $table->string('jenis_sertifikat');
             $table->string('imagesertifikat');
             $table->string('tahun');

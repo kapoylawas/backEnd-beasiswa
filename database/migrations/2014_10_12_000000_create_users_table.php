@@ -34,6 +34,7 @@ return new class extends Migration
             $table->string('nim')->nullable();
             $table->string('ktm')->nullable();
             $table->string('universitas')->nullable();
+            $table->string('alamat_univ')->nullable();
             $table->string('jurusan')->nullable();
             $table->string('imageaktifkampus')->nullable();
             $table->string('imagesuratpernyataan')->nullable();
