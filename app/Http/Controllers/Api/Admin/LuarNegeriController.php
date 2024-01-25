@@ -15,6 +15,6 @@ class LuarNegeriController extends Controller
             ->where('user_id', auth()->user()->id)->first();
 
         //return with Api Resource
-        return new LuarNegeriResource(true, 'List Data Akademiks', $luarNegeris);
+        return new LuarNegeriResource(true, 'List Data Luar Negeri', $luarNegeris);
     }
 }
