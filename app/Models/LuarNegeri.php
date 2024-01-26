@@ -16,7 +16,6 @@ class LuarNegeri extends Model
         'ipk',
         'semester', 
         'akredetasi_kampus', 
-        'akredetasi_jurusan',
         'imagetranskrip',
     ];
 

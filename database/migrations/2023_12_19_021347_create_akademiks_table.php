@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('progam_pendidikan');
             $table->string('imagetranskrip');
             $table->string('imageketerangan');
+            $table->string('imagebanpt');
             $table->timestamps();
         });
     }

@@ -20,6 +20,7 @@ class Akademik extends Model
         'progam_pendidikan',
         'imagetranskrip',
         'imageketerangan',
+        'imagebanpt',
     ];
 
     /**
@@ -43,6 +44,13 @@ class Akademik extends Model
     {
         return Attribute::make(
             get: fn ($imageketerangan) => url('/storage/suratketerangan/' . $imageketerangan),
+        );
+    }
+
+    protected function imagebanpt(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($imagebanpt) => url('/storage/banpt/' . $imagebanpt),
         );
     }
 }
