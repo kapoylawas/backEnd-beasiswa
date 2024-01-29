@@ -43,6 +43,7 @@ return new class extends Migration
             $table->string('jenis_universitas')->nullable();
             $table->integer('step')->nullable();
             $table->integer('tipe_beasiswa')->nullable();
+            $table->integer('kota')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

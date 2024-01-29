@@ -16,6 +16,7 @@ class LuarNegeri extends Model
         'ipk',
         'semester', 
         'akredetasi_kampus', 
+        'imageipk',
         'imagetranskrip',
     ];
 
@@ -27,7 +28,14 @@ class LuarNegeri extends Model
     protected function imagetranskrip(): Attribute
     {
         return Attribute::make(
-            get: fn ($imagetranskrip) => url('/storage/transkrip/' . $imagetranskrip),
+            get: fn ($imagetranskrip) => url('/storage/luarnegeri/' . $imagetranskrip),
+        );
+    }
+
+    protected function imageipk(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($imageipk) => url('/storage/transkrip/' . $imageipk),
         );
     }
 }

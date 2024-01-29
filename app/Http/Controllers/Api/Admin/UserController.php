@@ -145,6 +145,7 @@ class UserController extends Controller
             'imageakrekampus'       => $imageakrekampus->hashName(),
             'pilih_universitas'       => $request->pilih_universitas,
             'jenis_universitas'       => $request->jenis_universitas,
+            'kota'       => $request->kota,
             'step'     => 2,
         ]);
 

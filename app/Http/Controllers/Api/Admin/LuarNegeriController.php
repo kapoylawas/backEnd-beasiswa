@@ -24,9 +24,8 @@ class LuarNegeriController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'ipk'         => 'required',
-            'semester'       => 'required',
-            'akredetasi_kampus'       => 'required',
             'imagetranskrip'         => 'required|mimes:pdf|max:2000',
+            'imageipk'         => 'required|mimes:pdf|max:2000',
         ]);
 
         if ($validator->fails()) {
@@ -35,15 +34,18 @@ class LuarNegeriController extends Controller
 
         //upload image transkrip
         $imagetranskrip = $request->file('imagetranskrip');
-        $imagetranskrip->storeAs('public/transkrip', $imagetranskrip->hashName());
+        $imagetranskrip->storeAs('public/luarnegeri', $imagetranskrip->hashName());
+
+        //upload image ipk
+        $imageipk = $request->file('imageipk');
+        $imageipk->storeAs('public/transkrip', $imageipk->hashName());
 
         $luarNegeris = LuarNegeri::create([
             'user_id'     => auth()->guard('api')->user()->id,
             'name'       => "luar",
             'ipk'       => $request->ipk,
-            'semester'       => $request->semester,
-            'akredetasi_kampus'       => $request->akredetasi_kampus,
             'imagetranskrip'       => $imagetranskrip->hashName(),
+            'imageipk'       => $imageipk->hashName(),
         ]);
 
         if ($luarNegeris) {
