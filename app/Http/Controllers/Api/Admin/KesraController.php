@@ -36,11 +36,21 @@ class KesraController extends Controller
         $imagesertifikat = $request->file('imagesertifikat');
         $imagesertifikat->storeAs('public/sertifikat/kesra', $imagesertifikat->hashName());
 
+        //upload image sertifikat non muslim
+        $imagepiagamnonmuslim = $request->file('imagepiagamnonmuslim');
+        $imagepiagamnonmuslim->storeAs('public/sertifikat/kesra', $imagepiagamnonmuslim->hashName());
+
         $kesra = Kesra::create([
             'user_id'     => auth()->guard('api')->user()->id,
             'name'       => "Kesra",
+            'tipe_kesra'       => $request->tipe_kesra,
             'tipe_sertifikat'       => $request->tipe_sertifikat,
+            'nama_ponpes'       => $request->nama_ponpes,
+            'alamat_ponpes'       => $request->alamat_ponpes,
+            'nama_organisasi'       => $request->nama_organisasi,
+            'alamat_organisasi'       => $request->alamat_organisasi,
             'imagesertifikat'       => $imagesertifikat->hashName(),
+            'imagepiagamnonmuslim'       => $imagepiagamnonmuslim->hashName(),
             'tahun'       => $request->tahun,
         ]);
 

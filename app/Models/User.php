@@ -106,6 +106,16 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasOne(NonAkademik::class);
     }
 
+    public function kesra()
+    {
+        return $this->hasOne(Kesra::class);
+    }
+
+    public function dinsos()
+    {
+        return $this->hasOne(Dinsos::class);
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *

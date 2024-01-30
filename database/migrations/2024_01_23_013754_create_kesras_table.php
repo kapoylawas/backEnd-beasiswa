@@ -14,9 +14,15 @@ return new class extends Migration
         Schema::create('kesras', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->references('id')->on('users')->cascadeOnDelete();
-            $table->integer('tipe_sertifikat');
+            $table->integer('tipe_kesra')->nullable();
+            $table->integer('tipe_sertifikat')->nullable();
+            $table->integer('nama_ponpes')->nullable();
+            $table->integer('alamat_ponpes')->nullable();
+            $table->integer('nama_organisasi')->nullable();
+            $table->integer('alamat_organisasi')->nullable();
             $table->string('name');
-            $table->string('imagesertifikat');
+            $table->string('imagesertifikat')->nullable();
+            $table->string('imagepiagamnonmuslim')->nullable();
             $table->string('tahun');
             $table->timestamps();
         });

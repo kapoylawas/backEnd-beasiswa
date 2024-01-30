@@ -12,9 +12,11 @@ class Kesra extends Model
 
     protected $fillable = [
         'user_id',
+        'tipe_kesra',
         'tipe_sertifikat',
         'name',
         'imagesertifikat',
+        'imagepiagamnonmuslim',
         'tahun',
     ];
 
@@ -27,6 +29,13 @@ class Kesra extends Model
     {
         return Attribute::make(
             get: fn ($imagesertifikat) => url('/storage/sertifikat/kesra/' . $imagesertifikat),
+        );
+    }
+
+    protected function imagepiagamnonmuslim(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($imagepiagamnonmuslim) => url('/storage/sertifikat/kesra/' . $imagepiagamnonmuslim),
         );
     }
 }
