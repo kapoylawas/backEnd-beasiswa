@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\LuarNegeriResource;
 use App\Models\LuarNegeri;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -49,7 +50,7 @@ class LuarNegeriController extends Controller
         ]);
 
         if ($luarNegeris) {
-            LuarNegeri::where('id', auth()->guard('api')->user()->id)->update([
+            User::where('id', auth()->guard('api')->user()->id)->update([
                 'status_pendaftar' => 1,
                 'step'     => 3,
                 'tipe_beasiswa'     => 5,
