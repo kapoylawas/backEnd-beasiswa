@@ -23,6 +23,12 @@ Route::apiResource('/users', App\Http\Controllers\Api\Admin\UserController::clas
 //permissions all
 Route::get('/permissions/all', [\App\Http\Controllers\Api\Admin\PermissionController::class, 'all']);
 
+//kecamatan all
+Route::get('/kecamatan/all', [\App\Http\Controllers\Api\Admin\UserController::class, 'getKecamatan']);
+
+//kelurahan all
+Route::get('/kelurahan/byid', [\App\Http\Controllers\Api\Admin\UserController::class, 'getKelurahan']);
+
 
 
 //dashboard

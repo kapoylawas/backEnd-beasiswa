@@ -28,7 +28,7 @@ class User extends Authenticatable implements JWTSubject
         'nohp',
         'email',
         'gender',
-        'kecamatan',
+        'id_kecamatan',
         'codepos',
         'rt',
         'rw',
@@ -55,6 +55,8 @@ class User extends Authenticatable implements JWTSubject
         'status_wa',
         'status_email',
         'status_finish',
+        'id_kecamatan',
+        'id_kelurahan',
     ];
 
     protected function imagektp(): Attribute
@@ -117,6 +119,16 @@ class User extends Authenticatable implements JWTSubject
     public function dinsos()
     {
         return $this->hasOne(Dinsos::class);
+    }
+
+    public function kecamatan()
+    {
+        return $this->belongsTo(Kecamatan::class);
+    }
+
+    public function kelurahan()
+    {
+        return $this->belongsTo(Kelurahan::class);
     }
 
     /**

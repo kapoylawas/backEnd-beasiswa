@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
+use App\Models\Kecamatan;
+use App\Models\Kelurahan;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -36,6 +38,24 @@ class UserController extends Controller
         return new UserResource(true, 'List Data User', $userbyid);
     }
 
+    public function getKecamatan()
+    {
+        $kecamatans = Kecamatan::latest()->get();
+
+        //return with Api Resource
+        return new UserResource(true, 'List kecamatan', $kecamatans);
+    }
+
+    public function getKelurahan(Request $request)
+    {
+
+        $kelurahans = Kelurahan::where('kecamatan_id', $request->kecamatan_id)->get();
+
+
+        //return with Api Resource
+        return new UserResource(true, 'List kelurahan', $kelurahans);
+    }
+
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -45,7 +65,8 @@ class UserController extends Controller
             'nohp'     => 'required',
             'email'    => 'required|unique:users',
             'gender'     => 'required',
-            'kecamatan'     => 'required',
+            'id_kecamatan'     => 'required',
+            'id_kelurahan'     => 'required',
             'codepos'     => 'required',
             'rt'     => 'required',
             'rw'     => 'required',
@@ -75,7 +96,8 @@ class UserController extends Controller
             'nohp'      => $request->nohp,
             'email'     => $request->email,
             'gender'     => $request->gender,
-            'kecamatan'     => $request->kecamatan,
+            'id_kecamatan'     => $request->id_kecamatan,
+            'id_kelurahan'     => $request->id_kelurahan,
             'codepos'     => $request->codepos,
             'rt'     => $request->rt,
             'rw'     => $request->rw,
