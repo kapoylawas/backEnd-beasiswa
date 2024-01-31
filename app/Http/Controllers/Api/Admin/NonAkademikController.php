@@ -27,7 +27,7 @@ class NonAkademikController extends Controller
             'akredetasi_kampus'       => 'required',
             'jenis_sertifikat'       => 'required',
             'imagesertifikat'         => 'required|mimes:pdf|max:2000',
-            'imageakrekampus'         => 'required|mimes:pdf|max:2000',
+            'imageakredetasi'         => 'required|mimes:pdf|max:2000',
             'tahun'       => 'required',
         ]);
 
@@ -39,8 +39,8 @@ class NonAkademikController extends Controller
         $imagesertifikat = $request->file('imagesertifikat');
         $imagesertifikat->storeAs('public/sertifikat/dispora', $imagesertifikat->hashName());
 
-        $imageakrekampus = $request->file('imageakrekampus');
-        $imageakrekampus->storeAs('public/imageakrekampus', $imageakrekampus->hashName());
+        $imageakredetasi = $request->file('imageakredetasi');
+        $imageakredetasi->storeAs('public/imageakrekampus', $imageakredetasi->hashName());
 
         $nonakademik = NonAkademik::create([
             'user_id'     => auth()->guard('api')->user()->id,
@@ -49,7 +49,7 @@ class NonAkademikController extends Controller
             'akredetasi_kampus'       => $request->akredetasi_kampus,
             'jenis_sertifikat'       => $request->jenis_sertifikat,
             'imagesertifikat'       => $imagesertifikat->hashName(),
-            'imageakrekampus'       => $imageakrekampus->hashName(),
+            'imageakredetasi'       => $imageakredetasi->hashName(),
             'tahun'       => $request->tahun,
         ]);
 
