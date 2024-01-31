@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('akredetasi_kampus');
             $table->string('jenis_sertifikat');
             $table->string('imagesertifikat');
+            $table->string('imageakrekampus');
             $table->string('tahun');
             $table->timestamps();
         });

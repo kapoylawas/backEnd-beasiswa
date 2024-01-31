@@ -17,6 +17,7 @@ class NonAkademik extends Model
         'akredetasi_kampus', 
         'jenis_sertifikat',
         'imagesertifikat',
+        'imageakredetasi',
         'tahun',
     ];
 
@@ -29,6 +30,13 @@ class NonAkademik extends Model
     {
         return Attribute::make(
             get: fn ($imagesertifikat) => url('/storage/sertifikat/dispora/' . $imagesertifikat),
+        );
+    }
+
+    protected function imageakredetasi(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($imageakredetasi) => url('/storage/imageakrekampus/' . $imageakredetasi),
         );
     }
 }
