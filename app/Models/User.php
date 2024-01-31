@@ -121,6 +121,11 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasOne(Dinsos::class);
     }
 
+    public function luarNegeri()
+    {
+        return $this->hasOne(LuarNegeri::class);
+    }
+
     public function kecamatan()
     {
         return $this->belongsTo(Kecamatan::class);
