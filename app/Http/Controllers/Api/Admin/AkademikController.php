@@ -47,13 +47,14 @@ class AkademikController extends Controller
         $imagetranskrip = $request->file('imagetranskrip');
         $imagetranskrip->storeAs('public/transkrip', $imagetranskrip->hashName());
 
-        //upload image surat keterangan
-        $imageketerangan = $request->file('imageketerangan');
-        $imageketerangan->storeAs('public/suratketerangan', $imageketerangan->hashName());
-
         //upload image banpt
         $imagebanpt = $request->file('imagebanpt');
         $imagebanpt->storeAs('public/banpt', $imagebanpt->hashName());
+        
+        // //upload image surat keterangan
+        // $imageketerangan = $request->file('imageketerangan');
+        // $imageketerangan->storeAs('public/suratketerangan', $imageketerangan->hashName());
+
 
         $akademik = Akademik::create([
             'user_id'     => auth()->guard('api')->user()->id,
