@@ -8,6 +8,7 @@ use App\Models\Kecamatan;
 use App\Models\Kelurahan;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
@@ -186,42 +187,28 @@ class UserController extends Controller
     public function updateBiodata(Request $request, User $user)
     {
 
+        if ($request->file('ktm')) {
+            //remove old image
+            Storage::disk('local')->delete('public/ktm/' . basename($user->ktm));
 
-        $validator = Validator::make($request->all(), [
-            'nim'     => 'required',
-            'universitas' => 'required',
-            'jurusan' => 'required',
-        ]);
+            //upload new ktm
+            $ktm = $request->file('ktm');
+            $ktm->storeAs('public/ktm', $ktm->hashName());
 
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 422);
+            $user->update([
+                'ktm'       => $ktm->hashName(),
+                'nim'       => $request->nim,
+                'universitas'       => $request->universitas,
+                'alamat_univ'       => $request->alamat_univ,
+                'jurusan'       => $request->jurusan,
+            ]);
         }
-
-        // //upload new ktm
-        // $ktm = $request->file('ktm');
-        // $ktm->storeAs('public/ktm', $ktm->hashName());
-
-        // //upload new imageaktifkampus
-        // $imageaktifkampus = $request->file('imageaktifkampus');
-        // $imageaktifkampus->storeAs('public/imageaktifkampus', $imageaktifkampus->hashName());
-
-        // //upload new imagesuratpernyataan
-        // $imagesuratpernyataan = $request->file('imagesuratpernyataan');
-        // $imagesuratpernyataan->storeAs('public/imagesuratpernyataan', $imagesuratpernyataan->hashName());
-
-        // //upload new imageakrekampus
-        // $imageakrekampus = $request->file('imageakrekampus');
-        // $imageakrekampus->storeAs('public/imageakrekampus', $imageakrekampus->hashName());
 
         $user->update([
             'nim'       => $request->nim,
             'universitas'       => $request->universitas,
             'alamat_univ'       => $request->alamat_univ,
             'jurusan'       => $request->jurusan,
-            'pilih_universitas'       => $request->pilih_universitas,
-            'jenis_universitas'       => $request->jenis_universitas,
-            'kota'       => $request->kota,
-            'step'     => 2,
         ]);
 
         if ($user) {
