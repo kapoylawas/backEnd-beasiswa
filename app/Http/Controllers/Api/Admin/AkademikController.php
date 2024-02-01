@@ -35,7 +35,7 @@ class AkademikController extends Controller
             'akredetasi_kampus'       => 'required',
             'progam_pendidikan'       => 'required',
             'imagetranskrip'         => 'required|mimes:pdf|max:2000',
-            'imageketerangan'         => 'required|mimes:pdf|max:2000',
+            // 'imageketerangan'         => 'required|mimes:pdf|max:2000',
             'imagebanpt'         => 'required|mimes:pdf|max:2000',
         ]);
 
@@ -63,7 +63,7 @@ class AkademikController extends Controller
             'akredetasi_kampus'       => $request->akredetasi_kampus,
             'progam_pendidikan'       => $request->progam_pendidikan,
             'imagetranskrip'       => $imagetranskrip->hashName(),
-            'imageketerangan'       => $imageketerangan->hashName(),
+            // 'imageketerangan'       => $imageketerangan->hashName(),
             'imagebanpt'       => $imagebanpt->hashName(),
         ]);
 

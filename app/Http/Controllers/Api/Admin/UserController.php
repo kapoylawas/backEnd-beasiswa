@@ -159,7 +159,7 @@ class UserController extends Controller
         $imageakrekampus = $request->file('imageakrekampus');
         $imageakrekampus->storeAs('public/imageakrekampus', $imageakrekampus->hashName());
 
-        $user->update([ 
+        $user->update([
             'nim'       => $request->nim,
             'ktm'       => $ktm->hashName(),
             'universitas'       => $request->universitas,
@@ -168,6 +168,56 @@ class UserController extends Controller
             'imageaktifkampus'       => $imageaktifkampus->hashName(),
             'imagesuratpernyataan'       => $imagesuratpernyataan->hashName(),
             'imageakrekampus'       => $imageakrekampus->hashName(),
+            'pilih_universitas'       => $request->pilih_universitas,
+            'jenis_universitas'       => $request->jenis_universitas,
+            'kota'       => $request->kota,
+            'step'     => 2,
+        ]);
+
+        if ($user) {
+            //return success with Api Resource
+            return new UserResource(true, 'Data User Berhasil Disimpan!', $user);
+        }
+
+        //return failed with Api Resource
+        return new UserResource(false, 'Data User Gagal Disimpan!', null);
+    }
+
+    public function updateBiodata(Request $request, User $user)
+    {
+
+
+        $validator = Validator::make($request->all(), [
+            'nim'     => 'required',
+            'universitas' => 'required',
+            'jurusan' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+
+        // //upload new ktm
+        // $ktm = $request->file('ktm');
+        // $ktm->storeAs('public/ktm', $ktm->hashName());
+
+        // //upload new imageaktifkampus
+        // $imageaktifkampus = $request->file('imageaktifkampus');
+        // $imageaktifkampus->storeAs('public/imageaktifkampus', $imageaktifkampus->hashName());
+
+        // //upload new imagesuratpernyataan
+        // $imagesuratpernyataan = $request->file('imagesuratpernyataan');
+        // $imagesuratpernyataan->storeAs('public/imagesuratpernyataan', $imagesuratpernyataan->hashName());
+
+        // //upload new imageakrekampus
+        // $imageakrekampus = $request->file('imageakrekampus');
+        // $imageakrekampus->storeAs('public/imageakrekampus', $imageakrekampus->hashName());
+
+        $user->update([
+            'nim'       => $request->nim,
+            'universitas'       => $request->universitas,
+            'alamat_univ'       => $request->alamat_univ,
+            'jurusan'       => $request->jurusan,
             'pilih_universitas'       => $request->pilih_universitas,
             'jenis_universitas'       => $request->jenis_universitas,
             'kota'       => $request->kota,

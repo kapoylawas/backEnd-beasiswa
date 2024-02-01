@@ -17,9 +17,9 @@ class UserTableSeeder extends Seeder
     {
         //create data user
         User::create([
-            'nik'      => '3515082407920001',
-            'nokk'      => '3515082407220001',
-            'name'      => 'Administrator',
+            'nik'      => '2222222222222222',
+            'nokk'      => '3515082407220002',
+            'name'      => 'Dispora',
             'nohp'      => '085633517033',
             'email'     => 'admin@gmail.com',
             'gender'     => 'L',
