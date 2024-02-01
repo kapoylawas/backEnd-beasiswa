@@ -80,11 +80,11 @@ class UserController extends Controller
             return response()->json($validator->errors(), 422);
         }
 
-        //upload imagektp
+        // //upload imagektp
         $imagektp = $request->file('imagektp');
         $imagektp->storeAs('public/ktp', $imagektp->hashName());
 
-        //upload imagekk
+        // //upload imagekk
         $imagekk = $request->file('imagekk');
         $imagekk->storeAs('public/kk', $imagekk->hashName());
 

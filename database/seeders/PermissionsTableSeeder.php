@@ -64,5 +64,11 @@ class PermissionsTableSeeder extends Seeder
         Permission::create(['name' => 'luarnegeri.create', 'guard_name' => 'api']);
         Permission::create(['name' => 'luarnegeri.edit', 'guard_name' => 'api']);
         Permission::create(['name' => 'luarnegeri.delete', 'guard_name' => 'api']);
+
+        //permission for dispora
+        Permission::create(['name' => 'dispora.index', 'guard_name' => 'api']);
+        Permission::create(['name' => 'dispora.create', 'guard_name' => 'api']);
+        Permission::create(['name' => 'dispora.edit', 'guard_name' => 'api']);
+        Permission::create(['name' => 'dispora.delete', 'guard_name' => 'api']);
     }
 }
