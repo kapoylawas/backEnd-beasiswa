@@ -83,6 +83,10 @@ Route::prefix('admin')->group(function () {
         // user by id
         Route::get('/users/byid', [\App\Http\Controllers\Api\Admin\UserController::class, 'userbyid']);
 
+        // update biodata
         Route::put('/users/biodata/{user}', [\App\Http\Controllers\Api\Admin\UserController::class, 'updateBiodata']);
+
+        // update biodata
+        Route::put('/users/verif/{user}', [\App\Http\Controllers\Api\Admin\UserController::class, 'updateVerif']);
     });
 });

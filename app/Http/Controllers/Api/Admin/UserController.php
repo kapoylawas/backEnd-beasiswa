@@ -219,4 +219,19 @@ class UserController extends Controller
         //return failed with Api Resource
         return new UserResource(false, 'Data User Gagal Disimpan!', null);
     }
+
+    public function updateVerif(Request $request, User $user)
+    {
+        $user->update([
+            'status_finish'       => $request->status_finish,
+        ]);
+
+        if ($user) {
+            //return success with Api Resource
+            return new UserResource(true, 'Data User Berhasil di Update!', $user);
+        }
+
+        //return failed with Api Resource
+        return new UserResource(false, 'Data User Gagal Update!', null);
+    }
 }
