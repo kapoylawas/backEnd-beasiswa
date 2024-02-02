@@ -27,6 +27,22 @@ class AkademikController extends Controller
         return new AkademikResource(true, 'List Data Akademiks', $akademiks);
     }
 
+    public function getData()
+    {
+        $searchString = request()->q;
+
+        $akademiks = Akademik::whereHas('student', function ($query) use ($searchString) {
+            $query->where('nik', 'like', '%' . $searchString . '%');
+        })
+            ->with(['student' => function ($query) use ($searchString) {
+                $query->where('nik', 'like', '%' . $searchString . '%');
+            }])->latest()->paginate(10);
+        $akademiks->appends(['q' => request()->q]);
+
+        //return with Api Resource
+        return new AkademikResource(true, 'List Data Akademiks', $akademiks);
+    }
+
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -50,7 +66,7 @@ class AkademikController extends Controller
         //upload image banpt
         $imagebanpt = $request->file('imagebanpt');
         $imagebanpt->storeAs('public/banpt', $imagebanpt->hashName());
-        
+
         // //upload image surat keterangan
         // $imageketerangan = $request->file('imageketerangan');
         // $imageketerangan->storeAs('public/suratketerangan', $imageketerangan->hashName());
