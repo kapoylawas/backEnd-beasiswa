@@ -21,7 +21,7 @@ class KesraController extends Controller
     }
 
     public function store(Request $request)
-    { 
+    {
         $validator = Validator::make($request->all(), [
             'tipe_sertifikat'         => 'required',
             'imagesertifikat'         => 'required|mimes:pdf|max:2000',
@@ -38,7 +38,9 @@ class KesraController extends Controller
 
         //upload image sertifikat non muslim
         $imagepiagamnonmuslim = $request->file('imagepiagamnonmuslim');
-        $imagepiagamnonmuslim->storeAs('public/sertifikat/kesra', $imagepiagamnonmuslim->hashName());
+        if ($imagepiagamnonmuslim != null) {
+            $imagepiagamnonmuslim->storeAs('public/sertifikat/kesra', $imagepiagamnonmuslim->hashName());
+        }
 
         $kesra = Kesra::create([
             'user_id'     => auth()->guard('api')->user()->id,
@@ -50,7 +52,7 @@ class KesraController extends Controller
             'nama_organisasi'       => $request->nama_organisasi,
             'alamat_organisasi'       => $request->alamat_organisasi,
             'imagesertifikat'       => $imagesertifikat->hashName(),
-            'imagepiagamnonmuslim'       => $imagepiagamnonmuslim->hashName(),
+            'imagepiagamnonmuslim'       => ($imagepiagamnonmuslim != null) ? $imagepiagamnonmuslim->hashName() : null,
             'tahun'       => $request->tahun,
         ]);
 
