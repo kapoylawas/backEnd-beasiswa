@@ -31,10 +31,10 @@ class AkademikController extends Controller
     {
         $searchString = request()->q;
 
-        $akademiks = Akademik::whereHas('student', function ($query) use ($searchString) {
+        $akademiks = Akademik::whereHas('user', function ($query) use ($searchString) {
             $query->where('nik', 'like', '%' . $searchString . '%');
         })
-            ->with(['student' => function ($query) use ($searchString) {
+            ->with(['user' => function ($query) use ($searchString) {
                 $query->where('nik', 'like', '%' . $searchString . '%');
             }])->latest()->paginate(10);
         $akademiks->appends(['q' => request()->q]);

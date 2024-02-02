@@ -83,6 +83,9 @@ Route::prefix('admin')->group(function () {
         // user by id
         Route::get('/users/byid', [\App\Http\Controllers\Api\Admin\UserController::class, 'userbyid']);
 
+        // get akademik
+        Route::get('/beasiswa/akademiks', [\App\Http\Controllers\Api\Admin\AkademikController::class, 'getData']);
+
         // update biodata
         Route::put('/users/biodata/{user}', [\App\Http\Controllers\Api\Admin\UserController::class, 'updateBiodata']);
 

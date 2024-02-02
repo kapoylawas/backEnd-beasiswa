@@ -129,7 +129,7 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
         $validator = Validator::make($request->all(), [
-            'nim'     => 'required|unique:users',
+            'nim'     => 'required',
             'ktm'    => 'required|mimes:pdf|max:2048',
             'universitas' => 'required',
             'alamat_univ' => 'required',
