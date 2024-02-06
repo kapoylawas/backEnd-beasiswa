@@ -24,10 +24,10 @@ class NonAkademikController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'semester'         => 'required',
-            'akredetasi_kampus'       => 'required',
             'jenis_sertifikat'       => 'required',
             'imagesertifikat'         => 'required|mimes:pdf|max:2000',
-            'imageakredetasi'         => 'required|mimes:pdf|max:2000',
+            // 'akredetasi_kampus'       => 'required',
+            // 'imageakredetasi'         => 'required|mimes:pdf|max:2000',
             'tahun'       => 'required',
         ]);
 
@@ -39,17 +39,17 @@ class NonAkademikController extends Controller
         $imagesertifikat = $request->file('imagesertifikat');
         $imagesertifikat->storeAs('public/sertifikat/dispora', $imagesertifikat->hashName());
 
-        $imageakredetasi = $request->file('imageakredetasi');
-        $imageakredetasi->storeAs('public/imageakrekampus', $imageakredetasi->hashName());
+        // $imageakredetasi = $request->file('imageakredetasi');
+        // $imageakredetasi->storeAs('public/imageakrekampus', $imageakredetasi->hashName());
 
         $nonakademik = NonAkademik::create([
             'user_id'     => auth()->guard('api')->user()->id,
             'name'       => "non akademik",
             'semester'       => $request->semester,
-            'akredetasi_kampus'       => $request->akredetasi_kampus,
             'jenis_sertifikat'       => $request->jenis_sertifikat,
             'imagesertifikat'       => $imagesertifikat->hashName(),
-            'imageakredetasi'       => $imageakredetasi->hashName(),
+            // 'akredetasi_kampus'       => $request->akredetasi_kampus,    
+            // 'imageakredetasi'       => $imageakredetasi->hashName(),
             'tahun'       => $request->tahun,
         ]);
 
