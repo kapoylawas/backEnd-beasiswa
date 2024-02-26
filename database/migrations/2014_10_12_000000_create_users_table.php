@@ -13,13 +13,14 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('id_kecamatan')->references('id')->on('kecamatans')->cascadeOnDelete();
+            $table->foreignId('id_kelurahan')->references('id')->on('kelurahans')->cascadeOnDelete();
             $table->string('nik')->unique();
             $table->string('nokk')->unique();
             $table->string('name');
             $table->string('nohp');
             $table->string('email')->unique();
             $table->string('gender');
-            $table->string('kecamatan');
             $table->string('codepos');
             $table->string('rt');
             $table->string('rw');

@@ -29,11 +29,8 @@ class UserController extends Controller
 
     public function userbyid()
     {
-        try {
-            $userbyid = User::with('akademik', 'nonakademik', 'kesra', 'dinsos', 'luarNegeri')->where('id', auth()->user()->id)->first();
-        } catch (\Throwable $th) {
-            dd($th);
-        }
+
+        $userbyid = User::with('akademik', 'nonakademik', 'kesra', 'dinsos', 'luarNegeri', 'kecamatan', 'kelurahan')->where('id', auth()->user()->id)->first();
 
         //return with Api Resource
         return new UserResource(true, 'List Data User', $userbyid);
@@ -196,19 +193,25 @@ class UserController extends Controller
             $ktm->storeAs('public/ktm', $ktm->hashName());
 
             $user->update([
-                'ktm'       => $ktm->hashName(),
+                'name'       => $request->name,
+                'email'       => $request->email,
+                'nik'       => $request->nik,
                 'nim'       => $request->nim,
-                'universitas'       => $request->universitas,
-                'alamat_univ'       => $request->alamat_univ,
-                'jurusan'       => $request->jurusan,
+                'nokk'       => $request->nokk,
+                'nohp'       => $request->nohp,
+                'alamat'       => $request->alamat,
+                'ktm'       => $ktm->hashName(),
             ]);
         }
 
         $user->update([
+            'name'       => $request->name,
+            'email'       => $request->email,
+            'nik'       => $request->nik,
             'nim'       => $request->nim,
-            'universitas'       => $request->universitas,
-            'alamat_univ'       => $request->alamat_univ,
-            'jurusan'       => $request->jurusan,
+            'nokk'       => $request->nokk,
+            'nohp'       => $request->nohp,
+            'alamat'       => $request->alamat,
         ]);
 
         if ($user) {

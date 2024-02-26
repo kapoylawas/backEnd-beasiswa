@@ -128,12 +128,12 @@ class User extends Authenticatable implements JWTSubject
 
     public function kecamatan()
     {
-        return $this->belongsTo(Kecamatan::class);
+        return $this->belongsTo(Kecamatan::class, 'id_kecamatan');
     }
 
     public function kelurahan()
     {
-        return $this->belongsTo(Kelurahan::class);
+        return $this->belongsTo(Kelurahan::class, 'id_kelurahan');
     }
 
     /**
