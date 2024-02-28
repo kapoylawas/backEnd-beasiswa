@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_kecamatan')->references('id')->on('kecamatans')->cascadeOnDelete();
-            $table->foreignId('id_kelurahan')->references('id')->on('kelurahans')->cascadeOnDelete();
+            $table->integer('status_wa')->nullable();
+            $table->integer('status_email')->nullable();
+            $table->integer('status_finish')->nullable();
             $table->string('nik')->unique();
             $table->string('nokk')->unique();
             $table->string('name');
@@ -27,7 +28,7 @@ return new class extends Migration
             $table->string('alamat');
             $table->string('status_terkirim');
             $table->integer('status');
-            $table->integer('status_pendaftar');
+            $table->integer('status_pendaftar')->nullable();
             $table->string('imagektp')->nullable();
             $table->string('imagekk')->nullable();
             $table->timestamp('email_verified_at')->nullable();
@@ -42,9 +43,11 @@ return new class extends Migration
             $table->string('imageakrekampus')->nullable();
             $table->string('pilih_universitas')->nullable();
             $table->string('jenis_universitas')->nullable();
-            $table->integer('step')->nullable();
-            $table->integer('tipe_beasiswa')->nullable();
             $table->integer('kota')->nullable();
+            $table->integer('tipe_beasiswa')->nullable();
+            $table->integer('step')->nullable();
+            $table->foreignId('id_kecamatan')->references('id')->on('kecamatans')->cascadeOnDelete();
+            $table->foreignId('id_kelurahan')->references('id')->on('kelurahans')->cascadeOnDelete();
             $table->rememberToken();
             $table->timestamps();
         });

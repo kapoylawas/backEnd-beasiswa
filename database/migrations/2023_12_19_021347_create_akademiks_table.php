@@ -14,14 +14,13 @@ return new class extends Migration
         Schema::create('akademiks', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->references('id')->on('users')->cascadeOnDelete();
-            $table->string('name');
             $table->string('ipk');
+            $table->string('name');
             $table->string('semester');
             $table->string('akredetasi_kampus');
-            $table->string('akredetasi_jurusan');
             $table->string('progam_pendidikan');
             $table->string('imagetranskrip');
-            $table->string('imageketerangan');
+            $table->string('imageketerangan')->nullable();
             $table->string('imagebanpt');
             $table->timestamps();
         });

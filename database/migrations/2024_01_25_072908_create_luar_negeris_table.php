@@ -16,8 +16,9 @@ return new class extends Migration
             $table->foreignId('user_id')->references('id')->on('users')->cascadeOnDelete();
             $table->string('name');
             $table->string('ipk');
-            $table->string('semester');
-            $table->string('akredetasi_kampus');
+            $table->string('semester')->nullable();
+            $table->string('akredetasi_kampus')->nullable();
+            $table->string('imageipk');
             $table->string('imagetranskrip');
             $table->timestamps();
         });

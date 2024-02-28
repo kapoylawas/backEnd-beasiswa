@@ -16,11 +16,11 @@ return new class extends Migration
             $table->foreignId('user_id')->references('id')->on('users')->cascadeOnDelete();
             $table->integer('tipe_kesra')->nullable();
             $table->integer('tipe_sertifikat')->nullable();
+            $table->string('name')->nullable();
             $table->integer('nama_ponpes')->nullable();
             $table->integer('alamat_ponpes')->nullable();
             $table->integer('nama_organisasi')->nullable();
             $table->integer('alamat_organisasi')->nullable();
-            $table->string('name');
             $table->string('imagesertifikat')->nullable();
             $table->string('imagepiagamnonmuslim')->nullable();
             $table->string('tahun');
