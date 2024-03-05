@@ -17,20 +17,19 @@ class UserTableSeeder extends Seeder
     {
         //create data user
         User::create([
-            'nik'      => '2222222222222222',
-            'nokk'      => '3515082407220002',
-            'name'      => 'Dispora',
-            'nohp'      => '085633517033',
-            'email'     => 'admin@gmail.com',
+            'nik'      => '1111111111111111',
+            'nokk'      => '3515082407220003',
+            'name'      => 'Dispenduk',
+            'nohp'      => '085633517034',
+            'email'     => 'dispenduk@gmail.com',
             'gender'     => 'L',
-            'kecamatan'     => 1,
             'codepos'     => '61224',
             'rt'     => '10',
             'rw'     => '5',
             'alamat'     => 'testing sidoarjo',
             'status_terkirim'     => 'false',
             'status'     => 1,
-            'password'  => bcrypt('password')
+            'password'  => bcrypt('dispendukpassword')
         ]);
 
         //assign permission to role
