@@ -184,13 +184,13 @@ class UserController extends Controller
     public function updateBiodata(Request $request, User $user)
     {
 
-        if ($request->file('ktm')) {
+        if ($request->file('imagektp')) {
             //remove old image
-            Storage::disk('local')->delete('public/ktm/' . basename($user->ktm));
+            Storage::disk('local')->delete('public/ktp/' . basename($user->imagektp));
 
-            //upload new ktm
-            $ktm = $request->file('ktm');
-            $ktm->storeAs('public/ktm', $ktm->hashName());
+            //upload new ktp
+            $imagektp = $request->file('imagektp');
+            $imagektp->storeAs('public/ktp', $imagektp->hashName());
 
             $user->update([
                 'name'       => $request->name,
@@ -200,7 +200,27 @@ class UserController extends Controller
                 'nokk'       => $request->nokk,
                 'nohp'       => $request->nohp,
                 'alamat'       => $request->alamat,
-                'ktm'       => $ktm->hashName(),
+                'imagektp'       => $imagektp->hashName(),
+            ]);
+        }
+
+        if ($request->file('imagekk')) {
+            //remove old image
+            Storage::disk('local')->delete('public/kk/' . basename($user->imagekk));
+
+            //upload new kk
+            $imagekk = $request->file('imagekk');
+            $imagekk->storeAs('public/kk', $imagekk->hashName());
+
+            $user->update([
+                'name'       => $request->name,
+                'email'       => $request->email,
+                'nik'       => $request->nik,
+                'nim'       => $request->nim,
+                'nokk'       => $request->nokk,
+                'nohp'       => $request->nohp,
+                'alamat'       => $request->alamat,
+                'imagekk'       => $imagekk->hashName(),
             ]);
         }
 
