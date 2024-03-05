@@ -59,26 +59,26 @@ Route::prefix('admin')->group(function () {
         //roles
         Route::apiResource('/roles', App\Http\Controllers\Api\Admin\RoleController::class)
             ->middleware('permission:roles.index|roles.store|roles.update|roles.delete');
-        
+
         //Akademik
         Route::apiResource('/akademiks', App\Http\Controllers\Api\Admin\AkademikController::class)
-        ->middleware('permission:akademiks.index|akademiks.store|akademiks.update|akademiks.delete');
+            ->middleware('permission:akademiks.index|akademiks.store|akademiks.update|akademiks.delete');
 
         //Non Akademik
         Route::apiResource('/nonakademiks', App\Http\Controllers\Api\Admin\NonAkademikController::class)
-        ->middleware('permission:nonakademiks.index|nonakademiks.store|nonakademiks.update|nonakademiks.delete');
+            ->middleware('permission:nonakademiks.index|nonakademiks.store|nonakademiks.update|nonakademiks.delete');
 
         //Kesra
         Route::apiResource('/kesra', App\Http\Controllers\Api\Admin\KesraController::class)
-        ->middleware('permission:kesra.index|kesra.store|kesra.update|kesra.delete');
+            ->middleware('permission:kesra.index|kesra.store|kesra.update|kesra.delete');
 
         //Dinsos
         Route::apiResource('/dinsos', App\Http\Controllers\Api\Admin\DinsosController::class)
-        ->middleware('permission:dinsos.index|dinsos.store|dinsos.update|dinsos.delete');
+            ->middleware('permission:dinsos.index|dinsos.store|dinsos.update|dinsos.delete');
 
         //luar negeri
         Route::apiResource('/luarnegeri', App\Http\Controllers\Api\Admin\LuarNegeriController::class)
-        ->middleware('permission:luarnegeri.index|luarnegeri.store|luarnegeri.update|luarnegeri.delete');
+            ->middleware('permission:luarnegeri.index|luarnegeri.store|luarnegeri.update|luarnegeri.delete');
 
         // user by id
         Route::get('/users/byid', [\App\Http\Controllers\Api\Admin\UserController::class, 'userbyid']);
@@ -91,5 +91,8 @@ Route::prefix('admin')->group(function () {
 
         // update biodata
         Route::put('/users/verif/{user}', [\App\Http\Controllers\Api\Admin\UserController::class, 'updateVerif']);
+
+        // update akademiks
+        Route::put('/users/akademiks/{akademik}', [\App\Http\Controllers\Api\Admin\AkademikController::class, 'updateAkademik']);
     });
 });
