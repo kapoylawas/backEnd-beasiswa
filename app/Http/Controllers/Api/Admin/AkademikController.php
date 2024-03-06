@@ -117,22 +117,6 @@ class AkademikController extends Controller
             ]);
         }
 
-        if ($request->file('imageketerangan')) {
-            //remove old image
-            Storage::disk('local')->delete('public/suratketerangan/' . basename($akademik->imageketerangan));
-
-            //upload new surat keterangan
-            $imageketerangan = $request->file('imageketerangan');
-            $imageketerangan->storeAs('public/suratketerangan', $imageketerangan->hashName());
-
-            $akademik->update([
-                'semester'       => $request->semester,
-                'akredetasi_kampus'       => $request->akredetasi_kampus,
-                'progam_pendidikan'       => $request->progam_pendidikan,
-                'imageketerangan'       => $imageketerangan->hashName(),
-            ]);
-        }
-
         if ($request->file('imagebanpt')) {
             //remove old image
             Storage::disk('local')->delete('public/banpt/' . basename($akademik->imagebanpt));
