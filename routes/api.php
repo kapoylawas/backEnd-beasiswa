@@ -94,5 +94,8 @@ Route::prefix('admin')->group(function () {
 
         // update akademiks
         Route::put('/users/akademiks/{akademik}', [\App\Http\Controllers\Api\Admin\AkademikController::class, 'updateAkademik']);
+
+        // update non akademiks
+        Route::put('/users/nonAkademiks/{nonAkademik}', [\App\Http\Controllers\Api\Admin\NonAkademikController::class, 'updateNonAkademik']);
     });
 });

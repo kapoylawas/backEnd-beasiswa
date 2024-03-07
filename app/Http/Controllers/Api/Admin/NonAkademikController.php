@@ -8,6 +8,7 @@ use App\Models\NonAkademik;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
 
 class NonAkademikController extends Controller
 {
@@ -65,5 +66,36 @@ class NonAkademikController extends Controller
 
         //return failed with Api Resource
         return new NonAkademikResource(false, 'Data Post Gagal Disimpan!', null);
+    }
+
+    public function updateNonAkademik(Request $request, NonAkademik $nonAkademik)
+    {
+        if ($request->file('imagesertifikat')) {
+            //remove old image
+            Storage::disk('local')->delete('public/sertifikat/dispora/' . basename($nonAkademik->imagesertifikat));
+
+            //upload new transkip
+            $imagesertifikat = $request->file('imagesertifikat');
+            $imagesertifikat->storeAs('public/sertifikat/dispora', $imagesertifikat->hashName());
+
+            $nonAkademik->update([
+                'semester'       => $request->semester,
+                'tahun'       => $request->tahun,
+                'imagesertifikat'       => $imagesertifikat->hashName(),
+            ]);
+        }
+
+        $nonAkademik->update([
+            'semester'       => $request->semester,
+            'tahun'       => $request->tahun,
+        ]);
+
+        if ($nonAkademik) {
+            //return success with Api Resource
+            return new NonAkademikResource(true, 'Data User Berhasil Disimpan!', $nonAkademik);
+        }
+
+        //return failed with Api Resource
+        return new NonAkademikResource(false, 'Data User Gagal Disimpan!', null);
     }
 }
