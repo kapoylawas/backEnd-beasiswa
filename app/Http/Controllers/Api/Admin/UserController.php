@@ -133,6 +133,7 @@ class UserController extends Controller
             'imageaktifkampus' => 'required|mimes:pdf|max:2048',
             'imagesuratpernyataan' => 'required|mimes:pdf|max:2048',
             'imageakrekampus' => 'required|mimes:pdf|max:2000',
+            'imagesuratbeasiswa' => 'required|mimes:pdf|max:2000',
             'pilih_universitas' => 'required',
         ]);
 
@@ -155,6 +156,10 @@ class UserController extends Controller
         //upload new imageakrekampus
         $imageakrekampus = $request->file('imageakrekampus');
         $imageakrekampus->storeAs('public/imageakrekampus', $imageakrekampus->hashName());
+        
+        //upload new imagesuratbeasiswa
+        $imagesuratbeasiswa = $request->file('imagesuratbeasiswa');
+        $imagesuratbeasiswa->storeAs('public/imagesuratbeasiswa', $imagesuratbeasiswa->hashName());
 
         $user->update([
             'nim'       => $request->nim,
@@ -165,6 +170,7 @@ class UserController extends Controller
             'imageaktifkampus'       => $imageaktifkampus->hashName(),
             'imagesuratpernyataan'       => $imagesuratpernyataan->hashName(),
             'imageakrekampus'       => $imageakrekampus->hashName(),
+            'imagesuratbeasiswa'       => $imagesuratbeasiswa->hashName(),
             'pilih_universitas'       => $request->pilih_universitas,
             'jenis_universitas'       => $request->jenis_universitas,
             'kota'       => $request->kota,

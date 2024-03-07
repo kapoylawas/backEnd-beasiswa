@@ -47,6 +47,7 @@ class User extends Authenticatable implements JWTSubject
         'imageaktifkampus',
         'imagesuratpernyataan',
         'imageakrekampus',
+        'imagesuratbeasiswa',
         'pilih_universitas',
         'jenis_universitas',
         'step',
@@ -100,6 +101,14 @@ class User extends Authenticatable implements JWTSubject
             get: fn ($imageakrekampus) => url('/storage/imageakrekampus/' . $imageakrekampus),
         );
     }
+
+    protected function imagesuratbeasiswa(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($imagesuratbeasiswa) => url('/storage/imagesuratbeasiswa/' . $imagesuratbeasiswa),
+        );
+    }
+
 
     public function akademik()
     {

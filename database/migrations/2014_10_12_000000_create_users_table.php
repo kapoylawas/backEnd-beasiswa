@@ -41,6 +41,7 @@ return new class extends Migration
             $table->string('imageaktifkampus')->nullable();
             $table->string('imagesuratpernyataan')->nullable();
             $table->string('imageakrekampus')->nullable();
+            $table->string('imagesuratbeasiswa')->nullable();
             $table->string('pilih_universitas')->nullable();
             $table->string('jenis_universitas')->nullable();
             $table->integer('kota')->nullable();
