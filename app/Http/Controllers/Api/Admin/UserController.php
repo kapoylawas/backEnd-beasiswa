@@ -58,7 +58,6 @@ class UserController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'nik'    => 'required|unique:users|max:16|min:16',
-            'nokk'    => 'required|unique:users|max:16|min:16',
             'name'     => 'required',
             'nohp'     => 'required',
             'email'    => 'required|unique:users',
