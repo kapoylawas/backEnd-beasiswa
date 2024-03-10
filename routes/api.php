@@ -97,5 +97,8 @@ Route::prefix('admin')->group(function () {
 
         // update non akademiks
         Route::put('/users/nonAkademiks/{nonAkademik}', [\App\Http\Controllers\Api\Admin\NonAkademikController::class, 'updateNonAkademik']);
+        
+        // update dinsos
+        Route::put('/users/dinsoses/{dinsos}', [\App\Http\Controllers\Api\Admin\DinsosController::class, 'updateDinsos']);
     });
 });

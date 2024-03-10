@@ -7,6 +7,7 @@ use App\Http\Resources\DinsosResource;
 use App\Models\Dinsos;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class DinsosController extends Controller
@@ -61,5 +62,35 @@ class DinsosController extends Controller
 
         //return failed with Api Resource
         return new DinsosResource(false, 'Data Dinsos Gagal Disimpan!', null);
+    }
+
+    public function updateDinsos(Request $request, Dinsos $dinsos)
+    {
+
+        if ($request->file('imagesktm')) {
+            //remove old image
+            Storage::disk('local')->delete('public/sertifikat/dinsos/' . basename($dinsos->imagesktm));
+
+            //upload new surat sktm
+            $imagesktm = $request->file('imagesktm');
+            $imagesktm->storeAs('public/sertifikat/dinsos', $imagesktm->hashName());
+
+            $dinsos->update([
+                'tipe_daftar'       => $request->tipe_daftar,
+                'imagesktm'       => $imagesktm->hashName(),
+            ]);
+        }
+
+        $dinsos->update([
+            'tipe_daftar'       => $request->tipe_daftar,
+        ]);
+
+        if ($dinsos) {
+            //return success with Api Resource
+            return new DinsosResource(true, 'Data User Berhasil Disimpan!', $dinsos);
+        }
+
+        //return failed with Api Resource
+        return new DinsosResource(false, 'Data User Gagal Disimpan!', null);
     }
 }
