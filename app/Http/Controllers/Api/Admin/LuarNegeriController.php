@@ -59,4 +59,19 @@ class LuarNegeriController extends Controller
             return new LuarNegeriResource(true, 'Data Post Berhasil Disimpan!', $luarNegeris);
         }
     }
+
+    public function updateLuarNegeri(Request $request, LuarNegeri $luarNegeri)
+    {
+        $luarNegeri->update([
+            'ipk'       => $request->ipk,
+        ]);
+
+        if ($luarNegeri) {
+            //return success with Api Resource
+            return new LuarNegeriResource(true, 'Data User Berhasil Disimpan!', $luarNegeri);
+        }
+
+        //return failed with Api Resource
+        return new LuarNegeriResource(false, 'Data User Gagal Disimpan!', null);
+    }
 }

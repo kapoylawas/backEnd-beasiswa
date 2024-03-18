@@ -100,5 +100,8 @@ Route::prefix('admin')->group(function () {
         
         // update dinsos
         Route::put('/users/dinsoses/{dinsos}', [\App\Http\Controllers\Api\Admin\DinsosController::class, 'updateDinsos']);
+
+        // update luar negeri
+        Route::put('/users/luarNegeris/{luarNegeri}', [\App\Http\Controllers\Api\Admin\LuarNegeriController::class, 'updateLuarNegeri']);
     });
 });
