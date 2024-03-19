@@ -110,6 +110,7 @@ class AkademikController extends Controller
             $imagetranskrip->storeAs('public/transkrip', $imagetranskrip->hashName());
 
             $akademik->update([
+                'ipk'       => $request->ipk,
                 'semester'       => $request->semester,
                 'akredetasi_kampus'       => $request->akredetasi_kampus,
                 'progam_pendidikan'       => $request->progam_pendidikan,
@@ -126,6 +127,7 @@ class AkademikController extends Controller
             $imagebanpt->storeAs('public/banpt', $imagebanpt->hashName());
 
             $akademik->update([
+                'ipk'       => $request->ipk,
                 'semester'       => $request->semester,
                 'akredetasi_kampus'       => $request->akredetasi_kampus,
                 'progam_pendidikan'       => $request->progam_pendidikan,
@@ -134,6 +136,7 @@ class AkademikController extends Controller
         }
 
         $akademik->update([
+            'ipk'       => $request->ipk,
             'semester'       => $request->semester,
             'akredetasi_kampus'       => $request->akredetasi_kampus,
             'progam_pendidikan'       => $request->progam_pendidikan,

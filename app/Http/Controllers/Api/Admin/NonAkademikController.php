@@ -80,6 +80,8 @@ class NonAkademikController extends Controller
 
             $nonAkademik->update([
                 'semester'       => $request->semester,
+                'jenis_sertifikat'       => $request->jenis_sertifikat,
+                'tingkat_sertifikat'       => $request->tingkat_sertifikat,
                 'tahun'       => $request->tahun,
                 'imagesertifikat'       => $imagesertifikat->hashName(),
             ]);
@@ -87,6 +89,8 @@ class NonAkademikController extends Controller
 
         $nonAkademik->update([
             'semester'       => $request->semester,
+            'jenis_sertifikat'       => $request->jenis_sertifikat,
+            'tingkat_sertifikat'       => $request->tingkat_sertifikat,
             'tahun'       => $request->tahun,
         ]);
 

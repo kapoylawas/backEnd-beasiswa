@@ -16,6 +16,7 @@ class NonAkademik extends Model
         'semester',
         'akredetasi_kampus', 
         'jenis_sertifikat',
+        'tingkat_sertifikat',
         'imagesertifikat',
         'imageakredetasi',
         'tahun',

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('semester');
             $table->string('akredetasi_kampus')->nullable();
             $table->string('jenis_sertifikat');
+            $table->string('tingkat_sertifikat');
             $table->string('imagesertifikat');
             $table->string('imageakredetasi')->nullable();
             $table->string('tahun');
