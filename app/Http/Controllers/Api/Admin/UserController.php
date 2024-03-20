@@ -64,7 +64,6 @@ class UserController extends Controller
             'gender'     => 'required',
             'id_kecamatan'     => 'required',
             'id_kelurahan'     => 'required',
-            'codepos'     => 'required',
             'rt'     => 'required',
             'rw'     => 'required',
             'alamat'     => 'required',
