@@ -7,6 +7,7 @@ use App\Http\Resources\LuarNegeriResource;
 use App\Models\LuarNegeri;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -62,6 +63,36 @@ class LuarNegeriController extends Controller
 
     public function updateLuarNegeri(Request $request, LuarNegeri $luarNegeri)
     {
+
+        if ($request->file('imagetranskrip')) {
+            //remove old image
+            Storage::disk('local')->delete('public/luarnegeri/' . basename($luarNegeri->imagetranskrip));
+
+            //upload new surat sktm
+            $imagetranskrip = $request->file('imagetranskrip');
+            $imagetranskrip->storeAs('public/luarnegeri', $imagetranskrip->hashName());
+
+            $luarNegeri->update([
+                'ipk'       => $request->ipk,
+                'imagetranskrip'       => $imagetranskrip->hashName(),
+            ]);
+        }
+
+        if ($request->file('imageipk')) {
+            //remove old image
+            Storage::disk('local')->delete('public/transkrip/' . basename($luarNegeri->imageipk));
+
+            //upload new surat sktm
+            $imageipk = $request->file('imageipk');
+            $imageipk->storeAs('public/transkrip', $imageipk->hashName());
+
+            $luarNegeri->update([
+                'ipk'       => $request->ipk,
+                'imageipk'       => $imageipk->hashName(),
+            ]);
+        }
+
+
         $luarNegeri->update([
             'ipk'       => $request->ipk,
         ]);
