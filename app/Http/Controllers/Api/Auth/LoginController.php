@@ -31,7 +31,7 @@ class LoginController extends Controller
         //get "email" dan "password" dari input
         $credentials = $request->only('nik', 'password');
 
-        //check jika "email" dan "password" tidak sesuai
+        //check jika "nik" dan "password" tidak sesuai
         if (!$token = auth()->guard('api')->attempt($credentials)) {
 
             //response login "failed"
