@@ -18,6 +18,10 @@ class Kesra extends Model
         'imagesertifikat',
         'imagepiagamnonmuslim',
         'tahun',
+        'nama_organisasi',
+        'alamat_organisasi',
+        'nama_ponpes',
+        'alamat_ponpes',
     ];
 
     public function user()

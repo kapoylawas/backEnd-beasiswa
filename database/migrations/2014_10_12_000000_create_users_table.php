@@ -17,7 +17,7 @@ return new class extends Migration
             $table->integer('status_email')->nullable();
             $table->integer('status_finish')->nullable();
             $table->string('nik')->unique();
-            $table->string('nokk')->unique();
+            $table->string('nokk');
             $table->string('name');
             $table->string('nohp');
             $table->string('email')->unique();
