@@ -103,5 +103,8 @@ Route::prefix('admin')->group(function () {
 
         // update luar negeri
         Route::put('/users/luarNegeris/{luarNegeri}', [\App\Http\Controllers\Api\Admin\LuarNegeriController::class, 'updateLuarNegeri']);
+
+        // update kesra
+        Route::put('/users/kesras/{kesra}', [\App\Http\Controllers\Api\Admin\KesraController::class, 'updateKesra']);
     });
 });

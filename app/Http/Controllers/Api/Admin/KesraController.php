@@ -69,4 +69,23 @@ class KesraController extends Controller
         //return failed with Api Resource
         return new KesraResource(false, 'Data Kesra Gagal Disimpan!', null);
     }
+
+    public function updateKesra(Request $request, Kesra $kesra)
+    {
+
+        $kesra->update([
+            'nama_ponpes'       => $request->nama_ponpes,
+            'alamat_ponpes'       => $request->alamat_ponpes,
+            'nama_organisasi'       => $request->nama_organisasi,
+            'alamat_organisasi'       => $request->alamat_organisasi,
+        ]);
+
+        if ($kesra) {
+            //return success with Api Resource
+            return new KesraResource(true, 'Data User Berhasil Disimpan!', $kesra);
+        }
+
+        //return failed with Api Resource
+        return new KesraResource(false, 'Data User Gagal Disimpan!', null);
+    }
 }
