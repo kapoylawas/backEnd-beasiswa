@@ -29,6 +29,20 @@ class AkademikController extends Controller
         return new AkademikResource(true, 'List Data Akademiks', $akademiks);
     }
 
+    public function show($id)
+    {
+        //get akademiks
+        $akademiks = Akademik::with('user')->whereId($id)->first();;
+
+        if($akademiks) {
+            //return success with Api Resource
+            return new AkademikResource(true, 'Detail Data Akademik!', $akademiks);
+        }
+
+        //return failed with Api Resource
+        return new AkademikResource(false, 'Detail Data Akademik Tidak Ditemukan!', null);
+    }
+
     public function getData()
     {
         $searchString = request()->search;
