@@ -21,6 +21,7 @@ class AkademikController extends Controller
 
     public function index()
     {
+        
         $akademiks = Akademik::with('user')
             ->where('user_id', auth()->user()->id)->first();
 
@@ -32,14 +33,15 @@ class AkademikController extends Controller
     {
         $searchString = request()->q;
 
-        $akademiks = Akademik::whereHas('user', function ($query) use ($searchString) {
+        $akademiks = Akademik::whereHas('student', function ($query) use ($searchString) {
             $query->where('nik', 'like', '%' . $searchString . '%');
         })
-            ->with(['user' => function ($query) use ($searchString) {
+            ->with(['student' => function ($query) use ($searchString) {
                 $query->where('nik', 'like', '%' . $searchString . '%');
             }])->latest()->paginate(10);
-        $akademiks->appends(['q' => request()->q]);
 
+        $akademiks->appends(['q' => request()->q]);
+        
         //return with Api Resource
         return new AkademikResource(true, 'List Data Akademiks', $akademiks);
     }
