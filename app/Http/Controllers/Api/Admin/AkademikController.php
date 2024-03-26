@@ -31,7 +31,7 @@ class AkademikController extends Controller
 
     public function getData()
     {
-        $searchString = request()->q;
+        $searchString = request()->search;
 
         $akademiks = Akademik::whereHas('user', function ($query) use ($searchString) {
             $query->where('nik', 'like', '%' . $searchString . '%');
@@ -40,7 +40,7 @@ class AkademikController extends Controller
                 $query->where('nik', 'like', '%' . $searchString . '%');
             }])->latest()->paginate(10);
 
-        $akademiks->appends(['q' => request()->q]);
+        $akademiks->appends(['search' => request()->search]);
         
         //return with Api Resource
         return new AkademikResource(true, 'List Data Akademiks', $akademiks);
