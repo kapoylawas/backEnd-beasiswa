@@ -88,6 +88,7 @@ class KesraController extends Controller
                 'nama_organisasi'       => $request->nama_organisasi,
                 'alamat_organisasi'       => $request->alamat_organisasi,
                 'imagesertifikat'       => $imagesertifikat->hashName(),
+                'tahun'       => $request->tahun,
             ]);
         }
 
@@ -105,6 +106,7 @@ class KesraController extends Controller
                 'nama_organisasi'       => $request->nama_organisasi,
                 'alamat_organisasi'       => $request->alamat_organisasi,
                 'imagepiagamnonmuslim'       => $imagepiagamnonmuslim->hashName(),
+                'tahun'       => $request->tahun,
             ]);
         }
 
@@ -113,6 +115,7 @@ class KesraController extends Controller
             'alamat_ponpes'       => $request->alamat_ponpes,
             'nama_organisasi'       => $request->nama_organisasi,
             'alamat_organisasi'       => $request->alamat_organisasi,
+            'tahun'       => $request->tahun,
         ]);
 
         if ($kesra) {
