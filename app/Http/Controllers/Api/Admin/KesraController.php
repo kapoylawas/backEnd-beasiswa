@@ -7,6 +7,7 @@ use App\Http\Resources\KesraResource;
 use App\Models\Kesra;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class KesraController extends Controller
@@ -72,6 +73,40 @@ class KesraController extends Controller
 
     public function updateKesra(Request $request, Kesra $kesra)
     {
+
+        if ($request->file('imagesertifikat')) {
+            //remove old image
+            Storage::disk('local')->delete('public/sertifikat/kesra/' . basename($kesra->imagesertifikat));
+
+            //upload new imagesertifikat
+            $imagesertifikat = $request->file('imagesertifikat');
+            $imagesertifikat->storeAs('public/sertifikat/kesra', $imagesertifikat->hashName());
+
+            $kesra->update([
+                'nama_ponpes'       => $request->nama_ponpes,
+                'alamat_ponpes'       => $request->alamat_ponpes,
+                'nama_organisasi'       => $request->nama_organisasi,
+                'alamat_organisasi'       => $request->alamat_organisasi,
+                'imagesertifikat'       => $imagesertifikat->hashName(),
+            ]);
+        }
+
+        if ($request->file('imagepiagamnonmuslim')) {
+            //remove old image
+            Storage::disk('local')->delete('public/sertifikat/kesra/' . basename($kesra->imagepiagamnonmuslim));
+
+            //upload new imagepiagamnonmuslim
+            $imagepiagamnonmuslim = $request->file('imagepiagamnonmuslim');
+            $imagepiagamnonmuslim->storeAs('public/sertifikat/kesra', $imagepiagamnonmuslim->hashName());
+
+            $kesra->update([
+                'nama_ponpes'       => $request->nama_ponpes,
+                'alamat_ponpes'       => $request->alamat_ponpes,
+                'nama_organisasi'       => $request->nama_organisasi,
+                'alamat_organisasi'       => $request->alamat_organisasi,
+                'imagepiagamnonmuslim'       => $imagepiagamnonmuslim->hashName(),
+            ]);
+        }
 
         $kesra->update([
             'nama_ponpes'       => $request->nama_ponpes,
