@@ -106,5 +106,8 @@ Route::prefix('admin')->group(function () {
 
         // update kesra
         Route::put('/users/kesras/{kesra}', [\App\Http\Controllers\Api\Admin\KesraController::class, 'updateKesra']);
+
+        /* update admin verif akademik */
+        Route::put('/verif/akademik/{user}', [\App\Http\Controllers\Api\Admin\AkademikController::class, 'updateVerif']);
     });
 });

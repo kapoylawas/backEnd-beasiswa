@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\AkademikResource;
+use App\Http\Resources\UserResource;
 use App\Models\Akademik;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -21,7 +22,7 @@ class AkademikController extends Controller
 
     public function index()
     {
-        
+
         $akademiks = Akademik::with('user')
             ->where('user_id', auth()->user()->id)->first();
 
@@ -34,7 +35,7 @@ class AkademikController extends Controller
         //get akademiks
         $akademiks = Akademik::with('user')->whereId($id)->first();;
 
-        if($akademiks) {
+        if ($akademiks) {
             //return success with Api Resource
             return new AkademikResource(true, 'Detail Data Akademik!', $akademiks);
         }
@@ -55,7 +56,7 @@ class AkademikController extends Controller
             }])->latest()->paginate(10);
 
         $akademiks->appends(['search' => request()->search]);
-        
+
         //return with Api Resource
         return new AkademikResource(true, 'List Data Akademiks', $akademiks);
     }
@@ -165,5 +166,33 @@ class AkademikController extends Controller
 
         //return failed with Api Resource
         return new AkademikResource(false, 'Data User Gagal Disimpan!', null);
+    }
+
+    public function updateVerif(Request $request, User $user)
+    {
+        $validator = Validator::make($request->all(), [
+            'alasan'     => 'required',
+            'jenis_verif'    => 'required',
+        ], [
+            'alasan.required' => 'alasan verifikasi tidak boleh kosong',
+            'jenis_verif.required' => 'pilih jenis verifikasi terlebih dahulu',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+
+        $user->update([
+            'alasan'       => $request->alasan,
+            'jenis_verif'       => $request->jenis_verif,
+        ]);
+
+        if ($user) {
+            //return success with Api Resource
+            return new UserResource(true, 'Verifikasi Data Berhasil Disimpan!', $user);
+        }
+
+        //return failed with Api Resource
+        return new UserResource(false, 'Verifikasi Data Gagal Disimpan!', null);
     }
 }
