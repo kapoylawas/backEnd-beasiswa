@@ -18,6 +18,7 @@ class Dinsos extends Model
         'pekerjaan_orangtua',
         'status_rumah',
         'status_kendaraan',
+        'jumlah_kendaraan',
         'imagesktm',
     ];
 
