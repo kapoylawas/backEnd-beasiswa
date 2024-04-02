@@ -38,6 +38,20 @@ class NonAkademikController extends Controller
         return new NonAkademikResource(true, 'List Data Akademiks', $nonAkademiks);
     }
 
+    public function show($id)
+    {
+        //get akademiks
+        $nonAkademiks = NonAkademik::with('user')->whereId($id)->first();;
+
+        if ($nonAkademiks) {
+            //return success with Api Resource
+            return new NonAkademikResource(true, 'Detail Data Non Akademik!', $nonAkademiks);
+        }
+
+        //return failed with Api Resource
+        return new NonAkademikResource(false, 'Detail Data Non Akademik Tidak Ditemukan!', null);
+    }
+
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
