@@ -106,5 +106,8 @@ Route::prefix('admin')->group(function () {
 
         // update kesra
         Route::put('/users/kesras/{kesra}', [\App\Http\Controllers\Api\Admin\KesraController::class, 'updateKesra']);
+
+        // get data NonAkademiks
+        Route::get('/beasiswa/nonAkademiks', [\App\Http\Controllers\Api\Admin\NonAkademikController::class, 'getDataNonAkademik']);
     });
 });

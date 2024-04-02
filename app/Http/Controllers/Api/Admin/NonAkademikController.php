@@ -21,6 +21,23 @@ class NonAkademikController extends Controller
         return new NonAkademikResource(true, 'List Data Akademiks', $akademiks);
     }
 
+    public function getDataNonAkademik()
+    {
+        $searchString = request()->search;
+
+        $nonAkademiks = NonAkademik::whereHas('user', function ($query) use ($searchString) {
+            $query->where('nik', 'like', '%' . $searchString . '%');
+        })
+            ->with(['user' => function ($query) use ($searchString) {
+                $query->where('nik', 'like', '%' . $searchString . '%');
+            }])->latest()->paginate(10);
+
+        $nonAkademiks->appends(['search' => request()->search]);
+
+        //return with Api Resource
+        return new NonAkademikResource(true, 'List Data Akademiks', $nonAkademiks);
+    }
+
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
