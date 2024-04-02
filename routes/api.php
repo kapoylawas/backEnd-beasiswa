@@ -97,7 +97,7 @@ Route::prefix('admin')->group(function () {
 
         // update non akademiks
         Route::put('/users/nonAkademiks/{nonAkademik}', [\App\Http\Controllers\Api\Admin\NonAkademikController::class, 'updateNonAkademik']);
-        
+
         // update dinsos
         Route::put('/users/dinsoses/{dinsos}', [\App\Http\Controllers\Api\Admin\DinsosController::class, 'updateDinsos']);
 
@@ -115,5 +115,8 @@ Route::prefix('admin')->group(function () {
 
         /* update admin verif non akademik */
         Route::put('/verif/nonAkademik/{user}', [\App\Http\Controllers\Api\Admin\NonAkademikController::class, 'updateVerif']);
+
+        // get data Luar Negeri
+        Route::get('/beasiswa/luarNegeri', [\App\Http\Controllers\Api\Admin\LuarNegeriController::class, 'getDataLuarNegeri']);
     });
 });

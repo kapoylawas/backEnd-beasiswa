@@ -22,6 +22,23 @@ class LuarNegeriController extends Controller
         return new LuarNegeriResource(true, 'List Data Luar Negeri', $luarNegeris);
     }
 
+    public function getDataLuarNegeri()
+    {
+        $searchString = request()->search;
+
+        $luarNegeris = LuarNegeri::whereHas('user', function ($query) use ($searchString) {
+            $query->where('nik', 'like', '%' . $searchString . '%');
+        })
+            ->with(['user' => function ($query) use ($searchString) {
+                $query->where('nik', 'like', '%' . $searchString . '%');
+            }])->latest()->paginate(10);
+
+        $luarNegeris->appends(['search' => request()->search]);
+
+        //return with Api Resource
+        return new LuarNegeriResource(true, 'List Data Luar Negeri', $luarNegeris);
+    }
+
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
