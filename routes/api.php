@@ -112,5 +112,8 @@ Route::prefix('admin')->group(function () {
 
         /* update admin verif akademik */
         Route::put('/verif/akademik/{user}', [\App\Http\Controllers\Api\Admin\AkademikController::class, 'updateVerif']);
+
+        /* update admin verif non akademik */
+        Route::put('/verif/nonAkademik/{user}', [\App\Http\Controllers\Api\Admin\NonAkademikController::class, 'updateVerif']);
     });
 });
