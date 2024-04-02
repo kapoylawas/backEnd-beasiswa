@@ -21,6 +21,23 @@ class KesraController extends Controller
         return new KesraResource(true, 'List Data Kesra', $kesras);
     }
 
+    public function getDataKesra()
+    {
+        $searchString = request()->search;
+
+        $kesras = Kesra::where('tipe_kesra', '1')->whereHas('user', function ($query) use ($searchString) {
+            $query->where('nik', 'like', '%' . $searchString . '%');
+        })
+            ->with(['user' => function ($query) use ($searchString) {
+                $query->where('nik', 'like', '%' . $searchString . '%');
+            }])->latest()->paginate(10);
+
+        $kesras->appends(['search' => request()->search]);
+
+        //return with Api Resource
+        return new KesraResource(true, 'List Data Luar Negeri', $kesras);
+    }
+
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [

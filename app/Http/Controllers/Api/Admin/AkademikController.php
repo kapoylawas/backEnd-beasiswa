@@ -33,7 +33,7 @@ class AkademikController extends Controller
     public function show($id)
     {
         //get akademiks
-        $akademiks = Akademik::with('user')->whereId($id)->first();;
+        $akademiks = Akademik::with('user')->whereId($id)->first();
 
         if ($akademiks) {
             //return success with Api Resource

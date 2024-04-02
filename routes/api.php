@@ -118,5 +118,8 @@ Route::prefix('admin')->group(function () {
 
         // get data Luar Negeri
         Route::get('/beasiswa/luarNegeri', [\App\Http\Controllers\Api\Admin\LuarNegeriController::class, 'getDataLuarNegeri']);
+
+        // get data kesra tipe 1
+        Route::get('/beasiswa/kesra', [\App\Http\Controllers\Api\Admin\KesraController::class, 'getDataKesra']);
     });
 });
