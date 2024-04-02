@@ -109,5 +109,8 @@ Route::prefix('admin')->group(function () {
 
         // get data NonAkademiks
         Route::get('/beasiswa/nonAkademiks', [\App\Http\Controllers\Api\Admin\NonAkademikController::class, 'getDataNonAkademik']);
+
+        /* update admin verif akademik */
+        Route::put('/verif/akademik/{user}', [\App\Http\Controllers\Api\Admin\AkademikController::class, 'updateVerif']);
     });
 });

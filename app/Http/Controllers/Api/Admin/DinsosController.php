@@ -47,6 +47,11 @@ class DinsosController extends Controller
             'user_id'     => auth()->guard('api')->user()->id,
             'name'       => "dinsos",
             'tipe_daftar'       => $request->tipe_daftar,
+            'penghasilan_orangtua'       => $request->penghasilan_orangtua,
+            'pekerjaan_orangtua'       => $request->pekerjaan_orangtua,
+            'status_rumah'       => $request->status_rumah,
+            'status_kendaraan'       => $request->status_kendaraan,
+            'jumlah_kendaraan'       => $request->jumlah_kendaraan,
             'imagesktm'       => ($imagesktm != null) ? $imagesktm->hashName() : null,
         ]);
 
@@ -83,6 +88,11 @@ class DinsosController extends Controller
 
         $dinsos->update([
             'tipe_daftar'       => $request->tipe_daftar,
+            'penghasilan_orangtua'       => $request->penghasilan_orangtua,
+            'pekerjaan_orangtua'       => $request->pekerjaan_orangtua,
+            'status_rumah'       => $request->status_rumah,
+            'status_kendaraan'       => $request->status_kendaraan,
+            'jumlah_kendaraan'       => $request->jumlah_kendaraan,
         ]);
 
         if ($dinsos) {

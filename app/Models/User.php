@@ -50,6 +50,8 @@ class User extends Authenticatable implements JWTSubject
         'imagesuratbeasiswa',
         'pilih_universitas',
         'jenis_universitas',
+        'alasan',
+        'jenis_verif',
         'step',
         'tipe_beasiswa',
         'kota',

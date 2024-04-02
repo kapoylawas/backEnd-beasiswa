@@ -14,6 +14,11 @@ class Dinsos extends Model
         'user_id',
         'tipe_daftar',
         'name',
+        'penghasilan_orangtua',
+        'pekerjaan_orangtua',
+        'status_rumah',
+        'status_kendaraan',
+        'jumlah_kendaraan',
         'imagesktm',
     ];
 
