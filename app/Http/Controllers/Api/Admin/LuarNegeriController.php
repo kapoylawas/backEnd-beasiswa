@@ -39,6 +39,20 @@ class LuarNegeriController extends Controller
         return new LuarNegeriResource(true, 'List Data Luar Negeri', $luarNegeris);
     }
 
+    public function show($id)
+    {
+        //get akademiks
+        $luarNegeris = LuarNegeri::with('user')->whereId($id)->first();;
+
+        if ($luarNegeris) {
+            //return success with Api Resource
+            return new LuarNegeriResource(true, 'Detail Data Luar Negeri!', $luarNegeris);
+        }
+
+        //return failed with Api Resource
+        return new LuarNegeriResource(false, 'Detail Data Luar Negeri Tidak Ditemukan!', null);
+    }
+
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
