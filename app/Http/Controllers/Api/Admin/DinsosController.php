@@ -69,6 +69,23 @@ class DinsosController extends Controller
         return new DinsosResource(false, 'Data Dinsos Gagal Disimpan!', null);
     }
 
+    public function getDataDinsosDtks()
+    {
+        $searchString = request()->search;
+
+        $kesras = Dinsos::where('tipe_daftar', '1')->whereHas('user', function ($query) use ($searchString) {
+            $query->where('nik', 'like', '%' . $searchString . '%');
+        })
+            ->with(['user' => function ($query) use ($searchString) {
+                $query->where('nik', 'like', '%' . $searchString . '%');
+            }])->latest()->paginate(10);
+
+        $kesras->appends(['search' => request()->search]);
+
+        //return with Api Resource
+        return new DinsosResource(true, 'List Data Luar Negeri', $kesras);
+    }
+
     public function updateDinsos(Request $request, Dinsos $dinsos)
     {
 
