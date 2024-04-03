@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\LuarNegeriResource;
+use App\Http\Resources\UserResource;
 use App\Models\LuarNegeri;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -135,5 +136,33 @@ class LuarNegeriController extends Controller
 
         //return failed with Api Resource
         return new LuarNegeriResource(false, 'Data User Gagal Disimpan!', null);
+    }
+
+    public function updateVerif(Request $request, User $user)
+    {
+        $validator = Validator::make($request->all(), [
+            'alasan'     => 'required',
+            'jenis_verif'    => 'required',
+        ], [
+            'alasan.required' => 'alasan verifikasi tidak boleh kosong',
+            'jenis_verif.required' => 'pilih jenis verifikasi terlebih dahulu',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+
+        $user->update([
+            'alasan'       => $request->alasan,
+            'jenis_verif'       => $request->jenis_verif,
+        ]);
+
+        if ($user) {
+            //return success with Api Resource
+            return new UserResource(true, 'Verifikasi Data Berhasil Disimpan!', $user);
+        }
+
+        //return failed with Api Resource
+        return new UserResource(false, 'Verifikasi Data Gagal Disimpan!', null);
     }
 }

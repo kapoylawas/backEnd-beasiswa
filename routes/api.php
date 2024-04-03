@@ -116,6 +116,9 @@ Route::prefix('admin')->group(function () {
         /* update admin verif non akademik */
         Route::put('/verif/nonAkademik/{user}', [\App\Http\Controllers\Api\Admin\NonAkademikController::class, 'updateVerif']);
 
+        /* update admin verif luar negeri */
+        Route::put('/verif/luarNegeri/{user}', [\App\Http\Controllers\Api\Admin\LuarNegeriController::class, 'updateVerif']);
+
         // get data Luar Negeri
         Route::get('/beasiswa/luarNegeri', [\App\Http\Controllers\Api\Admin\LuarNegeriController::class, 'getDataLuarNegeri']);
 
