@@ -113,6 +113,9 @@ Route::prefix('admin')->group(function () {
         // get data dinsos tipe dtks
         Route::get('/beasiswa/dinsosDtks', [\App\Http\Controllers\Api\Admin\DinsosController::class, 'getDataDinsosDtks']);
 
+        // get data dinsos tipe tidak mempunyai dtks
+        Route::get('/beasiswa/dinsosNoDtks', [\App\Http\Controllers\Api\Admin\DinsosController::class, 'getDataDinsosNoDtks']);
+
         /* update admin verif akademik */
         Route::put('/verif/akademik/{user}', [\App\Http\Controllers\Api\Admin\AkademikController::class, 'updateVerif']);
 
