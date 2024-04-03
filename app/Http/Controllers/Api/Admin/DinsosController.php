@@ -103,6 +103,20 @@ class DinsosController extends Controller
         return new DinsosResource(true, 'List Data Luar Negeri', $kesras);
     }
 
+    public function show($id)
+    {
+        //get dinsos
+        $dinsos = Dinsos::with('user')->whereId($id)->first();
+
+        if ($dinsos) {
+            //return success with Api Resource
+            return new DinsosResource(true, 'Detail Data Dinsos!', $dinsos);
+        }
+
+        //return failed with Api Resource
+        return new DinsosResource(false, 'Detail Data Dinsos Tidak Ditemukan!', null);
+    }
+
     public function updateDinsos(Request $request, Dinsos $dinsos)
     {
 
