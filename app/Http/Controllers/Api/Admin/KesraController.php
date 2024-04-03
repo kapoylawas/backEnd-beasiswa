@@ -21,7 +21,7 @@ class KesraController extends Controller
         return new KesraResource(true, 'List Data Kesra', $kesras);
     }
 
-    public function getDataKesra()
+    public function getDataKesra1()
     {
         $searchString = request()->search;
 
@@ -37,6 +37,58 @@ class KesraController extends Controller
         //return with Api Resource
         return new KesraResource(true, 'List Data Luar Negeri', $kesras);
     }
+
+    public function getDataKesra2()
+    {
+        $searchString = request()->search;
+
+        $kesras = Kesra::where('tipe_kesra', '2')->whereHas('user', function ($query) use ($searchString) {
+            $query->where('nik', 'like', '%' . $searchString . '%');
+        })
+            ->with(['user' => function ($query) use ($searchString) {
+                $query->where('nik', 'like', '%' . $searchString . '%');
+            }])->latest()->paginate(10);
+
+        $kesras->appends(['search' => request()->search]);
+
+        //return with Api Resource
+        return new KesraResource(true, 'List Data Luar Negeri', $kesras);
+    }
+
+    public function getDataKesra3()
+    {
+        $searchString = request()->search;
+
+        $kesras = Kesra::where('tipe_kesra', '3')->whereHas('user', function ($query) use ($searchString) {
+            $query->where('nik', 'like', '%' . $searchString . '%');
+        })
+            ->with(['user' => function ($query) use ($searchString) {
+                $query->where('nik', 'like', '%' . $searchString . '%');
+            }])->latest()->paginate(10);
+
+        $kesras->appends(['search' => request()->search]);
+
+        //return with Api Resource
+        return new KesraResource(true, 'List Data Luar Negeri', $kesras);
+    }
+
+    public function getDataKesra4()
+    {
+        $searchString = request()->search;
+
+        $kesras = Kesra::where('tipe_kesra', '4')->whereHas('user', function ($query) use ($searchString) {
+            $query->where('nik', 'like', '%' . $searchString . '%');
+        })
+            ->with(['user' => function ($query) use ($searchString) {
+                $query->where('nik', 'like', '%' . $searchString . '%');
+            }])->latest()->paginate(10);
+
+        $kesras->appends(['search' => request()->search]);
+
+        //return with Api Resource
+        return new KesraResource(true, 'List Data Luar Negeri', $kesras);
+    }
+
 
     public function store(Request $request)
     {

@@ -129,6 +129,15 @@ Route::prefix('admin')->group(function () {
         Route::get('/beasiswa/luarNegeri', [\App\Http\Controllers\Api\Admin\LuarNegeriController::class, 'getDataLuarNegeri']);
 
         // get data kesra tipe 1
-        Route::get('/beasiswa/kesra', [\App\Http\Controllers\Api\Admin\KesraController::class, 'getDataKesra']);
+        Route::get('/beasiswa/kesra', [\App\Http\Controllers\Api\Admin\KesraController::class, 'getDataKesra1']);
+
+        // get data kesra tipe 2
+        Route::get('/beasiswa/kesra2', [\App\Http\Controllers\Api\Admin\KesraController::class, 'getDataKesra2']);
+
+        // get data kesra tipe 3
+        Route::get('/beasiswa/kesra3', [\App\Http\Controllers\Api\Admin\KesraController::class, 'getDataKesra3']);
+
+        // get data kesra tipe 3
+        Route::get('/beasiswa/kesra4', [\App\Http\Controllers\Api\Admin\KesraController::class, 'getDataKesra4']);
     });
 });
