@@ -71,7 +71,7 @@ class UserController extends Controller
     public function showUser($id)
     {
          //get dinsos
-         $users = User::with('user')->whereId($id)->first();
+         $users = User::whereId($id)->first();
 
          if ($users) {
              //return success with Api Resource
