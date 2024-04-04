@@ -16,7 +16,7 @@ class UserController extends Controller
     public function index()
     {
         //get users
-        $users = User::when(request()->search, function ($users) {
+        $users = User::where('status', '2')->when(request()->search, function ($users) {
             $users = $users->where('name', 'like', '%' . request()->search . '%');
         })->with('roles')->latest()->paginate(5);
 
@@ -54,6 +54,20 @@ class UserController extends Controller
         return new UserResource(true, 'List kelurahan', $kelurahans);
     }
 
+    public function getDataUser()
+    {
+        //get users
+        $users = User::where('status', '2')->when(request()->search, function ($users) {
+            $users = $users->where('name', 'like', '%' . request()->search . '%');
+        })->with('roles')->latest()->paginate(5);
+
+        //append query string to pagination links
+        $users->appends(['search' => request()->search]);
+
+        //return with Api Resource
+        return new UserResource(true, 'List Data Users', $users);
+    }
+
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -62,13 +76,13 @@ class UserController extends Controller
             'nohp'     => 'required',
             'email'    => 'required|unique:users',
             'gender'     => 'required',
-            'id_kecamatan'     => 'required',
-            'id_kelurahan'     => 'required',
+            //'id_kecamatan'     => 'required',
+            //'id_kelurahan'     => 'required',
             'rt'     => 'required',
             'rw'     => 'required',
             'alamat'     => 'required',
-            'imagektp'         => 'required|mimes:pdf|max:2000',
-            'imagekk'         => 'required|mimes:pdf|max:2000',
+            //'imagektp'         => 'required|mimes:pdf|max:2000',
+            //'imagekk'         => 'required|mimes:pdf|max:2000',
             'password' => 'required|confirmed'
         ]);
 
@@ -77,12 +91,12 @@ class UserController extends Controller
         }
 
         // //upload imagektp
-        $imagektp = $request->file('imagektp');
-        $imagektp->storeAs('public/ktp', $imagektp->hashName());
+        // $imagektp = $request->file('imagektp');
+        //$imagektp->storeAs('public/ktp', $imagektp->hashName());
 
         // //upload imagekk
-        $imagekk = $request->file('imagekk');
-        $imagekk->storeAs('public/kk', $imagekk->hashName());
+        //$imagekk = $request->file('imagekk');
+        //$imagekk->storeAs('public/kk', $imagekk->hashName());
 
         //create user
         $user = User::create([
@@ -104,8 +118,8 @@ class UserController extends Controller
             'status_email'     => 0,
             'status_finish'     => 0,
             'step'     => 1,
-            'imagektp'       => $imagektp->hashName(),
-            'imagekk'       => $imagekk->hashName(),
+            //'imagektp'       => $imagektp->hashName(),
+            //'imagekk'       => $imagekk->hashName(),
             'password'  => bcrypt($request->password)
         ]);
 
@@ -154,7 +168,7 @@ class UserController extends Controller
         //upload new imageakrekampus
         $imageakrekampus = $request->file('imageakrekampus');
         $imageakrekampus->storeAs('public/imageakrekampus', $imageakrekampus->hashName());
-        
+
         //upload new imagesuratbeasiswa
         $imagesuratbeasiswa = $request->file('imagesuratbeasiswa');
         if ($imagesuratbeasiswa != null) {

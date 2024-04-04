@@ -145,5 +145,8 @@ Route::prefix('admin')->group(function () {
 
         // get data kesra tipe 3
         Route::get('/beasiswa/kesra4', [\App\Http\Controllers\Api\Admin\KesraController::class, 'getDataKesra4']);
+
+         // get data users
+         Route::get('/beasiswa/users', [\App\Http\Controllers\Api\Admin\UserController::class, 'getDataUser']);
     });
 });
