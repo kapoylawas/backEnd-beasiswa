@@ -51,6 +51,7 @@ class User extends Authenticatable implements JWTSubject
         'pilih_universitas',
         'jenis_universitas',
         'alasan',
+        'alasan_nik',
         'jenis_verif',
         'jenis_verif_nik',
         'step',

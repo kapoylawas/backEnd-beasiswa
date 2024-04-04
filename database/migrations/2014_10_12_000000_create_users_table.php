@@ -45,6 +45,7 @@ return new class extends Migration
             $table->string('pilih_universitas')->nullable();
             $table->string('jenis_universitas')->nullable();
             $table->string('alasan')->nullable();
+            $table->string('alasan_nik')->nullable();
             $table->string('jenis_verif')->nullable();
             $table->string('jenis_verif_nik')->nullable();
             $table->integer('kota')->nullable();

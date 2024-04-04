@@ -58,7 +58,7 @@ class UserController extends Controller
     {
         //get users
         $users = User::where('status', '2')->when(request()->search, function ($users) {
-            $users = $users->where('name', 'like', '%' . request()->search . '%');
+            $users = $users->where('nik', 'like', '%' . request()->search . '%');
         })->with('roles')->latest()->paginate(10);
 
         //append query string to pagination links
@@ -294,10 +294,10 @@ class UserController extends Controller
     public function updateVerifNik(Request $request, User $user)
     {
         $validator = Validator::make($request->all(), [
-            'alasan'     => 'required',
+            'alasan_nik'     => 'required',
             'jenis_verif_nik'    => 'required',
         ], [
-            'alasan.required' => 'alasan verifikasi tidak boleh kosong',
+            'alasan_nik.required' => 'alasan verifikasi tidak boleh kosong',
             'jenis_verif_nik.required' => 'pilih jenis verifikasi terlebih dahulu',
         ]);
 
@@ -306,7 +306,7 @@ class UserController extends Controller
         }
 
         $user->update([
-            'alasan'       => $request->alasan,
+            'alasan_nik'       => $request->alasan_nik,
             'jenis_verif_nik'       => $request->jenis_verif_nik,
         ]);
 
