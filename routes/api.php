@@ -131,6 +131,9 @@ Route::prefix('admin')->group(function () {
         /* update admin verif kesra */
         Route::put('/verif/kesra/{user}', [\App\Http\Controllers\Api\Admin\DinsosController::class, 'updateVerif']);
 
+        /* update admin verif NIK */
+        Route::put('/verif/nik/{user}', [\App\Http\Controllers\Api\Admin\UserController::class, 'updateVerifNik']);
+
         // get data Luar Negeri
         Route::get('/beasiswa/luarNegeri', [\App\Http\Controllers\Api\Admin\LuarNegeriController::class, 'getDataLuarNegeri']);
 

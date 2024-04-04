@@ -290,4 +290,32 @@ class UserController extends Controller
         //return failed with Api Resource
         return new UserResource(false, 'Data User Gagal Update!', null);
     }
+
+    public function updateVerifNik(Request $request, User $user)
+    {
+        $validator = Validator::make($request->all(), [
+            'alasan'     => 'required',
+            'jenis_verif_nik'    => 'required',
+        ], [
+            'alasan.required' => 'alasan verifikasi tidak boleh kosong',
+            'jenis_verif_nik.required' => 'pilih jenis verifikasi terlebih dahulu',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+
+        $user->update([
+            'alasan'       => $request->alasan,
+            'jenis_verif_nik'       => $request->jenis_verif,
+        ]);
+
+        if ($user) {
+            //return success with Api Resource
+            return new UserResource(true, 'Verifikasi Data Berhasil Disimpan!', $user);
+        }
+
+        //return failed with Api Resource
+        return new UserResource(false, 'Verifikasi Data Gagal Disimpan!', null);
+    }
 }
