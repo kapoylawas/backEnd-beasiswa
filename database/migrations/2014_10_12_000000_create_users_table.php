@@ -46,6 +46,7 @@ return new class extends Migration
             $table->string('jenis_universitas')->nullable();
             $table->string('alasan')->nullable();
             $table->string('jenis_verif')->nullable();
+            $table->string('jenis_verif_nik')->nullable();
             $table->integer('kota')->nullable();
             $table->integer('tipe_beasiswa')->nullable();
             $table->integer('step')->nullable();
