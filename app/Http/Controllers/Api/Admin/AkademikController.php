@@ -53,7 +53,7 @@ class AkademikController extends Controller
         })
             ->with(['user' => function ($query) use ($searchString) {
                 $query->where('nik', 'like', '%' . $searchString . '%');
-            }])->latest()->paginate(10);
+            }])->orderBy('ipk', 'desc')->paginate(10);
 
         $akademiks->appends(['search' => request()->search]);
 
