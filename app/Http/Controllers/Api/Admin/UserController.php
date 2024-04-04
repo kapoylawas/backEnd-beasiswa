@@ -59,13 +59,27 @@ class UserController extends Controller
         //get users
         $users = User::where('status', '2')->when(request()->search, function ($users) {
             $users = $users->where('name', 'like', '%' . request()->search . '%');
-        })->with('roles')->latest()->paginate(5);
+        })->with('roles')->latest()->paginate(10);
 
         //append query string to pagination links
         $users->appends(['search' => request()->search]);
 
         //return with Api Resource
         return new UserResource(true, 'List Data Users', $users);
+    }
+
+    public function showUser($id)
+    {
+         //get dinsos
+         $users = User::with('user')->whereId($id)->first();
+
+         if ($users) {
+             //return success with Api Resource
+             return new UserResource(true, 'Detail Data User!', $users);
+         }
+ 
+         //return failed with Api Resource
+         return new UserResource(false, 'Detail Data User Tidak Ditemukan!', null);
     }
 
     public function store(Request $request)

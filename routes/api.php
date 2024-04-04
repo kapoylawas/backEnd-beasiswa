@@ -148,5 +148,8 @@ Route::prefix('admin')->group(function () {
 
          // get data users
          Route::get('/beasiswa/users', [\App\Http\Controllers\Api\Admin\UserController::class, 'getDataUser']);
+
+          // get data users by id
+          Route::get('/beasiswa/users/{id}', [\App\Http\Controllers\Api\Admin\UserController::class, 'showUser']);
     });
 });
