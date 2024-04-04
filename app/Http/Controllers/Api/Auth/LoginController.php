@@ -21,6 +21,11 @@ class LoginController extends Controller
         $validator = Validator::make($request->all(), [
             'nik'    => 'required|max:16|min:16',
             'password' => 'required',
+        ], [
+            'nik.required' => 'nik tidak boleh kosong',
+            'nik.max' => 'nik harus 16 digit',
+            'nik.min' => 'nik harus 16 digit',
+            'password.required' => 'password tidak boleh kosong',
         ]);
 
         //response error validasi
@@ -37,7 +42,7 @@ class LoginController extends Controller
             //response login "failed"
             return response()->json([
                 'success' => false,
-                'message' => 'NIK or Password is incorrect'
+                'message' => 'NIK atau Password anda salah'
             ], 400);
         }
 
