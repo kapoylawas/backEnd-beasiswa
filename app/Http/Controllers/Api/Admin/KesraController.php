@@ -90,6 +90,21 @@ class KesraController extends Controller
     }
 
 
+    public function show($id)
+    {
+        //get dinsos
+        $kesras = Kesra::with('user')->whereId($id)->first();
+
+        if ($kesras) {
+            //return success with Api Resource
+            return new KesraResource(true, 'Detail Data Kesra!', $kesras);
+        }
+
+        //return failed with Api Resource
+        return new KesraResource(false, 'Detail Data Kesra Tidak Ditemukan!', null);
+    }
+
+
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
