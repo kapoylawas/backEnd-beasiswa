@@ -307,7 +307,7 @@ class UserController extends Controller
 
         $user->update([
             'alasan'       => $request->alasan,
-            'jenis_verif_nik'       => $request->jenis_verif,
+            'jenis_verif_nik'       => $request->jenis_verif_nik,
         ]);
 
         if ($user) {
