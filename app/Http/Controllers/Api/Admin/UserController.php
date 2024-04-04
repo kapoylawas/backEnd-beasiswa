@@ -70,47 +70,71 @@ class UserController extends Controller
 
     public function showUser($id)
     {
-         //get dinsos
-         $users = User::whereId($id)->first();
+        //get dinsos
+        $users = User::whereId($id)->first();
 
-         if ($users) {
-             //return success with Api Resource
-             return new UserResource(true, 'Detail Data User!', $users);
-         }
- 
-         //return failed with Api Resource
-         return new UserResource(false, 'Detail Data User Tidak Ditemukan!', null);
+        if ($users) {
+            //return success with Api Resource
+            return new UserResource(true, 'Detail Data User!', $users);
+        }
+
+        //return failed with Api Resource
+        return new UserResource(false, 'Detail Data User Tidak Ditemukan!', null);
     }
 
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'nik'    => 'required|unique:users|max:16|min:16',
-            'name'     => 'required',
-            'nohp'     => 'required',
-            'email'    => 'required|unique:users',
-            'gender'     => 'required',
-            //'id_kecamatan'     => 'required',
-            //'id_kelurahan'     => 'required',
-            'rt'     => 'required',
-            'rw'     => 'required',
-            'alamat'     => 'required',
-            //'imagektp'         => 'required|mimes:pdf|max:2000',
-            //'imagekk'         => 'required|mimes:pdf|max:2000',
-            'password' => 'required|confirmed'
-        ]);
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'nik'    => 'required|unique:users|max:16|min:16',
+                'name'     => 'required',
+                'nohp'     => 'required',
+                'email'    => 'required|unique:users',
+                'gender'     => 'required',
+                'id_kecamatan'     => 'required',
+                'id_kelurahan'     => 'required',
+                'rt'     => 'required',
+                'rw'     => 'required',
+                'alamat'     => 'required',
+                'imagektp'         => 'required|mimes:pdf|max:2048',
+                'imagekk'         => 'required|mimes:pdf|max:2000',
+                'password' => 'required|confirmed'
+            ],
+            [
+                'nik.required' => 'nik no induk tidak boleh kosong',
+                'name.required' => 'nama tidak bole kosong',
+                'nohp.required' => 'no handphone/whatsapp tidak bole kosong',
+                'email.required' => 'email tidak bole kosong',
+                'email.unique' => 'email sudah di daftarkan',
+                'gender.unique' => 'pilih jenis kelamin terlebih dahulu',
+                'id_kecamatan.unique' => 'pilih kecamatan kelamin terlebih dahulu',
+                'id_kelurahan.unique' => 'pilih kelurahan/desa kelamin terlebih dahulu',
+                'rt.unique' => 'rt tidak boleh kosong',
+                'rw.unique' => 'rw tidak boleh kosong',
+                'alamat.unique' => 'alamat tidak boleh kosong',
+                'imagektp.unique' => 'file KTP tidak boleh kosong',
+                'imagektp.mimes' => 'file KTP harus pdf',
+                'imagektp.max' => 'file KTP melebihi dari 2 mb',
+                'imagekk.unique' => 'file kartu keluarga tidak boleh kosong',
+                'imagekk.mimes' => 'file kartu keluarga harus pdf',
+                'imagekk.max' => 'file kartu keluarga melebihi dari 2mb',
+                'password.unique' => 'password tidak boleh kosong',
+                'password.confirmed' => 'password tidak tidak sama',
+            ]
+        );
 
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
 
-        // //upload imagektp
-        // $imagektp = $request->file('imagektp');
-        //$imagektp->storeAs('public/ktp', $imagektp->hashName());
+        //upload imagektp
+        $imagektp = $request->file('imagektp');
+        $imagektp->storeAs('public/ktp', $imagektp->hashName());
 
-        // //upload imagekk
-        //$imagekk = $request->file('imagekk');
-        //$imagekk->storeAs('public/kk', $imagekk->hashName());
+        //upload imagekk
+        $imagekk = $request->file('imagekk');
+        $imagekk->storeAs('public/kk', $imagekk->hashName());
 
         //create user
         $user = User::create([
@@ -132,8 +156,8 @@ class UserController extends Controller
             'status_email'     => 0,
             'status_finish'     => 0,
             'step'     => 1,
-            //'imagektp'       => $imagektp->hashName(),
-            //'imagekk'       => $imagekk->hashName(),
+            'imagektp'       => $imagektp->hashName(),
+            'imagekk'       => $imagekk->hashName(),
             'password'  => bcrypt($request->password)
         ]);
 
