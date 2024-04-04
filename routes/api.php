@@ -125,8 +125,11 @@ Route::prefix('admin')->group(function () {
         /* update admin verif luar negeri */
         Route::put('/verif/luarNegeri/{user}', [\App\Http\Controllers\Api\Admin\LuarNegeriController::class, 'updateVerif']);
 
-        /* update admin verif luar negeri */
+        /* update admin verif dinsos */
         Route::put('/verif/dinsos/{user}', [\App\Http\Controllers\Api\Admin\DinsosController::class, 'updateVerif']);
+
+        /* update admin verif kesra */
+        Route::put('/verif/kesra/{user}', [\App\Http\Controllers\Api\Admin\DinsosController::class, 'updateVerif']);
 
         // get data Luar Negeri
         Route::get('/beasiswa/luarNegeri', [\App\Http\Controllers\Api\Admin\LuarNegeriController::class, 'getDataLuarNegeri']);
