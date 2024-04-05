@@ -12,6 +12,7 @@ class Kesra extends Model
 
     protected $fillable = [
         'user_id',
+        'uuid',
         'tipe_kesra',
         'tipe_sertifikat',
         'name',

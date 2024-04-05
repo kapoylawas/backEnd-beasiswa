@@ -12,6 +12,7 @@ class Dinsos extends Model
 
     protected $fillable = [
         'user_id',
+        'uuid',
         'tipe_daftar',
         'name',
         'penghasilan_orangtua',

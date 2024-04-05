@@ -22,6 +22,20 @@ class KesraController extends Controller
         return new KesraResource(true, 'List Data Kesra', $kesras);
     }
 
+    public function showUuid($uuid)
+    {
+        //get kesra
+        $kesras = Kesra::with('user')->where('uuid', $uuid)->first();
+
+        if ($kesras) {
+            //return success with Api Resource
+            return new KesraResource(true, 'Detail Data Kesra!', $kesras);
+        }
+
+        //return failed with Api Resource
+        return new KesraResource(false, 'Detail Data Kesra!', null);
+    }
+
     public function getDataKesra1()
     {
         $searchString = request()->search;
@@ -130,6 +144,7 @@ class KesraController extends Controller
 
         $kesra = Kesra::create([
             'user_id'     => auth()->guard('api')->user()->id,
+            'uuid'     => $request->uuid,
             'name'       => "Kesra",
             'tipe_kesra'       => $request->tipe_kesra,
             'tipe_sertifikat'       => $request->tipe_sertifikat,

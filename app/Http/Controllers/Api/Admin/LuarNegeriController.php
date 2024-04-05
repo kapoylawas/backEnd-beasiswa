@@ -54,6 +54,20 @@ class LuarNegeriController extends Controller
         return new LuarNegeriResource(false, 'Detail Data Luar Negeri Tidak Ditemukan!', null);
     }
 
+    public function showUuid($uuid)
+    {
+        //get luarnegeri
+        $luarNegeris = LuarNegeri::with('user')->where('uuid', $uuid)->first();
+
+        if ($luarNegeris) {
+            //return success with Api Resource
+            return new LuarNegeriResource(true, 'Detail Data Luar Negeri!', $luarNegeris);
+        }
+
+        //return failed with Api Resource
+        return new LuarNegeriResource(false, 'Detail Data Luar Negeri Tidak Ditemukan!', null);
+    }
+
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -76,6 +90,7 @@ class LuarNegeriController extends Controller
 
         $luarNegeris = LuarNegeri::create([
             'user_id'     => auth()->guard('api')->user()->id,
+            'uuid'     => $request->uuid,
             'name'       => "luar",
             'ipk'       => $request->ipk,
             'imagetranskrip'       => $imagetranskrip->hashName(),

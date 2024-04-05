@@ -28,6 +28,20 @@ class DinsosController extends Controller
         return new DinsosResource(true, 'List Data Dinsos', $dinsos);
     }
 
+    public function showUuid($uuid)
+    {
+        //get akademiks
+        $dinsos = Dinsos::with('user')->where('uuid', $uuid)->first();
+
+        if ($dinsos) {
+            //return success with Api Resource
+            return new DinsosResource(true, 'Detail Data Dinsos!', $dinsos);
+        }
+
+        //return failed with Api Resource
+        return new DinsosResource(false, 'Detail Data Dinsos!', null);
+    }
+
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -46,6 +60,7 @@ class DinsosController extends Controller
 
         $dinsos = Dinsos::create([
             'user_id'     => auth()->guard('api')->user()->id,
+            'uuid'     => $request->uuid,
             'name'       => "dinsos",
             'tipe_daftar'       => $request->tipe_daftar,
             'penghasilan_orangtua'       => $request->penghasilan_orangtua,

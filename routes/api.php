@@ -160,5 +160,14 @@ Route::prefix('admin')->group(function () {
 
           // get data non akademiks by uuiid
           Route::get('/beasiswa/nonAkademiks/{uuid}', [\App\Http\Controllers\Api\Admin\NonAkademikController::class, 'showUuid']);
+
+          // get data luar negeri by uuiid
+          Route::get('/beasiswa/luarNegeris/{uuid}', [\App\Http\Controllers\Api\Admin\LuarNegeriController::class, 'showUuid']);
+
+          // get data dinsos by uuiid
+          Route::get('/beasiswa/dinsoses/{uuid}', [\App\Http\Controllers\Api\Admin\DinsosController::class, 'showUuid']);
+
+          // get data kesra by uuiid
+          Route::get('/beasiswa/kesras/{uuid}', [\App\Http\Controllers\Api\Admin\KesraController::class, 'showUuid']);
     });
 });
