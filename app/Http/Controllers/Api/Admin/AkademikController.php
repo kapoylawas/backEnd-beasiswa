@@ -30,10 +30,10 @@ class AkademikController extends Controller
         return new AkademikResource(true, 'List Data Akademiks', $akademiks);
     }
 
-    public function show($id)
+    public function show($uuid)
     {
         //get akademiks
-        $akademiks = Akademik::with('user')->whereId($id)->first();
+        $akademiks = Akademik::with('user')->whereId($uuid)->first();
 
         if ($akademiks) {
             //return success with Api Resource
