@@ -12,6 +12,7 @@ class NonAkademik extends Model
 
     protected $fillable = [
         'user_id',
+        'uuid',
         'name',
         'semester',
         'akredetasi_kampus', 

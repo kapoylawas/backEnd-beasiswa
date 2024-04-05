@@ -53,6 +53,20 @@ class NonAkademikController extends Controller
         return new NonAkademikResource(false, 'Detail Data Non Akademik Tidak Ditemukan!', null);
     }
 
+    public function showUuid($uuid)
+    {
+        //get nonAkademiks
+        $nonAkademiks = NonAkademik::with('user')->where('uuid', $uuid)->first();
+
+        if ($nonAkademiks) {
+            //return success with Api Resource
+            return new NonAkademikResource(true, 'Detail Data Non Akademik!', $nonAkademiks);
+        }
+
+        //return failed with Api Resource
+        return new NonAkademikResource(false, 'Detail Data Non Akademik Tidak Ditemukan!', null);
+    }
+
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -71,11 +85,9 @@ class NonAkademikController extends Controller
         $imagesertifikat = $request->file('imagesertifikat');
         $imagesertifikat->storeAs('public/sertifikat/dispora', $imagesertifikat->hashName());
 
-        // $imageakredetasi = $request->file('imageakredetasi');
-        // $imageakredetasi->storeAs('public/imageakrekampus', $imageakredetasi->hashName());
-
         $nonakademik = NonAkademik::create([
             'user_id'     => auth()->guard('api')->user()->id,
+            'uuid'     => $request->uuid,
             'name'       => "non akademik",
             'semester'       => $request->semester,
             'jenis_sertifikat'       => $request->jenis_sertifikat,

@@ -157,5 +157,8 @@ Route::prefix('admin')->group(function () {
 
           // get data akademiks by uuiid
           Route::get('/beasiswa/akademiks/{uuid}', [\App\Http\Controllers\Api\Admin\AkademikController::class, 'showUuid']);
+
+          // get data non akademiks by uuiid
+          Route::get('/beasiswa/nonAkademiks/{uuid}', [\App\Http\Controllers\Api\Admin\NonAkademikController::class, 'showUuid']);
     });
 });
