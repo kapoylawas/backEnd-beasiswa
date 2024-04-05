@@ -86,6 +86,7 @@ class AkademikController extends Controller
 
         $akademik = Akademik::create([
             'user_id'     => auth()->guard('api')->user()->id,
+            'uuid'     => $request->uuid,
             'name'       => "akademik",
             'ipk'       => $request->ipk,
             'semester'       => $request->semester,
