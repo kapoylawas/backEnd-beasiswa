@@ -69,7 +69,6 @@ class AkademikController extends Controller
             'akredetasi_kampus'       => 'required',
             'progam_pendidikan'       => 'required',
             'imagetranskrip'         => 'required|mimes:pdf|max:2000',
-            // 'imageketerangan'         => 'required|mimes:pdf|max:2000',
             'imagebanpt'         => 'required|mimes:pdf|max:2000',
         ]);
 
@@ -85,11 +84,6 @@ class AkademikController extends Controller
         $imagebanpt = $request->file('imagebanpt');
         $imagebanpt->storeAs('public/banpt', $imagebanpt->hashName());
 
-        // //upload image surat keterangan
-        // $imageketerangan = $request->file('imageketerangan');
-        // $imageketerangan->storeAs('public/suratketerangan', $imageketerangan->hashName());
-
-
         $akademik = Akademik::create([
             'user_id'     => auth()->guard('api')->user()->id,
             'name'       => "akademik",
@@ -98,7 +92,6 @@ class AkademikController extends Controller
             'akredetasi_kampus'       => $request->akredetasi_kampus,
             'progam_pendidikan'       => $request->progam_pendidikan,
             'imagetranskrip'       => $imagetranskrip->hashName(),
-            // 'imageketerangan'       => $imageketerangan->hashName(),
             'imagebanpt'       => $imagebanpt->hashName(),
         ]);
 

@@ -15,7 +15,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('akademiks', function (Blueprint $table) {
-            //$table->uuid('uuid')->after('id')->nullable();
+            $table->uuid('uuid')->after('id')->nullable();
 
             // Generate UUID for existing records
             $akademik = Akademik::all();
@@ -32,7 +32,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('akademiks', function (Blueprint $table) {
-            //
+            $table->dropColumn('uuid');
         });
     }
 };
