@@ -30,10 +30,24 @@ class AkademikController extends Controller
         return new AkademikResource(true, 'List Data Akademiks', $akademiks);
     }
 
-    public function show($uuid)
+    public function show($id)
     {
         //get akademiks
-        $akademiks = Akademik::with('user')->whereId($uuid)->first();
+        $akademiks = Akademik::with('user')->whereId($id)->first();
+
+        if ($akademiks) {
+            //return success with Api Resource
+            return new AkademikResource(true, 'Detail Data Akademik!', $akademiks);
+        }
+
+        //return failed with Api Resource
+        return new AkademikResource(false, 'Detail Data Akademik Tidak Ditemukan!', null);
+    }
+
+    public function showUuid($uuid)
+    {
+        //get akademiks
+        $akademiks = Akademik::with('user')->where('uuid', $uuid)->first();
 
         if ($akademiks) {
             //return success with Api Resource
@@ -84,6 +98,7 @@ class AkademikController extends Controller
         $imagebanpt = $request->file('imagebanpt');
         $imagebanpt->storeAs('public/banpt', $imagebanpt->hashName());
 
+
         $akademik = Akademik::create([
             'user_id'     => auth()->guard('api')->user()->id,
             'uuid'     => $request->uuid,
@@ -93,6 +108,7 @@ class AkademikController extends Controller
             'akredetasi_kampus'       => $request->akredetasi_kampus,
             'progam_pendidikan'       => $request->progam_pendidikan,
             'imagetranskrip'       => $imagetranskrip->hashName(),
+            // 'imageketerangan'       => $imageketerangan->hashName(),
             'imagebanpt'       => $imagebanpt->hashName(),
         ]);
 
