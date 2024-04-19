@@ -50,7 +50,7 @@ class KesraController extends Controller
         $kesras->appends(['search' => request()->search]);
 
         //return with Api Resource
-        return new KesraResource(true, 'List Data Luar Negeri', $kesras);
+        return new KesraResource(true, 'List Data kesra', $kesras);
     }
 
     public function getDataKesra2()
@@ -67,7 +67,7 @@ class KesraController extends Controller
         $kesras->appends(['search' => request()->search]);
 
         //return with Api Resource
-        return new KesraResource(true, 'List Data Luar Negeri', $kesras);
+        return new KesraResource(true, 'List Data kesra', $kesras);
     }
 
     public function getDataKesra3()
@@ -84,7 +84,7 @@ class KesraController extends Controller
         $kesras->appends(['search' => request()->search]);
 
         //return with Api Resource
-        return new KesraResource(true, 'List Data Luar Negeri', $kesras);
+        return new KesraResource(true, 'List Data kesra', $kesras);
     }
 
     public function getDataKesra4()
@@ -101,7 +101,7 @@ class KesraController extends Controller
         $kesras->appends(['search' => request()->search]);
 
         //return with Api Resource
-        return new KesraResource(true, 'List Data Luar Negeri', $kesras);
+        return new KesraResource(true, 'List Data kesra', $kesras);
     }
 
 
