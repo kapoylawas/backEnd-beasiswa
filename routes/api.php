@@ -51,7 +51,6 @@ Route::prefix('admin')->group(function () {
         Route::get('/permissions', [\App\Http\Controllers\Api\Admin\PermissionController::class, 'index'])
             ->middleware('permission:permissions.index');
 
-
         //roles all
         Route::get('/roles/all', [\App\Http\Controllers\Api\Admin\RoleController::class, 'all'])
             ->middleware('permission:roles.index');
@@ -84,7 +83,8 @@ Route::prefix('admin')->group(function () {
         Route::get('/users/byid', [\App\Http\Controllers\Api\Admin\UserController::class, 'userbyid']);
 
         // get akademik
-        Route::get('/beasiswa/akademiks', [\App\Http\Controllers\Api\Admin\AkademikController::class, 'getData']);
+        Route::get('/beasiswa/akademiks', [\App\Http\Controllers\Api\Admin\AkademikController::class, 'getData'])
+            ->middleware('permission:akademiks.index|akademiks.store|akademiks.update|akademiks.delete');
 
         // update biodata
         Route::put('/users/biodata/{user}', [\App\Http\Controllers\Api\Admin\UserController::class, 'updateBiodata']);
@@ -108,13 +108,16 @@ Route::prefix('admin')->group(function () {
         Route::put('/users/kesras/{kesra}', [\App\Http\Controllers\Api\Admin\KesraController::class, 'updateKesra']);
 
         // get data NonAkademiks
-        Route::get('/beasiswa/nonAkademiks', [\App\Http\Controllers\Api\Admin\NonAkademikController::class, 'getDataNonAkademik']);
+        Route::get('/beasiswa/nonAkademiks', [\App\Http\Controllers\Api\Admin\NonAkademikController::class, 'getDataNonAkademik'])
+            ->middleware('permission:nonakademiks.index|nonakademiks.store|nonakademiks.update|nonakademiks.delete');
 
         // get data dinsos tipe dtks
-        Route::get('/beasiswa/dinsosDtks', [\App\Http\Controllers\Api\Admin\DinsosController::class, 'getDataDinsosDtks']);
+        Route::get('/beasiswa/dinsosDtks', [\App\Http\Controllers\Api\Admin\DinsosController::class, 'getDataDinsosDtks'])
+            ->middleware('permission:dinsos.index|dinsos.store|dinsos.update|dinsos.delete');
 
         // get data dinsos tipe tidak mempunyai dtks
-        Route::get('/beasiswa/dinsosNoDtks', [\App\Http\Controllers\Api\Admin\DinsosController::class, 'getDataDinsosNoDtks']);
+        Route::get('/beasiswa/dinsosNoDtks', [\App\Http\Controllers\Api\Admin\DinsosController::class, 'getDataDinsosNoDtks'])
+            ->middleware('permission:dinsos.index|dinsos.store|dinsos.update|dinsos.delete');
 
         /* update admin verif akademik */
         Route::put('/verif/akademik/{user}', [\App\Http\Controllers\Api\Admin\AkademikController::class, 'updateVerif']);
@@ -135,39 +138,45 @@ Route::prefix('admin')->group(function () {
         Route::put('/verif/nik/{user}', [\App\Http\Controllers\Api\Admin\UserController::class, 'updateVerifNik']);
 
         // get data Luar Negeri
-        Route::get('/beasiswa/luarNegeri', [\App\Http\Controllers\Api\Admin\LuarNegeriController::class, 'getDataLuarNegeri']);
+        Route::get('/beasiswa/luarNegeri', [\App\Http\Controllers\Api\Admin\LuarNegeriController::class, 'getDataLuarNegeri'])
+            ->middleware('permission:luarnegeri.index|luarnegeri.store|luarnegeri.update|luarnegeri.delete');
 
         // get data kesra tipe 1
-        Route::get('/beasiswa/kesra', [\App\Http\Controllers\Api\Admin\KesraController::class, 'getDataKesra1']);
+        Route::get('/beasiswa/kesra', [\App\Http\Controllers\Api\Admin\KesraController::class, 'getDataKesra1'])
+            ->middleware('permission:adminkesra.index|adminkesra.store|adminkesra.update|adminkesra.delete');
 
         // get data kesra tipe 2
-        Route::get('/beasiswa/kesra2', [\App\Http\Controllers\Api\Admin\KesraController::class, 'getDataKesra2']);
+        Route::get('/beasiswa/kesra2', [\App\Http\Controllers\Api\Admin\KesraController::class, 'getDataKesra2'])
+            ->middleware('permission:adminkesra.index|adminkesra.store|adminkesra.update|adminkesra.delete');
 
         // get data kesra tipe 3
-        Route::get('/beasiswa/kesra3', [\App\Http\Controllers\Api\Admin\KesraController::class, 'getDataKesra3']);
+        Route::get('/beasiswa/kesra3', [\App\Http\Controllers\Api\Admin\KesraController::class, 'getDataKesra3'])
+            ->middleware('permission:adminkesra.index|adminkesra.store|adminkesra.update|adminkesra.delete');
 
         // get data kesra tipe 3
-        Route::get('/beasiswa/kesra4', [\App\Http\Controllers\Api\Admin\KesraController::class, 'getDataKesra4']);
+        Route::get('/beasiswa/kesra4', [\App\Http\Controllers\Api\Admin\KesraController::class, 'getDataKesra4'])
+            ->middleware('permission:adminkesra.index|adminkesra.store|adminkesra.update|adminkesra.delete');
 
-         // get data users
-         Route::get('/beasiswa/users', [\App\Http\Controllers\Api\Admin\UserController::class, 'getDataUser']);
+        // get data users
+        Route::get('/beasiswa/users', [\App\Http\Controllers\Api\Admin\UserController::class, 'getDataUser'])
+            ->middleware('permission:users.index|users.store|users.update|users.delete');
 
-          // get data users by id
-          Route::get('/beasiswa/users/{id}', [\App\Http\Controllers\Api\Admin\UserController::class, 'showUser']);
+        // get data users by id
+        Route::get('/beasiswa/users/{id}', [\App\Http\Controllers\Api\Admin\UserController::class, 'showUser']);
 
-          // get data akademiks by uuiid
-          Route::get('/beasiswa/akademiks/{uuid}', [\App\Http\Controllers\Api\Admin\AkademikController::class, 'showUuid']);
+        // get data akademiks by uuiid
+        Route::get('/beasiswa/akademiks/{uuid}', [\App\Http\Controllers\Api\Admin\AkademikController::class, 'showUuid']);
 
-          // get data non akademiks by uuiid
-          Route::get('/beasiswa/nonAkademiks/{uuid}', [\App\Http\Controllers\Api\Admin\NonAkademikController::class, 'showUuid']);
+        // get data non akademiks by uuiid
+        Route::get('/beasiswa/nonAkademiks/{uuid}', [\App\Http\Controllers\Api\Admin\NonAkademikController::class, 'showUuid']);
 
-          // get data luar negeri by uuiid
-          Route::get('/beasiswa/luarNegeris/{uuid}', [\App\Http\Controllers\Api\Admin\LuarNegeriController::class, 'showUuid']);
+        // get data luar negeri by uuiid
+        Route::get('/beasiswa/luarNegeris/{uuid}', [\App\Http\Controllers\Api\Admin\LuarNegeriController::class, 'showUuid']);
 
-          // get data dinsos by uuiid
-          Route::get('/beasiswa/dinsoses/{uuid}', [\App\Http\Controllers\Api\Admin\DinsosController::class, 'showUuid']);
+        // get data dinsos by uuiid
+        Route::get('/beasiswa/dinsoses/{uuid}', [\App\Http\Controllers\Api\Admin\DinsosController::class, 'showUuid']);
 
-          // get data kesra by uuiid
-          Route::get('/beasiswa/kesras/{uuid}', [\App\Http\Controllers\Api\Admin\KesraController::class, 'showUuid']);
+        // get data kesra by uuiid
+        Route::get('/beasiswa/kesras/{uuid}', [\App\Http\Controllers\Api\Admin\KesraController::class, 'showUuid']);
     });
 });
