@@ -169,6 +169,83 @@ class UserController extends Controller
         return new UserResource(false, 'Data User Gagal Disimpan!', null);
     }
 
+    public function storeAdmin(Request $request)
+    {
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'nik'    => 'required|unique:users|max:16|min:16',
+                'name'     => 'required',
+                'nohp'     => 'required',
+                'email'    => 'required|unique:users',
+                'gender'     => 'required',
+                //'id_kecamatan'     => 'required',
+                //'id_kelurahan'     => 'required',
+                'rt'     => 'required',
+                'rw'     => 'required',
+                'alamat'     => 'required',
+                'password' => 'required|confirmed'
+            ],
+            [
+                'nik.required' => 'nik no induk tidak boleh kosong',
+                'nik.unique' => 'nik sudah terdaftar',
+                'nokk.required' => ' no kartu kelearga tidak boleh kosong',
+                'nokk.max' => ' no kartu kelearga harus 16 digit',
+                'nokk.min' => ' no kartu kelearga harus 16 digit',
+                'name.required' => 'nama tidak boleh kosong',
+                'nohp.required' => 'no handphone/whatsapp tidak boleh kosong',
+                'email.required' => 'email tidak boleh kosong',
+                'email.unique' => 'email sudah di daftarkan',
+                'gender.required' => 'pilih jenis kelamin terlebih dahulu',
+                //'id_kecamatan.required' => 'pilih kecamatan kelamin terlebih dahulu',
+                //'id_kelurahan.required' => 'pilih kelurahan/desa kelamin terlebih dahulu',
+                'rt.required' => 'rt tidak boleh kosong',
+                'rw.required' => 'rw tidak boleh kosong',
+                'alamat.required' => 'alamat tidak boleh kosong',
+                'password.required' => 'password tidak boleh kosong',
+                'password.confirmed' => 'password tidak tidak sama',
+            ]
+        );
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+
+        //create user
+        $user = User::create([
+            'nik'     => $request->nik,
+            'nokk'     => $request->nokk,
+            'name'      => $request->name,
+            'nohp'      => $request->nohp,
+            'email'     => $request->email,
+            'gender'     => $request->gender,
+            'id_kecamatan'     => $request->id_kecamatan,
+            'id_kelurahan'     => $request->id_kelurahan,
+            'codepos'     => $request->codepos,
+            'rt'     => $request->rt,
+            'rw'     => $request->rw,
+            'alamat'     => $request->alamat,
+            'status'     => 1,
+            'status_terkirim'     => 'false',
+            'status_wa'     => 0,
+            'status_email'     => 0,
+            'status_finish'     => 0,
+            'step'     => 1,
+            'password'  => bcrypt($request->password)
+        ]);
+
+        //assign roles to user
+        $user->assignRole(['adminkesra']);
+
+        if ($user) {
+            //return success with Api Resource
+            return new UserResource(true, 'Data User Berhasil Disimpan!', $user);
+        }
+
+        //return failed with Api Resource
+        return new UserResource(false, 'Data User Gagal Disimpan!', null);
+    }
+
     public function update(Request $request, User $user)
     {
         $validator = Validator::make($request->all(), [

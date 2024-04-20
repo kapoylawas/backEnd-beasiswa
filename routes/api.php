@@ -19,6 +19,8 @@ Route::post('/login', [App\Http\Controllers\Api\Auth\LoginController::class, 'in
 
 Route::apiResource('/users', App\Http\Controllers\Api\Admin\UserController::class);
 
+Route::post('/adminOpd', [App\Http\Controllers\Api\Admin\UserController::class, 'storeAdmin']);
+
 //permissions all
 Route::get('/permissions/all', [\App\Http\Controllers\Api\Admin\PermissionController::class, 'all']);
 
