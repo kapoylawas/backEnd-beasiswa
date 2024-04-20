@@ -17,7 +17,6 @@ use Illuminate\Support\Facades\Route;
 //route login
 Route::post('/login', [App\Http\Controllers\Api\Auth\LoginController::class, 'index']);
 
-//users
 Route::apiResource('/users', App\Http\Controllers\Api\Admin\UserController::class);
 
 //permissions all

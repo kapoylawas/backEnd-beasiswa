@@ -154,7 +154,7 @@ class UserController extends Controller
         ]);
 
         //assign roles to user
-        $user->assignRole($request->roles);
+        $user->assignRole(['user']);
 
         if ($user) {
             //return success with Api Resource
