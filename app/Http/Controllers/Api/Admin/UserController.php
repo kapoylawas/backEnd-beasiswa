@@ -79,6 +79,7 @@ class UserController extends Controller
             $request->all(),
             [
                 'nik'    => 'required|unique:users|max:16|min:16',
+                'nokk'    => 'required|max:16|min:16',
                 'name'     => 'required',
                 'nohp'     => 'required',
                 'email'    => 'required|unique:users',
@@ -95,6 +96,9 @@ class UserController extends Controller
             [
                 'nik.required' => 'nik no induk tidak boleh kosong',
                 'nik.unique' => 'nik sudah terdaftar',
+                'nokk.required' => ' no kartu kelearga tidak boleh kosong',
+                'nokk.max' => ' no kartu kelearga harus 16 digit',
+                'nokk.min' => ' no kartu kelearga harus 16 digit',
                 'name.required' => 'nama tidak boleh kosong',
                 'nohp.required' => 'no handphone/whatsapp tidak boleh kosong',
                 'email.required' => 'email tidak boleh kosong',
