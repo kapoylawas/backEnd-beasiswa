@@ -53,6 +53,7 @@ return new class extends Migration
             $table->integer('step')->nullable();
             $table->foreignId('id_kecamatan')->references('id')->on('kecamatans')->cascadeOnDelete();
             $table->foreignId('id_kelurahan')->references('id')->on('kelurahans')->cascadeOnDelete();
+            $table->string('verifikator')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

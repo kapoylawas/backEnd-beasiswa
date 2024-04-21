@@ -108,7 +108,6 @@ class AkademikController extends Controller
             'akredetasi_kampus'       => $request->akredetasi_kampus,
             'progam_pendidikan'       => $request->progam_pendidikan,
             'imagetranskrip'       => $imagetranskrip->hashName(),
-            // 'imageketerangan'       => $imageketerangan->hashName(),
             'imagebanpt'       => $imagebanpt->hashName(),
         ]);
 
@@ -195,6 +194,7 @@ class AkademikController extends Controller
         $user->update([
             'alasan'       => $request->alasan,
             'jenis_verif'       => $request->jenis_verif,
+            'verifikator'       => $request->verifikator,
         ]);
 
         if ($user) {
