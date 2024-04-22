@@ -162,6 +162,7 @@ class NonAkademikController extends Controller
         $user->update([
             'alasan'       => $request->alasan,
             'jenis_verif'       => $request->jenis_verif,
+            'verifikator'       => $request->verifikator,
         ]);
 
         if ($user) {

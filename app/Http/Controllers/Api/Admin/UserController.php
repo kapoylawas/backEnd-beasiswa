@@ -235,7 +235,7 @@ class UserController extends Controller
         ]);
 
         //assign roles to user
-        $user->assignRole(['adminkesra']);
+        $user->assignRole(['admin']);
 
         if ($user) {
             //return success with Api Resource
@@ -405,6 +405,7 @@ class UserController extends Controller
         $user->update([
             'alasan_nik'       => $request->alasan_nik,
             'jenis_verif_nik'       => $request->jenis_verif_nik,
+            'verifikator'       => $request->verifikator,
         ]);
 
         if ($user) {
