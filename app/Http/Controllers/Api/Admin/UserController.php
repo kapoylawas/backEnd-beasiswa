@@ -179,8 +179,6 @@ class UserController extends Controller
                 'nohp'     => 'required',
                 'email'    => 'required|unique:users',
                 'gender'     => 'required',
-                //'id_kecamatan'     => 'required',
-                //'id_kelurahan'     => 'required',
                 'rt'     => 'required',
                 'rw'     => 'required',
                 'alamat'     => 'required',
@@ -197,8 +195,6 @@ class UserController extends Controller
                 'email.required' => 'email tidak boleh kosong',
                 'email.unique' => 'email sudah di daftarkan',
                 'gender.required' => 'pilih jenis kelamin terlebih dahulu',
-                //'id_kecamatan.required' => 'pilih kecamatan kelamin terlebih dahulu',
-                //'id_kelurahan.required' => 'pilih kelurahan/desa kelamin terlebih dahulu',
                 'rt.required' => 'rt tidak boleh kosong',
                 'rw.required' => 'rw tidak boleh kosong',
                 'alamat.required' => 'alamat tidak boleh kosong',
@@ -235,7 +231,7 @@ class UserController extends Controller
         ]);
 
         //assign roles to user
-        $user->assignRole(['admin']);
+        $user->assignRole(['dispora']);
 
         if ($user) {
             //return success with Api Resource
