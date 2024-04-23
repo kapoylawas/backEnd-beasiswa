@@ -244,7 +244,7 @@ class KesraController extends Controller
         $user->update([
             'alasan'       => $request->alasan,
             'jenis_verif'       => $request->jenis_verif,
-            'verifikator'       => $request->verifikator,
+            'verifikator_berkas'       => $request->verifikator,
         ]);
 
         if ($user) {
