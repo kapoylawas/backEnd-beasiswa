@@ -50,7 +50,7 @@ class UserController extends Controller
         //get users
         $users = User::where('status', '2')->when(request()->search, function ($users) {
             $users = $users->where('nik', 'like', '%' . request()->search . '%');
-        })->with('roles')->latest()->paginate(10);
+        })->with('roles')->orderBy('jenis_verif_nik', 'desc')->paginate(10);
 
         //append query string to pagination links
         $users->appends(['search' => request()->search]);
