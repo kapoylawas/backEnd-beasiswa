@@ -170,7 +170,7 @@ class LuarNegeriController extends Controller
         $user->update([
             'alasan'       => $request->alasan,
             'jenis_verif'       => $request->jenis_verif,
-            'verifikator_berkas'       => $request->verifikator,
+            'verifikator_berkas'       => $request->verifikator_berkas,
         ]);
 
         if ($user) {
