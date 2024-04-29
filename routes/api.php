@@ -17,6 +17,9 @@ use Illuminate\Support\Facades\Route;
 //route login
 Route::post('/login', [App\Http\Controllers\Api\Auth\LoginController::class, 'index']);
 
+//route lupa password
+Route::post('/lupaPassword', [App\Http\Controllers\Api\Auth\LupaPassword::class, 'index']);
+
 Route::apiResource('/users', App\Http\Controllers\Api\Admin\UserController::class);
 
 Route::post('/adminOpd', [App\Http\Controllers\Api\Admin\UserController::class, 'storeAdmin']);
