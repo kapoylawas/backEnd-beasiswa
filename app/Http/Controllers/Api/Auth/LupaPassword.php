@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -42,5 +43,28 @@ class LupaPassword extends Controller
                 'message' => 'NIK dan NoKK Anda salah.',
             ], 404);
         }
+    }
+
+    public function update(Request $request, User $user)
+    {
+       /*  $validator = Validator::make($request->all(), [
+            'password' => 'confirmed',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        } */
+
+        $user->update([
+            'password'  => bcrypt($request->password)
+        ]);
+
+        if ($user) {
+            //return success with Api Resource
+            return new UserResource(true, 'Data User Berhasil Diupdate!', $user);
+        }
+
+        //return failed with Api Resource
+        return new UserResource(false, 'Data User Gagal Diupdate!', null);
     }
 }

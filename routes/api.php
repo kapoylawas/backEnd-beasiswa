@@ -20,6 +20,9 @@ Route::post('/login', [App\Http\Controllers\Api\Auth\LoginController::class, 'in
 //route lupa password
 Route::post('/lupaPassword', [App\Http\Controllers\Api\Auth\LupaPassword::class, 'index']);
 
+//ganti password
+Route::put('/changePassword/{user}', [App\Http\Controllers\Api\Auth\LupaPassword::class, 'update']);
+
 Route::apiResource('/users', App\Http\Controllers\Api\Admin\UserController::class);
 
 Route::post('/adminOpd', [App\Http\Controllers\Api\Admin\UserController::class, 'storeAdmin']);
