@@ -59,6 +59,20 @@ class UserController extends Controller
         return new UserResource(true, 'List Data Users', $users);
     }
 
+    public function getDataUserAkademik()
+    {
+        //get users
+        $users = User::where('status', '2')->where('tipe_beasiswa', '1')->when(request()->search, function ($users) {
+            $users = $users->where('nik', 'like', '%' . request()->search . '%');
+        })->with('roles')->orderBy('jenis_verif_nik', 'asc')->paginate(10);
+
+        //append query string to pagination links
+        $users->appends(['search' => request()->search]);
+
+        //return with Api Resource
+        return new UserResource(true, 'List Data Users', $users);
+    }
+
     public function showUser($id)
     {
         //get dinsos
@@ -231,7 +245,7 @@ class UserController extends Controller
         ]);
 
         //assign roles to user
-        $user->assignRole(['dispora']);
+        $user->assignRole(['admindinsos']);
 
         if ($user) {
             //return success with Api Resource
