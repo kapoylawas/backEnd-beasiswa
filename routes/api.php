@@ -184,6 +184,10 @@ Route::prefix('admin')->group(function () {
         Route::get('/beasiswa/userskesra', [\App\Http\Controllers\Api\Admin\UserController::class, 'getDataUserKesra'])
             ->middleware('permission:users.index|users.store|users.update|users.delete');
 
+        // get data users dinsos
+        Route::get('/beasiswa/usersDinsos', [\App\Http\Controllers\Api\Admin\UserController::class, 'getDataUserDinsos'])
+            ->middleware('permission:users.index|users.store|users.update|users.delete');
+
         // get data users by id
         Route::get('/beasiswa/users/{id}', [\App\Http\Controllers\Api\Admin\UserController::class, 'showUser']);
 
