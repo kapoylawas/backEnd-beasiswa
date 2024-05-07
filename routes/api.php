@@ -172,6 +172,10 @@ Route::prefix('admin')->group(function () {
         Route::get('/beasiswa/usersAkademik', [\App\Http\Controllers\Api\Admin\UserController::class, 'getDataUserAkademik'])
             ->middleware('permission:users.index|users.store|users.update|users.delete');
 
+        // get data users luar negeri
+        Route::get('/beasiswa/usersLuarNegeri', [\App\Http\Controllers\Api\Admin\UserController::class, 'getDataUserLuarNegeri'])
+            ->middleware('permission:users.index|users.store|users.update|users.delete');
+
         // get data users non akademik
         Route::get('/beasiswa/usersNonAkademik', [\App\Http\Controllers\Api\Admin\UserController::class, 'getDataUserNonkademik'])
             ->middleware('permission:users.index|users.store|users.update|users.delete');
