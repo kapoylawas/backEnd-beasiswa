@@ -314,7 +314,7 @@ class UserController extends Controller
 
     public function update(Request $request, User $user)
     {
-        $validator = Validator::make($request->all(), [
+    /*     $validator = Validator::make($request->all(), [
             'nim'     => 'required',
             'ktm'    => 'required|mimes:pdf|max:2048',
             'universitas' => 'required',
@@ -328,9 +328,9 @@ class UserController extends Controller
 
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
-        }
+        } */
 
-        //upload new ktm
+       /*  //upload new ktm
         $ktm = $request->file('ktm');
         $ktm->storeAs('public/ktm', $ktm->hashName());
 
@@ -341,7 +341,7 @@ class UserController extends Controller
         //upload new imagesuratpernyataan
         $imagesuratpernyataan = $request->file('imagesuratpernyataan');
         $imagesuratpernyataan->storeAs('public/imagesuratpernyataan', $imagesuratpernyataan->hashName());
-
+ */
         //upload new imageakrekampus
         $imageakrekampus = $request->file('imageakrekampus');
         $imageakrekampus->storeAs('public/imageakrekampus', $imageakrekampus->hashName());
@@ -354,12 +354,12 @@ class UserController extends Controller
 
         $user->update([
             'nim'       => $request->nim,
-            'ktm'       => $ktm->hashName(),
+            /* 'ktm'       => $ktm->hashName(), */
             'universitas'       => $request->universitas,
             'alamat_univ'       => $request->alamat_univ,
             'jurusan'       => $request->jurusan,
-            'imageaktifkampus'       => $imageaktifkampus->hashName(),
-            'imagesuratpernyataan'       => $imagesuratpernyataan->hashName(),
+            /* 'imageaktifkampus'       => $imageaktifkampus->hashName(),
+            'imagesuratpernyataan'       => $imagesuratpernyataan->hashName(), */
             'imageakrekampus'       => $imageakrekampus->hashName(),
             'imagesuratbeasiswa'       => ($imagesuratbeasiswa != null) ? $imagesuratbeasiswa->hashName() : null,
             'pilih_universitas'       => $request->pilih_universitas,
