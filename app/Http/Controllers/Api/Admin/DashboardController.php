@@ -37,7 +37,7 @@ class DashboardController extends Controller
         $jumlahSudahVerifDinsos = User::where('tipe_beasiswa', 4)
                                 ->whereNotNull('jenis_verif')
                                 ->count();
-        $jumlahSudahVerifLuarNegeri = User::where('tipe_beasiswa', 4)
+        $jumlahSudahVerifLuarNegeri = User::where('tipe_beasiswa', 5)
                                 ->whereNotNull('jenis_verif')
                                 ->count();
         //return response json
