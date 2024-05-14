@@ -25,7 +25,21 @@ class DashboardController extends Controller
         $dinsoses = Dinsos::count();
         $kesras = Kesra::count();
         $luarNegeris = LuarNegeri::count();
-
+        $jumlahSudahVerifAkademik = User::where('tipe_beasiswa', 1)
+                                ->whereNotNull('jenis_verif')
+                                ->count();
+        $jumlahSudahVerifNonAkademik = User::where('tipe_beasiswa', 2)
+                                ->whereNotNull('jenis_verif')
+                                ->count();
+        $jumlahSudahVerifKesra = User::where('tipe_beasiswa', 3)
+                                ->whereNotNull('jenis_verif')
+                                ->count();
+        $jumlahSudahVerifDinsos = User::where('tipe_beasiswa', 4)
+                                ->whereNotNull('jenis_verif')
+                                ->count();
+        $jumlahSudahVerifLuarNegeri = User::where('tipe_beasiswa', 4)
+                                ->whereNotNull('jenis_verif')
+                                ->count();
         //return response json
         return response()->json([
             'success'   => true,
@@ -37,6 +51,11 @@ class DashboardController extends Controller
                 'kesras' => $kesras,
                 'luarNegeris' => $luarNegeris,
                 'nonAkademiks' => $nonAkademiks,
+                'jumlahSudahVerifAkademik' => $jumlahSudahVerifAkademik,
+                'jumlahSudahVerifNonAkademik' => $jumlahSudahVerifNonAkademik,
+                'jumlahSudahVerifKesra' => $jumlahSudahVerifKesra,
+                'jumlahSudahVerifDinsos' => $jumlahSudahVerifDinsos,
+                'jumlahSudahVerifLuarNegeri' => $jumlahSudahVerifLuarNegeri,
             ]
         ]);
     }
