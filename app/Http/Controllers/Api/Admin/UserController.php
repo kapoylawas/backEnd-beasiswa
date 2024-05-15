@@ -10,12 +10,13 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
     public function index()
     {
-       return response()->json('ngapain broo');
+        return response()->json('ngapain broo');
     }
 
     public function userbyid()
@@ -481,5 +482,13 @@ class UserController extends Controller
 
         //return failed with Api Resource
         return new UserResource(false, 'Verifikasi Data Gagal Disimpan!', null);
+    }
+
+    function tanggalBatas(Request $request)
+    {
+        $dates = DB::table('tgl_batas')
+            ->get();
+
+        return response()->json($dates[0], 200);
     }
 }

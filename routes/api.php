@@ -36,6 +36,9 @@ Route::get('/kecamatan/all', [\App\Http\Controllers\Api\Admin\UserController::cl
 //kelurahan all
 Route::get('/kelurahan/byid', [\App\Http\Controllers\Api\Admin\UserController::class, 'getKelurahan']);
 
+//get tanggal batas
+Route::get('/tanggalBatas', [\App\Http\Controllers\Api\Admin\UserController::class, 'tanggalBatas']);
+
 
 
 //dashboard
