@@ -26,20 +26,38 @@ class DashboardController extends Controller
         $kesras = Kesra::count();
         $luarNegeris = LuarNegeri::count();
         $jumlahSudahVerifAkademik = User::where('tipe_beasiswa', 1)
-                                ->whereNotNull('jenis_verif')
-                                ->count();
+            ->whereNotNull('jenis_verif')
+            ->count();
         $jumlahSudahVerifNonAkademik = User::where('tipe_beasiswa', 2)
-                                ->whereNotNull('jenis_verif')
-                                ->count();
+            ->whereNotNull('jenis_verif')
+            ->count();
         $jumlahSudahVerifKesra = User::where('tipe_beasiswa', 3)
-                                ->whereNotNull('jenis_verif')
-                                ->count();
+            ->whereNotNull('jenis_verif')
+            ->count();
         $jumlahSudahVerifDinsos = User::where('tipe_beasiswa', 4)
-                                ->whereNotNull('jenis_verif')
-                                ->count();
+            ->whereNotNull('jenis_verif')
+            ->count();
         $jumlahSudahVerifLuarNegeri = User::where('tipe_beasiswa', 5)
-                                ->whereNotNull('jenis_verif')
-                                ->count();
+            ->whereNotNull('jenis_verif')
+            ->count();
+
+        /* count verifk nik */
+        $jumlahSudahVerifNikAkademik = User::where('tipe_beasiswa', 1)
+            ->whereNotNull('jenis_verif_nik')
+            ->count();
+        $jumlahSudahVerifNikNonAkademik = User::where('tipe_beasiswa', 2)
+            ->whereNotNull('jenis_verif_nik')
+            ->count();
+        $jumlahSudahVerifNikKesra = User::where('tipe_beasiswa', 3)
+            ->whereNotNull('jenis_verif_nik')
+            ->count();
+        $jumlahSudahVerifNikDinsos = User::where('tipe_beasiswa', 4)
+            ->whereNotNull('jenis_verif_nik')
+            ->count();
+        $jumlahSudahVerifNikLuarNegeri = User::where('tipe_beasiswa', 5)
+            ->whereNotNull('jenis_verif_nik')
+            ->count();
+
         //return response json
         return response()->json([
             'success'   => true,
@@ -56,6 +74,11 @@ class DashboardController extends Controller
                 'jumlahSudahVerifKesra' => $jumlahSudahVerifKesra,
                 'jumlahSudahVerifDinsos' => $jumlahSudahVerifDinsos,
                 'jumlahSudahVerifLuarNegeri' => $jumlahSudahVerifLuarNegeri,
+                'jumlahSudahVerifNikAkademik' => $jumlahSudahVerifNikAkademik,
+                'jumlahSudahVerifNikNonAkademik' => $jumlahSudahVerifNikNonAkademik,
+                'jumlahSudahVerifNikKesra' => $jumlahSudahVerifNikKesra,
+                'jumlahSudahVerifNikDinsos' => $jumlahSudahVerifNikDinsos,
+                'jumlahSudahVerifNikLuarNegeri' => $jumlahSudahVerifNikLuarNegeri,
             ]
         ]);
     }
