@@ -30,8 +30,8 @@ class NonAkademikController extends Controller
             $query->where('nik', 'like', '%' . $searchString . '%');
         })
             ->with(['user' => function ($query) use ($searchString) {
-                $query->where('nik', 'like', '%' . $searchString . '%');
-            }])->orderBy('jenis_verif', 'asc')->paginate(10);
+                $query->where('nik', 'like', '%' . $searchString . '%')->orderBy('jenis_verif', 'asc');
+            }])->paginate(10);
 
         $nonAkademiks->appends(['search' => request()->search]);
 
