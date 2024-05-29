@@ -22,18 +22,27 @@ class NonAkademikController extends Controller
         return new NonAkademikResource(true, 'List Data Akademiks', $akademiks);
     }
 
-    public function getDataNonAkademik()
+    public function getDataNonAkademik(Request $request)
     {
         $searchString = request()->search;
+        $jenis_verif = request()->jenis_verif;
 
-        $nonAkademiks = NonAkademik::whereHas('user', function ($query) use ($searchString) {
-            $query->where('nik', 'like', '%' . $searchString . '%');
+        $nonAkademiks = NonAkademik::whereHas('user', function ($query) use ($searchString, $jenis_verif) {
+            $query->where('nik', 'like', '%' . $searchString . '%')
+                ->when($jenis_verif, function ($q) use ($jenis_verif) {
+                    $q->where('jenis_verif', $jenis_verif);
+                });
         })
-            ->with(['user' => function ($query) use ($searchString) {
-                $query->where('nik', 'like', '%' . $searchString . '%');
-            }])->latest()->paginate(10);
+            ->with(['user' => function ($query) use ($searchString, $jenis_verif) {
+                $query->where('nik', 'like', '%' . $searchString . '%')
+                    ->when($jenis_verif, function ($q) use ($jenis_verif) {
+                        $q->where('jenis_verif', $jenis_verif);
+                    });
+            }])
+            ->latest()
+            ->paginate(10);
 
-        $nonAkademiks->appends(['search' => request()->search]);
+        $nonAkademiks->appends(['search' => request()->search, 'jenis_verif' => request()->jenis_verif]);
 
         //return with Api Resource
         return new NonAkademikResource(true, 'List Data Akademiks', $nonAkademiks);
