@@ -25,21 +25,50 @@ class DashboardController extends Controller
         $dinsoses = Dinsos::count();
         $kesras = Kesra::count();
         $luarNegeris = LuarNegeri::count();
-        $jumlahSudahVerifAkademik = User::where('tipe_beasiswa', 1)
-            ->whereNotNull('jenis_verif')
+        //hitung sudah verif akademik
+        $jumlahLolosVerifAkademik = User::where('tipe_beasiswa', 1)
+            ->where('jenis_verif', 'lolos')
             ->count();
-        $jumlahSudahVerifNonAkademik = User::where('tipe_beasiswa', 2)
-            ->whereNotNull('jenis_verif')
+        $jumlahTidakVerifAkademik = User::where('tipe_beasiswa', 1)
+            ->where('jenis_verif', 'tidak')
             ->count();
-        $jumlahSudahVerifKesra = User::where('tipe_beasiswa', 3)
-            ->whereNotNull('jenis_verif')
+        $jumlahSudahVerifAkademik = $jumlahLolosVerifAkademik + $jumlahTidakVerifAkademik;
+
+        //hitung sudah verif nonakademik
+        $jumlahLolosVerifNonAkademik = User::where('tipe_beasiswa', 2)
+            ->where('jenis_verif', 'lolos')
             ->count();
-        $jumlahSudahVerifDinsos = User::where('tipe_beasiswa', 4)
-            ->whereNotNull('jenis_verif')
+        $jumlahTidakVerifNonAkademik = User::where('tipe_beasiswa', 2)
+            ->where('jenis_verif', 'tidak')
             ->count();
-        $jumlahSudahVerifLuarNegeri = User::where('tipe_beasiswa', 5)
-            ->whereNotNull('jenis_verif')
+        $jumlahSudahVerifNonAkademik = $jumlahLolosVerifNonAkademik + $jumlahTidakVerifNonAkademik;
+
+        //hitung sudah verif kesra
+        $jumlahLolosVerifKesra = User::where('tipe_beasiswa', 3)
+            ->where('jenis_verif', 'lolos')
             ->count();
+        $jumlahTidakVerifKesra = User::where('tipe_beasiswa', 3)
+            ->where('jenis_verif', 'tidak')
+            ->count();
+        $jumlahSudahVerifKesra = $jumlahLolosVerifKesra + $jumlahTidakVerifKesra;
+
+        //hitung sudah verif dinsos
+        $jumlahLolosVerifDinsos = User::where('tipe_beasiswa', 4)
+            ->where('jenis_verif', 'lolos')
+            ->count();
+        $jumlahTidakVerifDinsos = User::where('tipe_beasiswa', 4)
+            ->where('jenis_verif', 'tidak')
+            ->count();
+        $jumlahSudahVerifDinsos = $jumlahLolosVerifDinsos + $jumlahTidakVerifDinsos;
+
+        //hitung sudah verif luarnegeri
+        $jumlahLolosVerifNikLuarNegeri = User::where('tipe_beasiswa', 5)
+            ->where('jenis_verif', 'lolos')
+            ->count();
+        $jumlahTidakVerifNikLuarNegeri = User::where('tipe_beasiswa', 5)
+            ->where('jenis_verif', 'tidak')
+            ->count();
+        $jumlahSudahVerifLuarNegeri = $jumlahLolosVerifNikLuarNegeri + $jumlahTidakVerifNikLuarNegeri;
 
         /* count verifk nik */
         $jumlahSudahVerifNikAkademik = User::where('tipe_beasiswa', 1)

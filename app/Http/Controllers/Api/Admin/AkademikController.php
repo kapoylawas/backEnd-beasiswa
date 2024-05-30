@@ -60,7 +60,7 @@ class AkademikController extends Controller
 
     public function getData()
     {
-        $searchString = request()->search;
+        /*     $searchString = request()->search;
 
         $akademiks = Akademik::whereHas('user', function ($query) use ($searchString) {
             $query->where('nik', 'like', '%' . $searchString . '%');
@@ -72,7 +72,30 @@ class AkademikController extends Controller
         $akademiks->appends(['search' => request()->search]);
 
         //return with Api Resource
-        return new AkademikResource(true, 'List Data Akademiks', $akademiks);
+        return new AkademikResource(true, 'List Data Akademiks', $akademiks); */
+
+        $searchString = request()->search;
+        $jenis_verif = request()->jenis_verif;
+
+        $nonAkademiks = Akademik::whereHas('user', function ($query) use ($searchString, $jenis_verif) {
+            $query->where('nik', 'like', '%' . $searchString . '%')
+                ->when($jenis_verif, function ($q) use ($jenis_verif) {
+                    $q->where('jenis_verif', $jenis_verif);
+                });
+        })
+            ->with(['user' => function ($query) use ($searchString, $jenis_verif) {
+                $query->where('nik', 'like', '%' . $searchString . '%')
+                    ->when($jenis_verif, function ($q) use ($jenis_verif) {
+                        $q->where('jenis_verif', $jenis_verif);
+                    });
+            }])
+            ->orderBy('ipk', 'desc')
+            ->paginate(10);
+
+        $nonAkademiks->appends(['search' => request()->search, 'jenis_verif' => request()->jenis_verif]);
+
+        //return with Api Resource
+        return new AkademikResource(true, 'List Data Akademiks', $nonAkademiks);
     }
 
     public function store(Request $request)
