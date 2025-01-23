@@ -302,7 +302,7 @@ class UserController extends Controller
         ]);
 
         //assign roles to user
-        $user->assignRole(['admindinsos']);
+        $user->assignRole(['user']);
 
         if ($user) {
             //return success with Api Resource
@@ -325,6 +325,15 @@ class UserController extends Controller
             'imagesuratpernyataan' => 'required|mimes:pdf|max:2048',
             'imageakrekampus' => 'required|mimes:pdf|max:2048',
             'pilih_universitas' => 'required',
+        ],[
+            'nim.required' => 'nim tidak boleh kosong',
+            'ktm.unique' => 'ktm tidak boleh kosong',
+            'universitas.required' => 'nama universitas tidak boleh kosong',
+            'jurusan.required' => 'jurusan tidak boleh kosong',
+            'imageaktifkampus.required' => 'file aktif kuliah tidak boleh kosong',
+            'imagesuratpernyataan.required' => 'file surat pernyataan tidak boleh kosong',
+            'imageakrekampus.required' => 'file  akredetasi dari universitas tidak boleh kosong',
+            'pilih_universitas.required' => 'pilih universitas terlebih dahulu',
         ]);
 
         if ($validator->fails()) {
