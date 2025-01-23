@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
 use App\Models\Kecamatan;
 use App\Models\Kelurahan;
+use App\Models\Terdaftar;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -146,10 +147,13 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
+        // Cek apakah NIK sudah terdaftar
+        $nikExists = Terdaftar::where('nik', $request->nik)->exists();
+    
         $validator = Validator::make(
             $request->all(),
             [
-                'nik'    => 'required|unique:users|max:16|min:16',
+                'nik'    => 'required|max:16|min:16',
                 'nokk'    => 'required|max:16|min:16',
                 'name'     => 'required',
                 'nohp'     => 'required',
@@ -166,7 +170,6 @@ class UserController extends Controller
             ],
             [
                 'nik.required' => 'nik no induk tidak boleh kosong',
-                'nik.unique' => 'nik sudah terdaftar',
                 'nokk.required' => ' no kartu kelearga tidak boleh kosong',
                 'nokk.max' => ' no kartu kelearga harus 16 digit',
                 'nokk.min' => ' no kartu kelearga harus 16 digit',
@@ -190,19 +193,19 @@ class UserController extends Controller
                 'password.confirmed' => 'password tidak tidak sama',
             ]
         );
-
+    
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
-
+    
         //upload imagektp
         $imagektp = $request->file('imagektp');
         $imagektp->storeAs('public/ktp', $imagektp->hashName());
-
+    
         //upload imagekk
         $imagekk = $request->file('imagekk');
         $imagekk->storeAs('public/kk', $imagekk->hashName());
-
+    
         //create user
         $user = User::create([
             'nik'     => $request->nik,
@@ -227,17 +230,17 @@ class UserController extends Controller
             'imagekk'       => $imagekk->hashName(),
             'password'  => bcrypt($request->password)
         ]);
-
+    
         //assign roles to user
         $user->assignRole(['user']);
-
-        if ($user) {
-            //return success with Api Resource
-            return new UserResource(true, 'Data User Berhasil Disimpan!', $user);
+    
+        // Kembalikan respons dengan peringatan jika NIK sudah terdaftar
+        if ($nikExists) {
+            return new UserResource(true, 'Data User Berhasil Disimpan! Namun, Anda sudah menerima beasiswa di tahun sebelumnya.', $user);
         }
-
-        //return failed with Api Resource
-        return new UserResource(false, 'Data User Gagal Disimpan!', null);
+    
+        //return success with Api Resource
+        return new UserResource(true, 'Anda belum pernah menerima beasiswa!', $user);
     }
 
     public function storeAdmin(Request $request)
