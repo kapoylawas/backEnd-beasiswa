@@ -10,6 +10,8 @@ use App\Models\LuarNegeri;
 use App\Models\NonAkademik;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
 
 class DashboardController extends Controller
 {
@@ -87,6 +89,11 @@ class DashboardController extends Controller
             ->whereNotNull('jenis_verif_nik')
             ->count();
 
+        // Mengambil data dengan join
+        $terdaftar = DB::table('users')
+            ->join('terdaftar', 'users.nik', '=', 'terdaftar.nik')
+            ->select('terdaftar.name', 'terdaftar.nim', 'terdaftar.universitas', 'terdaftar.nik', 'terdaftar.tahun')
+            ->get();
         //return response json
         return response()->json([
             'success'   => true,
@@ -108,7 +115,8 @@ class DashboardController extends Controller
                 'jumlahSudahVerifNikKesra' => $jumlahSudahVerifNikKesra,
                 'jumlahSudahVerifNikDinsos' => $jumlahSudahVerifNikDinsos,
                 'jumlahSudahVerifNikLuarNegeri' => $jumlahSudahVerifNikLuarNegeri,
-            ]
+            ],
+            'terdaftar' => $terdaftar
         ]);
     }
 }
