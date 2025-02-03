@@ -93,7 +93,7 @@ class DashboardController extends Controller
         $terdaftar = DB::table('users')
             ->join('terdaftar', 'users.nik', '=', 'terdaftar.nik')
             ->select('terdaftar.name', 'terdaftar.nim', 'terdaftar.universitas', 'terdaftar.nik', 'terdaftar.tahun')
-            ->get();
+            ->first();
         //return response json
         return response()->json([
             'success'   => true,

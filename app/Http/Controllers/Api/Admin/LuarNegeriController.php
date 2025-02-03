@@ -104,7 +104,7 @@ class LuarNegeriController extends Controller
                 'tipe_beasiswa'     => 5,
             ]);
             //return success with Api Resource
-            return new LuarNegeriResource(true, 'Data Post Berhasil Disimpan!', $luarNegeris);
+            return new LuarNegeriResource(true, 'Data Berhasil Disimpan!', $luarNegeris);
         }
     }
 

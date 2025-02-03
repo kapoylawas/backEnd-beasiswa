@@ -141,11 +141,11 @@ class AkademikController extends Controller
                 'tipe_beasiswa'     => 1,
             ]);
             //return success with Api Resource
-            return new AkademikResource(true, 'Data Post Berhasil Disimpan!', $akademik);
+            return new AkademikResource(true, 'Data Berhasil Disimpan!', $akademik);
         }
 
         //return failed with Api Resource
-        return new AkademikResource(false, 'Data Post Gagal Disimpan!', null);
+        return new AkademikResource(false, 'Data Gagal Disimpan!', null);
     }
 
     public function updateAkademik(Request $request, Akademik $akademik)

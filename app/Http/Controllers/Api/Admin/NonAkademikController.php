@@ -112,11 +112,11 @@ class NonAkademikController extends Controller
                 'tipe_beasiswa'     => 2,
             ]);
             //return success with Api Resource
-            return new NonAkademikResource(true, 'Data Post Berhasil Disimpan!', $nonakademik);
+            return new NonAkademikResource(true, 'Data Berhasil Disimpan!', $nonakademik);
         }
 
         //return failed with Api Resource
-        return new NonAkademikResource(false, 'Data Post Gagal Disimpan!', null);
+        return new NonAkademikResource(false, 'Data Gagal Disimpan!', null);
     }
 
     public function updateNonAkademik(Request $request, NonAkademik $nonAkademik)

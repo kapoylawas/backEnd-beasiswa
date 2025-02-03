@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Auth;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Terdaftar;
 use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
@@ -33,12 +34,14 @@ class LoginController extends Controller
             return response()->json($validator->errors(), 422);
         }
 
-        //get "email" dan "password" dari input
+        // Cek apakah NIK sudah terdaftar
+        $terdaftar = Terdaftar::where('nik', $request->nik)->first();
+        
+        //get "nik" dan "password" dari input
         $credentials = $request->only('nik', 'password');
 
         //check jika "nik" dan "password" tidak sesuai
         if (!$token = auth()->guard('api')->attempt($credentials)) {
-
             //response login "failed"
             return response()->json([
                 'success' => false,
@@ -47,14 +50,22 @@ class LoginController extends Controller
         }
 
         //response login "success" dengan generate "Token"
-        return response()->json([
+        $response = [
             'success'       => true,
             'user'          => auth()->guard('api')->user()->only(['name', 'nik']),
             'permissions'   => auth()->guard('api')->user()->getPermissionArray(),
             'token'         => $token
-        ], 200);
-    }
+        ];
 
+       // Jika NIK sudah terdaftar, tambahkan pesan dan tahun
+        if ($terdaftar) {
+            $response['metta'] = 'Anda sudah menerima beasiswa di tahun ' . $terdaftar->tahun;
+        } else {
+            $response['metta'] = 'Anda belum menerima beasiswa sama sekali';
+        }
+
+        return response()->json($response, 200);
+    }
     /**
      * logout
      *
