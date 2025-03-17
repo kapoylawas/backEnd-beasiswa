@@ -107,6 +107,13 @@ class AkademikController extends Controller
             'progam_pendidikan'       => 'required',
             'imagetranskrip'         => 'required|mimes:pdf|max:2000',
             'imagebanpt'         => 'required|mimes:pdf|max:2000',
+        ], [
+            'ipk.required' => 'ipk tidak boleh kosong',
+            'semester.required' => 'semester tidak boleh kosong',
+            'akredetasi_kampus.required' => 'akredetasi kampus tidak boleh kosong',
+            'progam_pendidikan.required' => 'program pendidikan kampus tidak boleh kosong',
+            'imagetranskrip.required' => 'program pendidikan kampus tidak boleh kosong',
+            'imagebanpt.required' => 'akredetasi dari BANPT kampus tidak boleh kosong',
         ]);
 
         if ($validator->fails()) {
