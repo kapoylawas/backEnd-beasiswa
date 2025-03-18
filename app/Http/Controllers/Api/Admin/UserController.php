@@ -149,7 +149,7 @@ class UserController extends Controller
     {
         // Cek apakah NIK sudah terdaftar
         $nikExists = Terdaftar::where('nik', $request->nik)->exists();
-    
+
         $validator = Validator::make(
             $request->all(),
             [
@@ -193,19 +193,19 @@ class UserController extends Controller
                 'password.confirmed' => 'password tidak tidak sama',
             ]
         );
-    
+
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
-    
+
         //upload imagektp
         $imagektp = $request->file('imagektp');
         $imagektp->storeAs('public/ktp', $imagektp->hashName());
-    
+
         //upload imagekk
         $imagekk = $request->file('imagekk');
         $imagekk->storeAs('public/kk', $imagekk->hashName());
-    
+
         //create user
         $user = User::create([
             'nik'     => $request->nik,
@@ -225,20 +225,21 @@ class UserController extends Controller
             'status_wa'     => 0,
             'status_email'     => 0,
             'status_finish'     => 0,
+            'jenis_verif'     => "belum",
             'step'     => 1,
             'imagektp'       => $imagektp->hashName(),
             'imagekk'       => $imagekk->hashName(),
             'password'  => bcrypt($request->password)
         ]);
-    
+
         //assign roles to user
         $user->assignRole(['user']);
-    
+
         // Kembalikan respons dengan peringatan jika NIK sudah terdaftar
         if ($nikExists) {
             return new UserResource(true, 'Data User Berhasil Disimpan! Namun, Anda sudah menerima beasiswa di tahun sebelumnya.', $user);
         }
-    
+
         //return success with Api Resource
         return new UserResource(true, 'Anda belum pernah menerima beasiswa!', $user);
     }
@@ -328,7 +329,7 @@ class UserController extends Controller
             'imagesuratpernyataan' => 'required|mimes:pdf|max:2048',
             'imageakrekampus' => 'required|mimes:pdf|max:2048',
             'pilih_universitas' => 'required',
-        ],[
+        ], [
             'nim.required' => 'nim tidak boleh kosong',
             'ktm.unique' => 'ktm tidak boleh kosong',
             'universitas.required' => 'nama universitas tidak boleh kosong',
