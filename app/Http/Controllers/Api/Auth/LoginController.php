@@ -36,7 +36,7 @@ class LoginController extends Controller
 
         // Cek apakah NIK sudah terdaftar
         $terdaftar = Terdaftar::where('nik', $request->nik)->first();
-        
+
         //get "nik" dan "password" dari input
         $credentials = $request->only('nik', 'password');
 
@@ -57,7 +57,7 @@ class LoginController extends Controller
             'token'         => $token
         ];
 
-       // Jika NIK sudah terdaftar, tambahkan pesan dan tahun
+        // Jika NIK sudah terdaftar, tambahkan pesan dan tahun
         if ($terdaftar) {
             $response['metta'] = 'Anda sudah menerima beasiswa di tahun ' . $terdaftar->tahun;
         } else {

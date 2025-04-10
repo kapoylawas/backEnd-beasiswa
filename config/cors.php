@@ -19,7 +19,7 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['http://localhost:5173', 'https://beasiswa-uji.sidoarjokab.go.id', 'https://beasiswa.sidoarjokab.go.id', '103.104.99.34', '10.1.10.52'],
+    'allowed_origins' => ['http://localhost:5173', 'https://beasiswa-uji.sidoarjokab.go.id', 'https://beasiswa.sidoarjokab.go.id', '103.104.99.34', '10.1.10.52', 'http://10.50.1.82:5173'],
 
     'allowed_origins_patterns' => [],
 
