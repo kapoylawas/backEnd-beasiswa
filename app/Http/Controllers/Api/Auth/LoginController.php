@@ -7,6 +7,14 @@ use App\Http\Controllers\Controller;
 use App\Models\Terdaftar;
 use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Facades\JWTAuth;
+use App\Mail\WelcomeMail;
+use App\Models\User;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
+
+
 
 class LoginController extends Controller
 {
@@ -80,5 +88,47 @@ class LoginController extends Controller
         return response()->json([
             'success' => true,
         ], 200);
+    }
+
+    public function sendWelcomeEmail(Request $request)
+    {
+        // Validasi email tidak boleh kosong
+        $request->validate([
+            'email' => 'required|email',
+        ]);
+
+        $email = $request->input('email'); // Ambil email dari request
+
+        // Cek apakah email terdaftar di tabel users
+        $user = User::where('email', $email)->first();
+
+        if (!$user) {
+            return response()->json(['message' => 'Email belum terdaftar'], 404);
+        }
+
+        // Ambil NIK dari pengguna
+        $nik = $user->nik; // Pastikan kolom 'nik' ada di tabel users
+        $id = $user->id; // Pastikan kolom 'nik' ada di tabel users
+
+        // Buat token reset password
+        $token = Str::random(60);
+        DB::table('password_resets')->insert([
+            'email' => $email,
+            'token' => $token,
+            'created_at' => now(),
+        ]);
+
+        // Generate random password
+        $newPassword = Str::random(8); // Password acak dengan 8 karakter
+        $user->password = Hash::make($newPassword); // Hash password
+        $user->save(); // Simpan perubahan password
+
+        // Buat URL reset password dengan NIK
+        $resetLink = url('reset-password/' . $nik . '/' . $token . '/' . $id);
+
+        // Kirim email dengan link reset password dan password baru
+        Mail::to($email)->send(new WelcomeMail($resetLink, $newPassword));
+
+        return response()->json(['message' => 'Email reset password berhasil terkirim!']);
     }
 }

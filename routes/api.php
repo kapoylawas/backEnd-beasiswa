@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\Api\Auth\LoginController;
+use App\Mail\WelcomeMail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -39,6 +42,8 @@ Route::get('/kelurahan/byid', [\App\Http\Controllers\Api\Admin\UserController::c
 //get tanggal batas
 Route::get('/tanggalBatas', [\App\Http\Controllers\Api\Admin\UserController::class, 'tanggalBatas']);
 
+//reset password
+Route::post('/send-welcome-email', [LoginController::class, 'sendWelcomeEmail']);
 
 
 //dashboard
