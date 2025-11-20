@@ -28,12 +28,10 @@ class LoginController extends Controller
     {
         //set validasi
         $validator = Validator::make($request->all(), [
-            'nik'    => 'required|max:16|min:16',
+            'nik'    => 'required',
             'password' => 'required',
         ], [
             'nik.required' => 'nik tidak boleh kosong',
-            'nik.max' => 'nik harus 16 digit',
-            'nik.min' => 'nik harus 16 digit',
             'password.required' => 'password tidak boleh kosong',
         ]);
 

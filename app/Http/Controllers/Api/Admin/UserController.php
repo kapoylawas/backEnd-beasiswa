@@ -153,7 +153,7 @@ class UserController extends Controller
         $validator = Validator::make(
             $request->all(),
             [
-                'nik'    => 'required|max:16|min:16',
+                'nik'    => 'required',
                 'nokk'    => 'required|max:16|min:16',
                 'name'     => 'required',
                 'nohp'     => 'required',
@@ -164,8 +164,8 @@ class UserController extends Controller
                 'rt'     => 'required',
                 'rw'     => 'required',
                 'alamat'     => 'required',
-                'imagektp'         => 'required|mimes:pdf|max:2048',
-                'imagekk'         => 'required|mimes:pdf|max:2000',
+                // 'imagektp'         => 'required|mimes:pdf|max:2048',
+                // 'imagekk'         => 'required|mimes:pdf|max:2000',
                 'password' => 'required|confirmed'
             ],
             [
@@ -183,12 +183,12 @@ class UserController extends Controller
                 'rt.required' => 'rt tidak boleh kosong',
                 'rw.required' => 'rw tidak boleh kosong',
                 'alamat.required' => 'alamat tidak boleh kosong',
-                'imagektp.required' => 'file KTP tidak boleh kosong',
-                'imagektp.mimes' => 'file KTP harus pdf',
-                'imagektp.max' => 'file KTP melebihi dari 2 mb',
-                'imagekk.required' => 'file kartu keluarga tidak boleh kosong',
-                'imagekk.mimes' => 'file kartu keluarga harus pdf',
-                'imagekk.max' => 'file kartu keluarga melebihi dari 2mb',
+                // 'imagektp.required' => 'file KTP tidak boleh kosong',
+                // 'imagektp.mimes' => 'file KTP harus pdf',
+                // 'imagektp.max' => 'file KTP melebihi dari 2 mb',
+                // 'imagekk.required' => 'file kartu keluarga tidak boleh kosong',
+                // 'imagekk.mimes' => 'file kartu keluarga harus pdf',
+                // 'imagekk.max' => 'file kartu keluarga melebihi dari 2mb',
                 'password.required' => 'password tidak boleh kosong',
                 'password.confirmed' => 'password tidak tidak sama',
             ]
@@ -198,13 +198,13 @@ class UserController extends Controller
             return response()->json($validator->errors(), 422);
         }
 
-        //upload imagektp
-        $imagektp = $request->file('imagektp');
-        $imagektp->storeAs('public/ktp', $imagektp->hashName());
+        // //upload imagektp
+        // $imagektp = $request->file('imagektp');
+        // $imagektp->storeAs('public/ktp', $imagektp->hashName());
 
-        //upload imagekk
-        $imagekk = $request->file('imagekk');
-        $imagekk->storeAs('public/kk', $imagekk->hashName());
+        // //upload imagekk
+        // $imagekk = $request->file('imagekk');
+        // $imagekk->storeAs('public/kk', $imagekk->hashName());
 
         //create user
         $user = User::create([
@@ -227,13 +227,13 @@ class UserController extends Controller
             'status_finish'     => 0,
             'jenis_verif'     => "belum",
             'step'     => 1,
-            'imagektp'       => $imagektp->hashName(),
-            'imagekk'       => $imagekk->hashName(),
+            // 'imagektp'       => $imagektp->hashName(),
+            // 'imagekk'       => $imagekk->hashName(),
             'password'  => bcrypt($request->password)
         ]);
 
         //assign roles to user
-        $user->assignRole(['user']);
+        $user->assignRole(['yatim']);
 
         // Kembalikan respons dengan peringatan jika NIK sudah terdaftar
         if ($nikExists) {

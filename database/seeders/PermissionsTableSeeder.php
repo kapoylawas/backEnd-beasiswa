@@ -61,7 +61,7 @@ class PermissionsTableSeeder extends Seeder
         Permission::create(['name' => 'dinsos.create', 'guard_name' => 'api']);
         Permission::create(['name' => 'dinsos.edit', 'guard_name' => 'api']);
         Permission::create(['name' => 'dinsos.delete', 'guard_name' => 'api']);
-        
+
         //permission for luar negeri
         Permission::create(['name' => 'luarnegeri.index', 'guard_name' => 'api']);
         Permission::create(['name' => 'luarnegeri.create', 'guard_name' => 'api']);
@@ -91,5 +91,11 @@ class PermissionsTableSeeder extends Seeder
         Permission::create(['name' => 'dispenduk.create', 'guard_name' => 'api']);
         Permission::create(['name' => 'dispenduk.edit', 'guard_name' => 'api']);
         Permission::create(['name' => 'dispenduk.delete', 'guard_name' => 'api']);
+
+        //permission for admin yatim piatu
+        Permission::create(['name' => 'yatim.index', 'guard_name' => 'api']);
+        Permission::create(['name' => 'yatim.create', 'guard_name' => 'api']);
+        Permission::create(['name' => 'yatim.edit', 'guard_name' => 'api']);
+        Permission::create(['name' => 'yatim.delete', 'guard_name' => 'api']);
     }
 }
