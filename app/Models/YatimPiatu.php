@@ -13,10 +13,19 @@ class YatimPiatu extends Model
     protected $fillable = [
         'user_id',
         'nik',
+        'nisn',
+        'npsn',
+        'jenjang',
         'name',
         'asal_sekolah',
         'alamat',
+        'tempat_lahir',
+        'tanggal_lahir',
         'imageskartukeluarga',
+        'imagesktpwali',
+        'imagesketerangansiswaaktif',
+        'imagessuratkematian',
+        'imagessurattidakmenerimabeasiswa',
         'imagesuratsktm',
     ];
 

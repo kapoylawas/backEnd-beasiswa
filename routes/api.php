@@ -94,6 +94,12 @@ Route::prefix('admin')->group(function () {
         Route::apiResource('/luarnegeri', App\Http\Controllers\Api\Admin\LuarNegeriController::class)
             ->middleware('permission:luarnegeri.index|luarnegeri.store|luarnegeri.update|luarnegeri.delete');
 
+        Route::apiResource('/yatim', App\Http\Controllers\Api\Admin\YatimPiatuController::class)
+            ->parameters(['yatim' => 'id'])
+            ->middleware('permission:yatim.index|yatim.store|yatim.update|yatim.delete');
+
+        Route::get('/yatim-byidsekolah/{user_id}', [App\Http\Controllers\Api\Admin\YatimPiatuController::class, 'getYatimPiatuByUserId']);
+
         // user by id
         Route::get('/users/byid', [\App\Http\Controllers\Api\Admin\UserController::class, 'userbyid']);
 
