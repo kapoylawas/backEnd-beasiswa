@@ -347,4 +347,112 @@ class YatimPiatuController extends Controller
             ], 500);
         }
     }
+
+    /**
+     * Verifikasi data yatim
+     */
+    public function verif($id)
+    {
+        try {
+            $yatimPiatu = YatimPiatu::with('user')->find($id);
+
+            if (!$yatimPiatu) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Data yatim tidak ditemukan'
+                ], 404);
+            }
+
+            // Update status_data menjadi 'verif'
+            $yatimPiatu->update([
+                'status_data' => 'verif'
+            ]);
+
+            // Refresh model untuk mendapatkan data terbaru
+            $yatimPiatu->refresh();
+
+            return response()->json([
+                'success' => true,
+                'data' => $yatimPiatu,
+                'message' => 'Data yatim berhasil diverifikasi'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal memverifikasi data yatim: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
+     * Batalkan verifikasi data yatim
+     */
+    public function unverif($id)
+    {
+        try {
+            $yatimPiatu = YatimPiatu::with('user')->find($id);
+
+            if (!$yatimPiatu) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Data yatim tidak ditemukan'
+                ], 404);
+            }
+
+            // Update status_data menjadi null (belum terverifikasi)
+            $yatimPiatu->update([
+                'status_data' => null
+            ]);
+
+            // Refresh model untuk mendapatkan data terbaru
+            $yatimPiatu->refresh();
+
+            return response()->json([
+                'success' => true,
+                'data' => $yatimPiatu,
+                'message' => 'Verifikasi data yatim berhasil dibatalkan'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal membatalkan verifikasi data yatim: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
+     * Tolak data yatim
+     */
+    public function reject($id)
+    {
+        try {
+            $yatimPiatu = YatimPiatu::with('user')->find($id);
+
+            if (!$yatimPiatu) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Data yatim tidak ditemukan'
+                ], 404);
+            }
+
+            // Update status_data menjadi 'ditolak'
+            $yatimPiatu->update([
+                'status_data' => 'ditolak'
+            ]);
+
+            // Refresh model untuk mendapatkan data terbaru
+            $yatimPiatu->refresh();
+
+            return response()->json([
+                'success' => true,
+                'data' => $yatimPiatu,
+                'message' => 'Data yatim berhasil ditolak'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal menolak data yatim: ' . $e->getMessage()
+            ], 500);
+        }
+    }
 }

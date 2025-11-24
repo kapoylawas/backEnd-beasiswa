@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\Admin\YatimPiatuController;
 use App\Http\Controllers\Api\Auth\LoginController;
 use App\Mail\WelcomeMail;
 use Illuminate\Http\Request;
@@ -99,6 +100,11 @@ Route::prefix('admin')->group(function () {
             ->middleware('permission:yatim.index|yatim.store|yatim.update|yatim.delete');
 
         Route::get('/yatim-byidsekolah/{user_id}', [App\Http\Controllers\Api\Admin\YatimPiatuController::class, 'getYatimPiatuByUserId']);
+
+        // Routes untuk verifikasi yatim
+        Route::post('/yatim/{id}/verif', [YatimPiatuController::class, 'verif']);
+        Route::post('/yatim/{id}/unverif', [YatimPiatuController::class, 'unverif']);
+        Route::post('/yatim/{id}/reject', [YatimPiatuController::class, 'reject']);
 
         // user by id
         Route::get('/users/byid', [\App\Http\Controllers\Api\Admin\UserController::class, 'userbyid']);
