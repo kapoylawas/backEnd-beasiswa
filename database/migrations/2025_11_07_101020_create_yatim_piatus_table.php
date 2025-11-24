@@ -29,6 +29,7 @@ return new class extends Migration
             $table->string('imagessuratkematian')->nullable();
             $table->string('imagessurattidakmenerimabeasiswa')->nullable();
             $table->string('imagesuratsktm')->nullable();
+            $table->string('status_data')->nullable();
             $table->timestamps();
         });
     }

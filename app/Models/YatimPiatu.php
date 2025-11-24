@@ -27,6 +27,7 @@ class YatimPiatu extends Model
         'imagessuratkematian',
         'imagessurattidakmenerimabeasiswa',
         'imagesuratsktm',
+        'status_data',
     ];
 
     public function user()
