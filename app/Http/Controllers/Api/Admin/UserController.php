@@ -220,7 +220,7 @@ class UserController extends Controller
             'rt'     => $request->rt,
             'rw'     => $request->rw,
             'alamat'     => $request->alamat,
-            'status'     => 2,
+            'status'     => 1,
             'status_terkirim'     => 'false',
             'status_wa'     => 0,
             'status_email'     => 0,
