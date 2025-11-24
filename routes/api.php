@@ -106,6 +106,8 @@ Route::prefix('admin')->group(function () {
         Route::post('/yatim/{id}/unverif', [YatimPiatuController::class, 'unverif']);
         Route::post('/yatim/{id}/reject', [YatimPiatuController::class, 'reject']);
 
+        Route::post('/yatim/{id}/update-alasan-verif', [YatimPiatuController::class, 'updateAlasanVerif']);
+
         // user by id
         Route::get('/users/byid', [\App\Http\Controllers\Api\Admin\UserController::class, 'userbyid']);
 

@@ -30,6 +30,7 @@ return new class extends Migration
             $table->string('imagessurattidakmenerimabeasiswa')->nullable();
             $table->string('imagesuratsktm')->nullable();
             $table->string('status_data')->nullable();
+            $table->string('alasan_verif')->nullable();
             $table->timestamps();
         });
     }
