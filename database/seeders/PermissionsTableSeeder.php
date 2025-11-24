@@ -97,5 +97,11 @@ class PermissionsTableSeeder extends Seeder
         Permission::create(['name' => 'yatim.create', 'guard_name' => 'api']);
         Permission::create(['name' => 'yatim.edit', 'guard_name' => 'api']);
         Permission::create(['name' => 'yatim.delete', 'guard_name' => 'api']);
+
+        //permission for admin verif yatim piatu
+        Permission::create(['name' => 'verifyatim.index', 'guard_name' => 'api']);
+        Permission::create(['name' => 'verifyatim.create', 'guard_name' => 'api']);
+        Permission::create(['name' => 'verifyatim.edit', 'guard_name' => 'api']);
+        Permission::create(['name' => 'verifyatim.delete', 'guard_name' => 'api']);
     }
 }

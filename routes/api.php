@@ -97,7 +97,7 @@ Route::prefix('admin')->group(function () {
 
         Route::apiResource('/yatim', App\Http\Controllers\Api\Admin\YatimPiatuController::class)
             ->parameters(['yatim' => 'id'])
-            ->middleware('permission:yatim.index|yatim.store|yatim.update|yatim.delete');
+            ->middleware('permission:yatim.index|yatim.store|yatim.update|yatim.delete|verifyatim.index');
 
         Route::get('/yatim-byidsekolah/{user_id}', [App\Http\Controllers\Api\Admin\YatimPiatuController::class, 'getYatimPiatuByUserId']);
 
