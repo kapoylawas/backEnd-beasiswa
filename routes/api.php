@@ -70,7 +70,7 @@ Route::prefix('admin')->group(function () {
         Route::post('/usersManagement', [UserManagementController::class, 'store'])
             ->middleware('permission:usersmanagement.index');
 
-        Route::get('/getuserManagement', [UserManagementController::class, 'index']);
+        Route::get('/getuserManagement', [\App\Http\Controllers\Api\Admin\UserManagementController::class, 'index'])->middleware('permission:usersmanagement.index');
 
         //permissions
         Route::get('/permissions', [\App\Http\Controllers\Api\Admin\PermissionController::class, 'index'])
