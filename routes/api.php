@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\API\Admin\UserManagementController;
+use App\Http\Controllers\Api\Admin\UserManagementController;
 use App\Http\Controllers\Api\Admin\YatimPiatuController;
 use App\Http\Controllers\Api\Auth\LoginController;
 use App\Mail\WelcomeMail;
@@ -70,7 +70,7 @@ Route::prefix('admin')->group(function () {
         Route::post('/usersManagement', [UserManagementController::class, 'store'])
             ->middleware('permission:usersmanagement.index');
 
-        Route::get('/getuserManagement', [\App\Http\Controllers\Api\Admin\UserManagementController::class, 'index'])->middleware('permission:usersmanagement.index');
+        Route::get('/getuserManagement', [UserManagementController::class, 'index'])->middleware('permission:usersmanagement.index');
 
         //permissions
         Route::get('/permissions', [\App\Http\Controllers\Api\Admin\PermissionController::class, 'index'])
