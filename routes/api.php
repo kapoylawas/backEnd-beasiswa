@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\Admin\UserManagementController;
 use App\Http\Controllers\Api\Admin\YatimPiatuController;
 use App\Http\Controllers\Api\Auth\LoginController;
 use App\Mail\WelcomeMail;
@@ -46,6 +47,9 @@ Route::get('/tanggalBatas', [\App\Http\Controllers\Api\Admin\UserController::cla
 //reset password
 Route::post('/send-welcome-email', [LoginController::class, 'sendWelcomeEmail']);
 
+// ✅ TAMBAHKAN INI - Route tanpa middleware untuk testing
+Route::get('/admin/usersManagement-test', [UserManagementController::class, 'testConnection']);
+
 
 //dashboard
 
@@ -62,6 +66,11 @@ Route::prefix('admin')->group(function () {
     Route::group(['middleware' => 'auth:api'], function () {
 
         Route::get('/dashboard', App\Http\Controllers\Api\Admin\DashboardController::class);
+
+        Route::post('/usersManagement', [UserManagementController::class, 'store'])
+            ->middleware('permission:usersmanagement.index');
+
+        Route::get('/getuserManagement', [UserManagementController::class, 'index'])->middleware('permission:usersmanagement.index');
 
         //permissions
         Route::get('/permissions', [\App\Http\Controllers\Api\Admin\PermissionController::class, 'index'])

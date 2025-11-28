@@ -74,7 +74,7 @@ class YatimPiatuController extends Controller
                 'tempat_lahir' => 'required|string|max:255',
                 'tanggal_lahir' => 'required|date',
                 'imageskartukeluarga' => 'required|file|mimes:pdf|max:5120',
-                'imagesktpwali' => 'required|file|mimes:pdf|max:5120',
+                // 'imagesktpwali' => 'required|file|mimes:pdf|max:5120',
                 'imagesketerangansiswaaktif' => 'required|file|mimes:pdf|max:5120',
                 'imagessuratkematian' => 'required|file|mimes:pdf|max:5120',
                 'imagessurattidakmenerimabeasiswa' => 'required|file|mimes:pdf|max:5120',

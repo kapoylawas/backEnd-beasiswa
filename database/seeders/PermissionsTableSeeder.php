@@ -103,5 +103,8 @@ class PermissionsTableSeeder extends Seeder
         Permission::create(['name' => 'verifyatim.create', 'guard_name' => 'api']);
         Permission::create(['name' => 'verifyatim.edit', 'guard_name' => 'api']);
         Permission::create(['name' => 'verifyatim.delete', 'guard_name' => 'api']);
+
+        //permission for admin verif user management
+        Permission::create(['name' => 'usersmanagement.index', 'guard_name' => 'api']);
     }
 }
