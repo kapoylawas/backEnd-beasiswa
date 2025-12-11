@@ -29,6 +29,7 @@ class YatimPiatu extends Model
         'imagesuratsktm',
         'status_data',
         'alasan_verif',
+        'verif_kk',
     ];
 
     public function user()

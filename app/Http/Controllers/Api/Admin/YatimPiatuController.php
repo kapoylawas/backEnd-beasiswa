@@ -499,4 +499,109 @@ class YatimPiatuController extends Controller
             ], 500);
         }
     }
+
+    public function verifKartuKeluarga($id)
+    {
+        try {
+            $yatimPiatu = YatimPiatu::with('user')->find($id);
+
+            if (!$yatimPiatu) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Data yatim tidak ditemukan'
+                ], 404);
+            }
+
+            // Update verif_kk menjadi 'verif'
+            $yatimPiatu->update([
+                'verif_kk' => 'verif'
+            ]);
+
+            // Refresh model untuk mendapatkan data terbaru
+            $yatimPiatu->refresh();
+
+            return response()->json([
+                'success' => true,
+                'data' => $yatimPiatu,
+                'message' => 'Kartu Keluarga berhasil diverifikasi'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal memverifikasi Kartu Keluarga: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
+     * Batalkan Verifikasi Kartu Keluarga
+     */
+    public function unverifKartuKeluarga($id)
+    {
+        try {
+            $yatimPiatu = YatimPiatu::with('user')->find($id);
+
+            if (!$yatimPiatu) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Data yatim tidak ditemukan'
+                ], 404);
+            }
+
+            // Update verif_kk menjadi null (belum terverifikasi)
+            $yatimPiatu->update([
+                'verif_kk' => null
+            ]);
+
+            // Refresh model untuk mendapatkan data terbaru
+            $yatimPiatu->refresh();
+
+            return response()->json([
+                'success' => true,
+                'data' => $yatimPiatu,
+                'message' => 'Verifikasi Kartu Keluarga berhasil dibatalkan'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal membatalkan verifikasi Kartu Keluarga: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
+     * Tolak Kartu Keluarga
+     */
+    public function rejectKartuKeluarga($id)
+    {
+        try {
+            $yatimPiatu = YatimPiatu::with('user')->find($id);
+
+            if (!$yatimPiatu) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Data yatim tidak ditemukan'
+                ], 404);
+            }
+
+            // Update verif_kk menjadi 'ditolak'
+            $yatimPiatu->update([
+                'verif_kk' => 'ditolak'
+            ]);
+
+            // Refresh model untuk mendapatkan data terbaru
+            $yatimPiatu->refresh();
+
+            return response()->json([
+                'success' => true,
+                'data' => $yatimPiatu,
+                'message' => 'Kartu Keluarga berhasil ditolak'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal menolak Kartu Keluarga: ' . $e->getMessage()
+            ], 500);
+        }
+    }
 }

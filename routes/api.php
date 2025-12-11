@@ -114,8 +114,21 @@ Route::prefix('admin')->group(function () {
         Route::post('/yatim/{id}/verif', [YatimPiatuController::class, 'verif']);
         Route::post('/yatim/{id}/unverif', [YatimPiatuController::class, 'unverif']);
         Route::post('/yatim/{id}/reject', [YatimPiatuController::class, 'reject']);
-
         Route::post('/yatim/{id}/update-alasan-verif', [YatimPiatuController::class, 'updateAlasanVerif']);
+
+        // ==============================================
+        // ROUTE UNTUK VERIFIKASI KARTU KELUARGA (KK) - TAMBAHKAN INI
+        // ==============================================
+        // Verifikasi KK
+        Route::post('/yatim/{id}/verif-kk', [YatimPiatuController::class, 'verifKartuKeluarga']);
+        
+        // Batalkan verifikasi KK
+        Route::post('/yatim/{id}/unverif-kk', [YatimPiatuController::class, 'unverifKartuKeluarga']);
+        
+        // Tolak KK
+        Route::post('/yatim/{id}/reject-kk', [YatimPiatuController::class, 'rejectKartuKeluarga']);
+        
+        // ==============================================
 
         // user by id
         Route::get('/users/byid', [\App\Http\Controllers\Api\Admin\UserController::class, 'userbyid']);
