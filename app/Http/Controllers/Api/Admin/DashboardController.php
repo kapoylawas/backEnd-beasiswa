@@ -22,7 +22,7 @@ class DashboardController extends Controller
     public function __invoke(Request $request)
     {
         // count users registed
-        $users = User::count();
+        $users = User::where('status', 2)->count();
         $akademiks = Akademik::count();
         $nonAkademiks = NonAkademik::count();
         $dinsoses = Dinsos::count();
