@@ -88,110 +88,100 @@ class UserManagementController extends Controller
             ], 500);
         }
     }
-    public function store(Request $request): JsonResponse
+    public function store(Request $request)
     {
-        // Validasi langsung di controller
-        $validator = Validator::make($request->all(), [
-            'nik' => 'required|string|unique:users,nik',
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email',
-            'gender' => 'required|in:male,female',
-            'alamat' => 'required|string',
-            'nokk' => 'nullable|string|max:16',
-            'nohp' => 'nullable|string|max:15',
-            'id_kecamatan' => 'nullable|integer',
-            'id_kelurahan' => 'nullable|integer',
-            'codepos' => 'nullable|string|max:5',
-            'rt' => 'nullable|string|max:3',
-            'rw' => 'nullable|string|max:3',
-        ], [
-            'nik.required' => 'NIK wajib diisi',
-            'nik.unique' => 'NIK sudah terdaftar',
-            'email.required' => 'Email wajib diisi',
-            'email.unique' => 'Email sudah terdaftar',
-            'name.required' => 'Nama wajib diisi',
-            'gender.required' => 'Jenis kelamin wajib diisi',
-            'alamat.required' => 'Alamat wajib diisi',
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'nik'    => 'required|unique:users|max:16|min:16',
+                'nokk'    => 'required|max:16|min:16',
+                'name'     => 'required',
+                'nohp'     => 'required',
+                'email'    => 'required|unique:users',
+                'gender'     => 'required',
+                'id_kecamatan'     => 'required',
+                'id_kelurahan'     => 'required',
+                'rt'     => 'required',
+                'rw'     => 'required',
+                'alamat'     => 'required',
+                'imagektp'         => 'required|mimes:pdf|max:2048',
+                'imagekk'         => 'required|mimes:pdf|max:2000',
+                'password' => 'required|confirmed'
+            ],
+            [
+                'nik.required' => 'nik no induk tidak boleh kosong',
+                'nik.unique' => 'nik sudah terdaftar',
+                'nokk.required' => ' no kartu kelearga tidak boleh kosong',
+                'nokk.max' => ' no kartu kelearga harus 16 digit',
+                'nokk.min' => ' no kartu kelearga harus 16 digit',
+                'name.required' => 'nama tidak boleh kosong',
+                'nohp.required' => 'no handphone/whatsapp tidak boleh kosong',
+                'email.required' => 'email tidak boleh kosong',
+                'email.unique' => 'email sudah di daftarkan',
+                'gender.required' => 'pilih jenis kelamin terlebih dahulu',
+                'id_kecamatan.required' => 'pilih kecamatan kelamin terlebih dahulu',
+                'id_kelurahan.required' => 'pilih kelurahan/desa kelamin terlebih dahulu',
+                'rt.required' => 'rt tidak boleh kosong',
+                'rw.required' => 'rw tidak boleh kosong',
+                'alamat.required' => 'alamat tidak boleh kosong',
+                'imagektp.required' => 'file KTP tidak boleh kosong',
+                'imagektp.mimes' => 'file KTP harus pdf',
+                'imagektp.max' => 'file KTP melebihi dari 2 mb',
+                'imagekk.required' => 'file kartu keluarga tidak boleh kosong',
+                'imagekk.mimes' => 'file kartu keluarga harus pdf',
+                'imagekk.max' => 'file kartu keluarga melebihi dari 2mb',
+                'password.required' => 'password tidak boleh kosong',
+                'password.confirmed' => 'password tidak tidak sama',
+            ]
+        );
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+
+        //upload imagektp
+        $imagektp = $request->file('imagektp');
+        $imagektp->storeAs('public/ktp', $imagektp->hashName());
+
+        //upload imagekk
+        $imagekk = $request->file('imagekk');
+        $imagekk->storeAs('public/kk', $imagekk->hashName());
+
+        //create user
+        $user = User::create([
+            'nik'     => $request->nik,
+            'nokk'     => $request->nokk,
+            'name'      => $request->name,
+            'nohp'      => $request->nohp,
+            'email'     => $request->email,
+            'gender'     => $request->gender,
+            'id_kecamatan'     => $request->id_kecamatan,
+            'id_kelurahan'     => $request->id_kelurahan,
+            'codepos'     => $request->codepos,
+            'rt'     => $request->rt,
+            'rw'     => $request->rw,
+            'alamat'     => $request->alamat,
+            'status'     => 2,
+            'status_terkirim'     => 'false',
+            'status_wa'     => 0,
+            'status_email'     => 0,
+            'status_finish'     => 0,
+            'step'     => 1,
+            'imagektp'       => $imagektp->hashName(),
+            'imagekk'       => $imagekk->hashName(),
+            'password'  => bcrypt($request->password)
         ]);
 
-        // Jika validasi gagal
-        if ($validator->fails()) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Validasi gagal',
-                'errors' => $validator->errors()
-            ], 422);
+        //assign roles to user
+        $user->assignRole(['user']);
+
+        if ($user) {
+            //return success with Api Resource
+            return new UserResource(true, 'Data User Berhasil Disimpan!', $user);
         }
 
-        DB::beginTransaction();
-
-        try {
-            // Debug: Log request data
-            Log::info('User Creation Request:', $request->all());
-
-            $userData = [
-                'nik' => $request->nik,
-                'nokk' => $request->nokk ?? '1234567890123456',
-                'name' => $request->name,
-                'nohp' => $request->nohp ?? '081234567890',
-                'email' => $request->email,
-                'gender' => $request->gender,
-                'id_kecamatan' => $request->id_kecamatan ?? 1,
-                'id_kelurahan' => $request->id_kelurahan ?? 1,
-                'codepos' => $request->codepos ?? '61256',
-                'rt' => $request->rt ?? '001',
-                'rw' => $request->rw ?? '001',
-                'alamat' => $request->alamat,
-                'status' => 1,
-                'status_terkirim' => 'false',
-                'status_wa' => 0,
-                'status_email' => 0,
-                'status_finish' => 0,
-                'jenis_verif' => 'belum',
-                'step' => 1,
-                'password' => Hash::make('!pendidikan@2025')
-            ];
-
-            Log::info('User Data to Create:', $userData);
-
-            $user = User::create($userData);
-
-            // Assign role 'yatim' ke user
-            $user->assignRole('admindinsos');
-
-            DB::commit();
-
-            Log::info('User created successfully:', [
-                'user_id' => $user->id,
-                'role_assigned' => 'yatim'
-            ]);
-
-            return response()->json([
-                'success' => true,
-                'message' => 'User berhasil dibuat dengan role yatim',
-                'data' => $user->load('roles') // Load roles untuk response
-            ], 201);
-        } catch (\Exception $e) {
-            DB::rollBack();
-
-            // Log error details
-            Log::error('User Creation Failed:', [
-                'message' => $e->getMessage(),
-                'file' => $e->getFile(),
-                'line' => $e->getLine(),
-                'trace' => $e->getTraceAsString()
-            ]);
-
-            return response()->json([
-                'success' => false,
-                'message' => 'Gagal membuat user',
-                'error' => $e->getMessage(),
-                'debug' => [
-                    'file' => $e->getFile(),
-                    'line' => $e->getLine()
-                ]
-            ], 500);
-        }
+        //return failed with Api Resource
+        return new UserResource(false, 'Data User Gagal Disimpan!', null);
     }
 
     // Method untuk test koneksi

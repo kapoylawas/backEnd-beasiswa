@@ -9,6 +9,7 @@ use App\Models\Kesra;
 use App\Models\LuarNegeri;
 use App\Models\NonAkademik;
 use App\Models\User;
+use App\Models\YatimPiatu;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -27,6 +28,7 @@ class DashboardController extends Controller
         $dinsoses = Dinsos::count();
         $kesras = Kesra::count();
         $luarNegeris = LuarNegeri::count();
+        $yatims = YatimPiatu::count();
         //hitung sudah verif akademik
         $jumlahLolosVerifAkademik = User::where('tipe_beasiswa', 1)
             ->where('jenis_verif', 'lolos')
@@ -104,7 +106,7 @@ class DashboardController extends Controller
                 'dinsoses' => $dinsoses,
                 'kesras' => $kesras,
                 'luarNegeris' => $luarNegeris,
-                'nonAkademiks' => $nonAkademiks,
+                'yatims' => $yatims,
                 'jumlahSudahVerifAkademik' => $jumlahSudahVerifAkademik,
                 'jumlahSudahVerifNonAkademik' => $jumlahSudahVerifNonAkademik,
                 'jumlahSudahVerifKesra' => $jumlahSudahVerifKesra,
