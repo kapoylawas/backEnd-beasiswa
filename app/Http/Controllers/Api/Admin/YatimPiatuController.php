@@ -500,6 +500,49 @@ class YatimPiatuController extends Controller
         }
     }
 
+     public function updateAlasanVerifKK(Request $request, $id)
+    {
+        try {
+            $yatimPiatu = YatimPiatu::with('user')->find($id);
+
+            if (!$yatimPiatu) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Data yatim tidak ditemukan'
+                ], 404);
+            }
+
+            $validator = Validator::make($request->all(), [
+                'alasan_kk' => 'required|string|max:1000',
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Validasi gagal',
+                    'errors' => $validator->errors()
+                ], 422);
+            }
+
+            $yatimPiatu->update([
+                'alasan_kk' => $request->alasan_kk
+            ]);
+
+            $yatimPiatu->refresh();
+
+            return response()->json([
+                'success' => true,
+                'data' => $yatimPiatu,
+                'message' => 'Alasan verifikasi berhasil diperbarui'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal memperbarui alasan verifikasi: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
     public function verifKartuKeluarga($id)
     {
         try {

@@ -17,7 +17,7 @@ class UserTableSeeder extends Seeder
     public function run(): void
     {
         // 1. Ambil role yatim yang sudah ada
-        $yatimRole = Role::where('name', 'dispora')->first();
+        $yatimRole = Role::where('name', 'admindashboard')->first();
 
         if (!$yatimRole) {
             $this->command->error('Role "yatim" tidak ditemukan!');
@@ -26,7 +26,7 @@ class UserTableSeeder extends Seeder
 
         // 2. Data Madrasah Ibtidaiyah (MI) dengan role yatim
         $sekolahData = [
-            ['name' => 'Muhammad Rifqi Achmadi', 'nik' => '3515080104930008'],
+            ['name' => 'Dashboard', 'nik' => '12345678910'],
         ];
 
         $this->command->info('Memulai pembuatan user dispenduk dengan role dispenduk...');
@@ -97,7 +97,7 @@ class UserTableSeeder extends Seeder
                     'alamat'     => 'Jl. ' . $data['name'] . ' No.' . rand(1, 100) . ' Sidoarjo',
                     'status_terkirim'     => 'false',
                     'status'     => 1,
-                    'password'  => bcrypt('password')
+                    'password'  => bcrypt('!AdminDashboard@2026')
                 ]);
 
                 // Assign role yatim

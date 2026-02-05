@@ -115,6 +115,7 @@ Route::prefix('admin')->group(function () {
         Route::post('/yatim/{id}/unverif', [YatimPiatuController::class, 'unverif']);
         Route::post('/yatim/{id}/reject', [YatimPiatuController::class, 'reject']);
         Route::post('/yatim/{id}/update-alasan-verif', [YatimPiatuController::class, 'updateAlasanVerif']);
+        Route::post('/yatim/{id}/update-alasan-kk', [YatimPiatuController::class, 'updateAlasanVerifKK']);
 
         // ==============================================
         // ROUTE UNTUK VERIFIKASI KARTU KELUARGA (KK) - TAMBAHKAN INI

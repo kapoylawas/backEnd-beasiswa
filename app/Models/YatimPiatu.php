@@ -30,6 +30,7 @@ class YatimPiatu extends Model
         'status_data',
         'alasan_verif',
         'verif_kk',
+        'alasan_kk',
     ];
 
     public function user()
