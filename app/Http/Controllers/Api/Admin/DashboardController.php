@@ -107,6 +107,7 @@ class DashboardController extends Controller
                 'kesras' => $kesras,
                 'luarNegeris' => $luarNegeris,
                 'yatims' => $yatims,
+                'nonAkademiks' => $nonAkademiks,
                 'jumlahSudahVerifAkademik' => $jumlahSudahVerifAkademik,
                 'jumlahSudahVerifNonAkademik' => $jumlahSudahVerifNonAkademik,
                 'jumlahSudahVerifKesra' => $jumlahSudahVerifKesra,

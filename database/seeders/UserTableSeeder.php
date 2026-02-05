@@ -17,7 +17,7 @@ class UserTableSeeder extends Seeder
     public function run(): void
     {
         // 1. Ambil role yatim yang sudah ada
-        $yatimRole = Role::where('name', 'admindinsos')->first();
+        $yatimRole = Role::where('name', 'dispora')->first();
 
         if (!$yatimRole) {
             $this->command->error('Role "yatim" tidak ditemukan!');
@@ -26,12 +26,7 @@ class UserTableSeeder extends Seeder
 
         // 2. Data Madrasah Ibtidaiyah (MI) dengan role yatim
         $sekolahData = [
-            ['name' => 'Santa Wira Kartika Putri Wihendra, S.Tr.IP', 'nik' => '200306232024092001'],
-            ['name' => 'M. Sudhiro, S.E.', 'nik' => '198108302009101001'],
-            ['name' => 'Sonny Aditya Darma, S.Sos', 'nik' => '199010292023211018'],
-            ['name' => 'Muhammad Shodiqil Khafili Djakfar', 'nik' => '199407122023211009'],
-            ['name' => 'Mahatma Byamoga', 'nik' => '3515080102000009'],
-            ['name' => 'Hindy Alfri Ajisprasetya, S.Pd.', 'nik' => '199205022015021001'],
+            ['name' => 'Muhammad Rifqi Achmadi', 'nik' => '3515080104930008'],
         ];
 
         $this->command->info('Memulai pembuatan user dispenduk dengan role dispenduk...');
@@ -102,7 +97,7 @@ class UserTableSeeder extends Seeder
                     'alamat'     => 'Jl. ' . $data['name'] . ' No.' . rand(1, 100) . ' Sidoarjo',
                     'status_terkirim'     => 'false',
                     'status'     => 1,
-                    'password'  => bcrypt('pendidikan@1234')
+                    'password'  => bcrypt('password')
                 ]);
 
                 // Assign role yatim
