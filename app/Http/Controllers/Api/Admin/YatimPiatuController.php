@@ -513,7 +513,7 @@ class YatimPiatuController extends Controller
             }
 
             $validator = Validator::make($request->all(), [
-                'alasan_kk' => 'required|string|max:1000',
+                'alasan_kk' => 'required',
             ]);
 
             if ($validator->fails()) {
