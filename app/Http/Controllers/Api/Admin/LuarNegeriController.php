@@ -54,10 +54,10 @@ class LuarNegeriController extends Controller
         return new LuarNegeriResource(false, 'Detail Data Luar Negeri Tidak Ditemukan!', null);
     }
 
-    public function showUuid($uuid)
+    public function showUuid($id)
     {
         //get luarnegeri
-        $luarNegeris = LuarNegeri::with('user')->where('uuid', $uuid)->first();
+        $luarNegeris = LuarNegeri::with('user')->where('id', $id)->first();
 
         if ($luarNegeris) {
             //return success with Api Resource

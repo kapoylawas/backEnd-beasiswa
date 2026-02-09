@@ -28,10 +28,10 @@ class DinsosController extends Controller
         return new DinsosResource(true, 'List Data Dinsos', $dinsos);
     }
 
-    public function showUuid($uuid)
+    public function showUuid($id)
     {
         //get akademiks
-        $dinsos = Dinsos::with('user')->where('uuid', $uuid)->first();
+        $dinsos = Dinsos::with('user')->where('id', $id)->first();
 
         if ($dinsos) {
             //return success with Api Resource

@@ -22,10 +22,10 @@ class KesraController extends Controller
         return new KesraResource(true, 'List Data Kesra', $kesras);
     }
 
-    public function showUuid($uuid)
+    public function showUuid($id)
     {
         //get kesra
-        $kesras = Kesra::with('user')->where('uuid', $uuid)->first();
+        $kesras = Kesra::with('user')->where('id', $id)->first();
 
         if ($kesras) {
             //return success with Api Resource

@@ -44,10 +44,10 @@ class AkademikController extends Controller
         return new AkademikResource(false, 'Detail Data Akademik Tidak Ditemukan!', null);
     }
 
-    public function showUuid($uuid)
+    public function showUuid($id)
     {
         //get akademiks
-        $akademiks = Akademik::with('user')->where('uuid', $uuid)->first();
+        $akademiks = Akademik::with('user')->where('id', $id)->first();
 
         if ($akademiks) {
             //return success with Api Resource

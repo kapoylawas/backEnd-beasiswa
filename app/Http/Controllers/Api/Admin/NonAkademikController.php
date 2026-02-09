@@ -62,10 +62,10 @@ class NonAkademikController extends Controller
         return new NonAkademikResource(false, 'Detail Data Non Akademik Tidak Ditemukan!', null);
     }
 
-    public function showUuid($uuid)
+    public function showUuid($id)
     {
         //get nonAkademiks
-        $nonAkademiks = NonAkademik::with('user')->where('uuid', $uuid)->first();
+        $nonAkademiks = NonAkademik::with('user')->where('id', $id)->first();
 
         if ($nonAkademiks) {
             //return success with Api Resource

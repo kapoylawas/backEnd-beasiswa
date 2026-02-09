@@ -92,8 +92,8 @@ class DashboardController extends Controller
             ->count();
         $jumlahSudahVerifYatim = YatimPiatu::whereNotNull('status_data')
             ->count();
-        $jumlahSudahVerifYatimKK = YatimPiatu::whereNotNull('verif_kk')
-            ->count();
+        // $jumlahSudahVerifYatimKK = YatimPiatu::whereNotNull('verif_kk')
+        //     ->count();
 
         // Mengambil data dengan join
         $terdaftar = DB::table('users')
@@ -123,7 +123,7 @@ class DashboardController extends Controller
                 'jumlahSudahVerifNikDinsos' => $jumlahSudahVerifNikDinsos,
                 'jumlahSudahVerifNikLuarNegeri' => $jumlahSudahVerifNikLuarNegeri,
                 'jumlahSudahVerifYatim' => $jumlahSudahVerifYatim,
-                'jumlahSudahVerifYatimKK' => $jumlahSudahVerifYatimKK,
+                // 'jumlahSudahVerifYatimKK' => $jumlahSudahVerifYatimKK,
             ],
             'terdaftar' => $terdaftar
         ]);
