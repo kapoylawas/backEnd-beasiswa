@@ -64,6 +64,7 @@ class User extends Authenticatable implements JWTSubject
         'id_kelurahan',
         'verifikator_nik',
         'verifikator_berkas',
+        'modal',
     ];
 
     protected function imagektp(): Attribute
