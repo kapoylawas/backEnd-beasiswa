@@ -61,18 +61,74 @@ class UserController extends Controller
         return new UserResource(true, 'List Data Users', $users);
     }
 
-    public function getDataUserAkademik()
+    public function getDataUserAkademik(Request $request)
     {
-        //get users
-        $users = User::where('status', '2')->where('tipe_beasiswa', '1')->when(request()->search, function ($users) {
-            $users = $users->where('nik', 'like', '%' . request()->search . '%');
-        })->with('roles')->orderBy('jenis_verif_nik', 'asc')->paginate(10);
+        try {
+            //get users
+            $query = User::where('status', '2')
+                ->where('tipe_beasiswa', '1')
+                ->with('roles');
 
-        //append query string to pagination links
-        $users->appends(['search' => request()->search]);
+            // Filter berdasarkan search (NIK)
+            if ($request->has('search') && $request->search != '') {
+                $search = $request->search;
+                $query->where(function ($q) use ($search) {
+                    $q->where('nik', 'like', '%' . $search . '%');
+                });
+            }
 
-        //return with Api Resource
-        return new UserResource(true, 'List Data Users', $users);
+            // Filter berdasarkan status verifikasi NIK
+            if ($request->has('status') && $request->status != '') {
+                $status = $request->status;
+
+                if ($status === 'null') {
+                    $query->whereNull('jenis_verif_nik');
+                } else {
+                    $query->where('jenis_verif_nik', $status);
+                }
+            }
+
+            // Hitung total counts untuk semua status (SEBELUM pagination)
+            // Clone query untuk menghitung masing-masing status
+            $totalCounts = [
+                'total' => (clone $query)->count(),
+                'lolos' => (clone $query)->where('jenis_verif_nik', 'lolos')->count(),
+                'tidak' => (clone $query)->where('jenis_verif_nik', 'tidak')->count(),
+                'belum' => (clone $query)->whereNull('jenis_verif_nik')->count(),
+            ];
+
+            // Sorting
+            $query->orderBy('jenis_verif_nik', 'asc');
+
+            // Pagination
+            $perPage = $request->get('per_page', 10);
+            $users = $query->paginate($perPage);
+
+            //append query string to pagination links
+            $users->appends([
+                'search' => $request->search,
+                'status' => $request->status,
+                'per_page' => $perPage
+            ]);
+
+            // Convert pagination data to array
+            $usersData = $users->toArray();
+
+            // Tambahkan counts ke dalam data
+            $usersData['counts'] = $totalCounts;
+
+            //return with success response
+            return response()->json([
+                'success' => true,
+                'data' => $usersData,
+                'message' => 'List Data Users Akademik berhasil diambil'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal mengambil data users akademik: ' . $e->getMessage()
+            ], 500);
+        }
     }
 
     public function getDataUserNonkademik()

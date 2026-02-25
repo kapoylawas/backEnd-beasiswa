@@ -17,7 +17,7 @@ class UserTableSeeder extends Seeder
     public function run(): void
     {
         // 1. Ambil role yatim yang sudah ada
-        $yatimRole = Role::where('name', 'admindashboard')->first();
+        $yatimRole = Role::where('name', 'yatim')->first();
 
         if (!$yatimRole) {
             $this->command->error('Role "yatim" tidak ditemukan!');
@@ -26,7 +26,8 @@ class UserTableSeeder extends Seeder
 
         // 2. Data Madrasah Ibtidaiyah (MI) dengan role yatim
         $sekolahData = [
-            ['name' => 'Dashboard', 'nik' => '12345678910'],
+            ['name' => 'SLB NEGERI GEDANGAN', 'nik' => '20501853'],
+            ['name' => 'SLBN JUWETKENONGO', 'nik' => '20572019'],
         ];
 
         $this->command->info('Memulai pembuatan user dispenduk dengan role dispenduk...');
@@ -97,7 +98,7 @@ class UserTableSeeder extends Seeder
                     'alamat'     => 'Jl. ' . $data['name'] . ' No.' . rand(1, 100) . ' Sidoarjo',
                     'status_terkirim'     => 'false',
                     'status'     => 1,
-                    'password'  => bcrypt('!AdminDashboard@2026')
+                    'password'  => bcrypt('password')
                 ]);
 
                 // Assign role yatim
@@ -124,7 +125,7 @@ class UserTableSeeder extends Seeder
         $this->command->info("Successfully created: {$createdCount} users");
         $this->command->info("Skipped (duplicate/empty NIK): {$skippedCount} users");
         $this->command->info("Domain email: @mi.sch.id");
-        $this->command->info("Password: swasta@1234");
+        $this->command->info("Password: password");
 
         // 6. Tampilkan statistik
         $this->command->line("\nStatistics:");
