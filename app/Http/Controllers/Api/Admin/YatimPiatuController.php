@@ -39,6 +39,25 @@ class YatimPiatuController extends Controller
                 $query->where('jenjang', $request->jenjang);
             }
 
+            // Filter berdasarkan status verifikasi
+            if ($request->has('status') && $request->status != '') {
+                $status = $request->status;
+
+                if ($status === 'null') {
+                    $query->whereNull('status_data');
+                } else {
+                    $query->where('status_data', $status);
+                }
+            }
+
+            // Hitung total counts untuk semua status (SEBELUM pagination)
+            $totalCounts = [
+                'total' => (clone $query)->count(),
+                'verif' => (clone $query)->where('status_data', 'verif')->count(),
+                'ditolak' => (clone $query)->where('status_data', 'ditolak')->count(),
+                'belum' => (clone $query)->whereNull('status_data')->count(),
+            ];
+
             $sortField = $request->get('sort_field', 'created_at');
             $sortOrder = $request->get('sort_order', 'desc');
             $query->orderBy($sortField, $sortOrder);
@@ -46,9 +65,23 @@ class YatimPiatuController extends Controller
             $perPage = $request->get('per_page', 10);
             $yatimPiatu = $query->paginate($perPage);
 
+            // Append query string to pagination links
+            $yatimPiatu->appends([
+                'search' => $request->search,
+                'jenjang' => $request->jenjang,
+                'status' => $request->status,
+                'per_page' => $perPage
+            ]);
+
+            // Convert pagination data to array
+            $yatimPiatuData = $yatimPiatu->toArray();
+
+            // Tambahkan counts ke dalam data
+            $yatimPiatuData['counts'] = $totalCounts;
+
             return response()->json([
                 'success' => true,
-                'data' => $yatimPiatu,
+                'data' => $yatimPiatuData,
                 'message' => 'Data yatim berhasil diambil'
             ]);
         } catch (\Exception $e) {
