@@ -39,7 +39,7 @@ class YatimPiatuController extends Controller
                 $query->where('jenjang', $request->jenjang);
             }
 
-            // Filter berdasarkan status verifikasi
+            // Filter berdasarkan status_data (status verifikasi data)
             if ($request->has('status') && $request->status != '') {
                 $status = $request->status;
 
@@ -50,12 +50,23 @@ class YatimPiatuController extends Controller
                 }
             }
 
+            // Filter berdasarkan status_kk (verif_kk - verifikasi kartu keluarga)
+            if ($request->has('status_kk') && $request->status_kk != '') {
+                $statusKk = $request->status_kk;
+
+                if ($statusKk === 'null') {
+                    $query->whereNull('verif_kk');
+                } else {
+                    $query->where('verif_kk', $statusKk);
+                }
+            }
+
             // Hitung total counts untuk semua status (SEBELUM pagination)
             $totalCounts = [
                 'total' => (clone $query)->count(),
-                'verif' => (clone $query)->where('status_data', 'verif')->count(),
-                'ditolak' => (clone $query)->where('status_data', 'ditolak')->count(),
-                'belum' => (clone $query)->whereNull('status_data')->count(),
+                'verif' => (clone $query)->where('verif_kk', 'verif')->count(),
+                'ditolak' => (clone $query)->where('verif_kk', 'ditolak')->count(),
+                'belum' => (clone $query)->whereNull('verif_kk')->count(),
             ];
 
             $sortField = $request->get('sort_field', 'created_at');
@@ -70,6 +81,7 @@ class YatimPiatuController extends Controller
                 'search' => $request->search,
                 'jenjang' => $request->jenjang,
                 'status' => $request->status,
+                'status_kk' => $request->status_kk,
                 'per_page' => $perPage
             ]);
 
@@ -533,7 +545,7 @@ class YatimPiatuController extends Controller
         }
     }
 
-     public function updateAlasanVerifKK(Request $request, $id)
+    public function updateAlasanVerifKK(Request $request, $id)
     {
         try {
             $yatimPiatu = YatimPiatu::with('user')->find($id);
