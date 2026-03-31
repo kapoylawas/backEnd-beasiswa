@@ -64,6 +64,9 @@ class DashboardController extends Controller
             ->where('jenis_verif', 'tidak')
             ->count();
         $jumlahSudahVerifDinsos = $jumlahLolosVerifDinsos + $jumlahTidakVerifDinsos;
+        $SudahVerifDinsos = User::where('tipe_beasiswa', 4)
+            ->whereNotNull('jenis_verif')
+            ->count();
 
         //hitung sudah verif luarnegeri
         $jumlahLolosVerifNikLuarNegeri = User::where('tipe_beasiswa', 5)
@@ -124,6 +127,8 @@ class DashboardController extends Controller
                 'jumlahSudahVerifNikLuarNegeri' => $jumlahSudahVerifNikLuarNegeri,
                 'jumlahSudahVerifYatim' => $jumlahSudahVerifYatim,
                 'jumlahSudahVerifYatimKK' => $jumlahSudahVerifYatimKK,
+                'jumlahSudahVerifYatimKK' => $jumlahSudahVerifYatimKK,
+                'SudahVerifDinsos' => $SudahVerifDinsos,
             ],
             'terdaftar' => $terdaftar
         ]);
