@@ -72,6 +72,10 @@ Route::prefix('admin')->group(function () {
 
         Route::get('/getuserManagement', [UserManagementController::class, 'index'])->middleware('permission:usersmanagement.index');
 
+        // Reset password user
+        Route::post('/usersManagement/{id}/reset-password', [UserManagementController::class, 'resetPassword'])
+            ->middleware('permission:usersmanagement.index');
+
         //permissions
         Route::get('/permissions', [\App\Http\Controllers\Api\Admin\PermissionController::class, 'index'])
             ->middleware('permission:permissions.index');

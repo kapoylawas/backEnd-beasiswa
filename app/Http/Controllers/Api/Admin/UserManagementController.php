@@ -18,23 +18,35 @@ class UserManagementController extends Controller
     {
         try {
             // Query dasar dengan status 1
-            $users = User::where('status', 1)
-                ->with(['roles']) // Load relasi roles jika diperlukan
-                ->latest() // Urutkan dari yang terbaru
-                ->get();
+            $query = User::where('status', 1)
+                ->with(['roles']); // Load relasi roles jika diperlukan
 
-            // Jika perlu pagination (opsional)
-            // $users = User::where('status', 1)
-            //     ->with(['roles'])
-            //     ->latest()
-            //     ->paginate(10); // 10 data per halaman
+            // Filter berdasarkan search (opsional)
+            if ($request->has('search') && $request->search != '') {
+                $search = $request->search;
+                $query->where(function ($q) use ($search) {
+                    $q->where('name', 'like', "%{$search}%")
+                        ->orWhere('email', 'like', "%{$search}%")
+                        ->orWhere('nik', 'like', "%{$search}%");
+                });
+            }
+
+            // Pagination
+            $perPage = $request->get('per_page', 10);
+            $users = $query->latest()->paginate($perPage);
+
+            // Append query string to pagination links
+            $users->appends([
+                'search' => $request->search,
+                'per_page' => $perPage
+            ]);
 
             // Format response
             return response()->json([
                 'success' => true,
                 'message' => 'Data user dengan status 1 berhasil diambil',
                 'data' => $users,
-                'count' => $users->count()
+                'count' => $users->total()
             ], 200);
         } catch (\Exception $e) {
             Log::error('Get Users with Status 1 Failed:', [
@@ -224,5 +236,53 @@ class UserManagementController extends Controller
             'message' => 'Validasi berhasil',
             'data' => $request->all()
         ]);
+    }
+
+    /**
+     * Reset password user menjadi password default
+     */
+    public function resetPassword($id): JsonResponse
+    {
+        try {
+            $user = User::find($id);
+
+            if (!$user) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'User tidak ditemukan'
+                ], 404);
+            }
+
+            // Password default yang akan di-reset
+            $defaultPassword = 'password';
+            
+            // Update password dengan bcrypt
+            $user->update([
+                'password' => Hash::make($defaultPassword)
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Password berhasil direset menjadi ' . $defaultPassword,
+                'data' => [
+                    'user_id' => $user->id,
+                    'name' => $user->name,
+                    'email' => $user->email,
+                    'default_password' => $defaultPassword
+                ]
+            ], 200);
+        } catch (\Exception $e) {
+            Log::error('Reset Password Failed:', [
+                'message' => $e->getMessage(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine()
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal mereset password',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 }
