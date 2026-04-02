@@ -55,6 +55,19 @@ class LoginController extends Controller
             ], 400);
         }
 
+        // Cek status user - hanya status = 1 yang bisa login
+        $user = auth()->guard('api')->user();
+        
+        if ($user->status != 1) {
+            // Logout user dengan status != 1
+            auth()->guard('api')->logout();
+            
+            return response()->json([
+                'success' => false,
+                'message' => 'Pendaftaran Sudah Selesai.'
+            ], 403);
+        }
+
         //response login "success" dengan generate "Token"
         $response = [
             'success'       => true,
