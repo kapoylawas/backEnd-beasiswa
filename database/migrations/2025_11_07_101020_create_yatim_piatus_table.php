@@ -31,6 +31,14 @@ return new class extends Migration
             $table->string('imagesuratsktm')->nullable();
             $table->string('status_data')->nullable();
             $table->string('alasan_verif')->nullable();
+            $table->string('alasan_kk')->nullable();
+            $table->string('verif_kk')->nullable();
+            $table->string('status_ketrima')->nullable();
+            $table->string('imageketrima')->nullable();
+            $table->string('imagespjmt')->nullable();
+            $table->string('nik_ortu')->nullable();
+            $table->string('nama_ortu')->nullable();
+            $table->string('no_rekening')->nullable();
             $table->timestamps();
         });
     }

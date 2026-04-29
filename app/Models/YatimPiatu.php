@@ -31,6 +31,12 @@ class YatimPiatu extends Model
         'alasan_verif',
         'verif_kk',
         'alasan_kk',
+        'status_ketrima',
+        'imageketrima',
+        'imagespjmt',
+        'nik_ortu',
+        'nama_ortu',
+        'no_rekening',
     ];
 
     public function user()
@@ -77,6 +83,19 @@ class YatimPiatu extends Model
     {
         return Attribute::make(
             get: fn($imagesuratsktm) => url('/storage/sertifikat/yatim/' . $imagesuratsktm),
+        );
+    }
+
+    protected function imageketrima(): Attribute
+    {
+        return Attribute::make(
+            get: fn($imageketrima) => url('/storage/dokumen/yatim/' . $imageketrima),
+        );
+    }
+    protected function imagespjmt(): Attribute
+    {
+        return Attribute::make(
+            get: fn($imagespjmt) => url('/storage/dokumen/yatim/' . $imagespjmt),
         );
     }
 }

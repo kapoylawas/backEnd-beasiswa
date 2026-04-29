@@ -134,6 +134,11 @@ Route::prefix('admin')->group(function () {
         Route::post('/yatim/{id}/reject-kk', [YatimPiatuController::class, 'rejectKartuKeluarga']);
 
         // ==============================================
+        // ROUTE UNTUK UPLOAD IMAGE KETRIMA
+        // ==============================================
+        Route::post('/yatim/{id}/upload-imageketrima', [YatimPiatuController::class, 'uploadImageKetrima']);
+
+        // ==============================================
 
         // user by id
         Route::get('/users/byid', [\App\Http\Controllers\Api\Admin\UserController::class, 'userbyid']);

@@ -61,6 +61,17 @@ class YatimPiatuController extends Controller
                 }
             }
 
+            // Filter berdasarkan status_ketrima (status penerimaan beasiswa)
+            if ($request->has('status_ketrima') && $request->status_ketrima != '') {
+                $statusKetrima = $request->status_ketrima;
+
+                if ($statusKetrima === 'null') {
+                    $query->whereNull('status_ketrima');
+                } else {
+                    $query->where('status_ketrima', $statusKetrima);
+                }
+            }
+
             // Hitung total counts untuk semua status (SEBELUM pagination)
             $totalCounts = [
                 'total' => (clone $query)->count(),
@@ -82,6 +93,7 @@ class YatimPiatuController extends Controller
                 'jenjang' => $request->jenjang,
                 'status' => $request->status,
                 'status_kk' => $request->status_kk,
+                'status_ketrima' => $request->status_ketrima,
                 'per_page' => $perPage
             ]);
 
@@ -689,6 +701,95 @@ class YatimPiatuController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Gagal menolak Kartu Keluarga: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
+     * Upload/Update image ketrima dan imagespjmt (surat perjanjian)
+     */
+    public function uploadImageKetrima(Request $request, $id)
+    {
+        try {
+            $yatimPiatu = YatimPiatu::with('user')->find($id);
+
+            if (!$yatimPiatu) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Data yatim tidak ditemukan'
+                ], 404);
+            }
+
+            // Validasi file dan data tambahan
+            $validator = Validator::make($request->all(), [
+                'imageketrima' => 'nullable|file|mimes:pdf|max:5120',
+                'imagespjmt' => 'nullable|file|mimes:pdf|max:5120',
+                'nik_ortu' => 'nullable|string|max:16',
+                'nama_ortu' => 'nullable|string|max:255',
+                'no_rekening' => 'nullable|string|max:20',
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Validasi gagal',
+                    'errors' => $validator->errors()
+                ], 422);
+            }
+
+            // Data yang akan diupdate
+            $updateData = [
+                'nik_ortu' => $request->nik_ortu,
+                'nama_ortu' => $request->nama_ortu,
+                'no_rekening' => $request->no_rekening,
+            ];
+
+            // Hapus file lama jika ada dan upload file baru untuk imageketrima
+            if ($request->hasFile('imageketrima')) {
+                if ($yatimPiatu->imageketrima) {
+                    $oldFilename = $yatimPiatu->getRawOriginal('imageketrima');
+                    if ($oldFilename) {
+                        Storage::disk('public')->delete('dokumen/yatim/' . $oldFilename);
+                    }
+                }
+
+                $file = $request->file('imageketrima');
+                $filename = time() . '_imageketrima_' . uniqid() . '.pdf';
+                $file->storeAs('dokumen/yatim', $filename, 'public');
+                $updateData['imageketrima'] = $filename;
+            }
+
+            // Hapus file lama jika ada dan upload file baru untuk imagespjmt
+            if ($request->hasFile('imagespjmt')) {
+                if ($yatimPiatu->imagespjmt) {
+                    $oldFilename = $yatimPiatu->getRawOriginal('imagespjmt');
+                    if ($oldFilename) {
+                        Storage::disk('public')->delete('dokumen/yatim/' . $oldFilename);
+                    }
+                }
+
+                $file = $request->file('imagespjmt');
+                $filename = time() . '_imagespjmt_' . uniqid() . '.pdf';
+                $file->storeAs('dokumen/yatim', $filename, 'public');
+                $updateData['imagespjmt'] = $filename;
+            }
+
+            // Update database
+            $yatimPiatu->update($updateData);
+
+            // Refresh model
+            $yatimPiatu->refresh();
+            $yatimPiatu->load('user');
+
+            return response()->json([
+                'success' => true,
+                'data' => $yatimPiatu,
+                'message' => 'File surat keterangan dan data berhasil diupdate'
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal mengupdate data: ' . $e->getMessage()
             ], 500);
         }
     }
