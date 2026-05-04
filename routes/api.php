@@ -245,6 +245,9 @@ Route::prefix('admin')->group(function () {
         // get data users by id
         Route::get('/beasiswa/users/{id}', [\App\Http\Controllers\Api\Admin\UserController::class, 'showUser']);
 
+        // Upload imagespjmt untuk user
+        Route::post('/beasiswa/users/{id}/upload-spjmt', [\App\Http\Controllers\Api\Admin\UserController::class, 'uploadImageSpjmt']);
+
         // get data akademiks by uuiid
         Route::get('/beasiswa/akademiks/{uuid}', [\App\Http\Controllers\Api\Admin\AkademikController::class, 'showUuid']);
 

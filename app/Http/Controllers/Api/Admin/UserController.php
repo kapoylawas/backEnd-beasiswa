@@ -784,4 +784,63 @@ class UserController extends Controller
 
         return response()->json($dates[0], 200);
     }
+
+    /**
+     * Upload/Update imagespjmt (surat perjanjian) untuk user
+     */
+    public function uploadImageSpjmt(Request $request, $id)
+    {
+        try {
+            $user = User::find($id);
+
+            if (!$user) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'User tidak ditemukan'
+                ], 404);
+            }
+
+            // Validasi file
+            $validator = Validator::make($request->all(), [
+                'imagespjmt' => 'required|file|mimes:pdf|max:5120',
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Validasi gagal',
+                    'errors' => $validator->errors()
+                ], 422);
+            }
+
+            // Hapus file lama jika ada
+            if ($user->imagespjmt) {
+                $oldFilename = $user->getRawOriginal('imagespjmt');
+                if ($oldFilename) {
+                    Storage::disk('public')->delete('imagespjmt/' . $oldFilename);
+                }
+            }
+
+            // Upload file baru
+            $file = $request->file('imagespjmt');
+            $filename = time() . '_imagespjmt_' . uniqid() . '.pdf';
+            $file->storeAs('public/imagespjmt', $filename);
+
+            // Update database
+            $user->update([
+                'imagespjmt' => $filename
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'data' => $user,
+                'message' => 'File SPJMT berhasil diupload'
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal mengupload file: ' . $e->getMessage()
+            ], 500);
+        }
+    }
 }

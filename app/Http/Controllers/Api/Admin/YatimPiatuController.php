@@ -727,6 +727,7 @@ class YatimPiatuController extends Controller
                 'nik_ortu' => 'nullable|string|max:16',
                 'nama_ortu' => 'nullable|string|max:255',
                 'no_rekening' => 'nullable|string|max:20',
+                'punya_rekening' => 'nullable|string',
             ]);
 
             if ($validator->fails()) {
@@ -742,6 +743,7 @@ class YatimPiatuController extends Controller
                 'nik_ortu' => $request->nik_ortu,
                 'nama_ortu' => $request->nama_ortu,
                 'no_rekening' => $request->no_rekening,
+                'punya_rekening' => $request->punya_rekening,
             ];
 
             // Hapus file lama jika ada dan upload file baru untuk imageketrima

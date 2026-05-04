@@ -55,6 +55,8 @@ return new class extends Migration
             $table->foreignId('id_kelurahan')->references('id')->on('kelurahans')->cascadeOnDelete();
             $table->string('verifikator_nik')->nullable();
             $table->string('verifikator_berkas')->nullable();
+            $table->string('status_ketrima')->nullable();
+            $table->string('imagespjmt')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

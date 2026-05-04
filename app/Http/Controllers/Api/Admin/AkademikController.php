@@ -76,23 +76,38 @@ class AkademikController extends Controller
 
         $searchString = request()->search;
         $jenis_verif = request()->jenis_verif;
+        $status_ketrima = request()->status_ketrima;
 
-        $nonAkademiks = Akademik::whereHas('user', function ($query) use ($searchString, $jenis_verif) {
+        $nonAkademiks = Akademik::whereHas('user', function ($query) use ($searchString, $jenis_verif, $status_ketrima) {
             $query->where('nik', 'like', '%' . $searchString . '%')
                 ->when($jenis_verif, function ($q) use ($jenis_verif) {
                     $q->where('jenis_verif', $jenis_verif);
+                })
+                ->when($status_ketrima !== null && $status_ketrima !== '', function ($q) use ($status_ketrima) {
+                    if ($status_ketrima === 'null') {
+                        $q->whereNull('status_ketrima');
+                    } else {
+                        $q->where('status_ketrima', $status_ketrima);
+                    }
                 });
         })
-            ->with(['user' => function ($query) use ($searchString, $jenis_verif) {
+            ->with(['user' => function ($query) use ($searchString, $jenis_verif, $status_ketrima) {
                 $query->where('nik', 'like', '%' . $searchString . '%')
                     ->when($jenis_verif, function ($q) use ($jenis_verif) {
                         $q->where('jenis_verif', $jenis_verif);
+                    })
+                    ->when($status_ketrima !== null && $status_ketrima !== '', function ($q) use ($status_ketrima) {
+                        if ($status_ketrima === 'null') {
+                            $q->whereNull('status_ketrima');
+                        } else {
+                            $q->where('status_ketrima', $status_ketrima);
+                        }
                     });
             }])
             ->orderBy('ipk', 'desc')
             ->paginate(10);
 
-        $nonAkademiks->appends(['search' => request()->search, 'jenis_verif' => request()->jenis_verif]);
+        $nonAkademiks->appends(['search' => request()->search, 'jenis_verif' => request()->jenis_verif, 'status_ketrima' => request()->status_ketrima]);
 
         //return with Api Resource
         return new AkademikResource(true, 'List Data Akademiks', $nonAkademiks);

@@ -37,6 +37,7 @@ class YatimPiatu extends Model
         'nik_ortu',
         'nama_ortu',
         'no_rekening',
+        'punya_rekening',
     ];
 
     public function user()

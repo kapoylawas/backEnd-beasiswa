@@ -59,13 +59,40 @@ class LoginController extends Controller
         $user = auth()->guard('api')->user();
         
         if ($user->status != 1) {
-            // Logout user dengan status != 1
-            auth()->guard('api')->logout();
-            
-            return response()->json([
-                'success' => false,
-                'message' => 'Pendaftaran Sudah Selesai.'
-            ], 403);
+            // Jika status = 2, cek apakah status_ketrima = true di tabel users
+            if ($user->status == 2) {
+                \Log::info('Login Status 2 Check:', [
+                    'user_id' => $user->id,
+                    'status' => $user->status,
+                    'status_ketrima' => $user->status_ketrima
+                ]);
+                
+                if ($user->status_ketrima != true && $user->status_ketrima != 1 && $user->status_ketrima != '1' && $user->status_ketrima != 'true' && $user->status_ketrima != 'diterima') {
+                    // Logout user jika status_ketrima tidak true
+                    auth()->guard('api')->logout();
+                    
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Akun Anda belum mendapat persetujuan beasiswa.',
+                        'show_modal' => true,
+                        'modal_type' => 'warning',
+                        'modal_title' => 'Pendaftaran Belum Disetujui',
+                        'modal_message' => 'Akun Anda belum mendapat persetujuan beasiswa. Silakan hubungi administrator untuk informasi lebih lanjut.'
+                    ], 403);
+                }
+            } else {
+                // Logout user dengan status selain 1 dan 2
+                auth()->guard('api')->logout();
+                
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Pendaftaran Sudah Selesai.',
+                    'show_modal' => true,
+                    'modal_type' => 'info',
+                    'modal_title' => 'Pendaftaran Ditutup',
+                    'modal_message' => 'Pendaftaran beasiswa sudah selesai. Terima kasih atas partisipasi Anda.'
+                ], 403);
+            }
         }
 
         //response login "success" dengan generate "Token"

@@ -65,6 +65,8 @@ class User extends Authenticatable implements JWTSubject
         'verifikator_nik',
         'verifikator_berkas',
         'modal',
+        'status_ketrima',
+        'imagespjmt',
     ];
 
     protected function imagektp(): Attribute
@@ -113,6 +115,13 @@ class User extends Authenticatable implements JWTSubject
     {
         return Attribute::make(
             get: fn ($imagesuratbeasiswa) => url('/storage/imagesuratbeasiswa/' . $imagesuratbeasiswa),
+        );
+    }
+
+     protected function imagespjmt(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($imagespjmt) => url('/storage/imagespjmt/' . $imagespjmt),
         );
     }
 
