@@ -39,15 +39,30 @@ class KesraController extends Controller
     public function getDataKesra1()
     {
         $searchString = request()->search;
+        $status_ketrima = request()->status_ketrima;
 
-        $kesras = Kesra::where('tipe_kesra', '1')->whereHas('user', function ($query) use ($searchString) {
-            $query->where('nik', 'like', '%' . $searchString . '%');
+        $kesras = Kesra::where('tipe_kesra', '1')->whereHas('user', function ($query) use ($searchString, $status_ketrima) {
+            $query->where('nik', 'like', '%' . $searchString . '%')
+                ->when($status_ketrima !== null && $status_ketrima !== '', function ($q) use ($status_ketrima) {
+                    if ($status_ketrima === 'null') {
+                        $q->whereNull('status_ketrima');
+                    } else {
+                        $q->where('status_ketrima', $status_ketrima);
+                    }
+                });
         })
-            ->with(['user' => function ($query) use ($searchString) {
-                $query->where('nik', 'like', '%' . $searchString . '%');
+            ->with(['user' => function ($query) use ($searchString, $status_ketrima) {
+                $query->where('nik', 'like', '%' . $searchString . '%')
+                    ->when($status_ketrima !== null && $status_ketrima !== '', function ($q) use ($status_ketrima) {
+                        if ($status_ketrima === 'null') {
+                            $q->whereNull('status_ketrima');
+                        } else {
+                            $q->where('status_ketrima', $status_ketrima);
+                        }
+                    });
             }])->latest()->paginate(10);
 
-        $kesras->appends(['search' => request()->search]);
+        $kesras->appends(['search' => request()->search, 'status_ketrima' => request()->status_ketrima]);
 
         //return with Api Resource
         return new KesraResource(true, 'List Data kesra', $kesras);
@@ -56,15 +71,30 @@ class KesraController extends Controller
     public function getDataKesra2()
     {
         $searchString = request()->search;
+        $status_ketrima = request()->status_ketrima;
 
-        $kesras = Kesra::where('tipe_kesra', '2')->whereHas('user', function ($query) use ($searchString) {
-            $query->where('nik', 'like', '%' . $searchString . '%');
+        $kesras = Kesra::where('tipe_kesra', '2')->whereHas('user', function ($query) use ($searchString, $status_ketrima) {
+            $query->where('nik', 'like', '%' . $searchString . '%')
+                ->when($status_ketrima !== null && $status_ketrima !== '', function ($q) use ($status_ketrima) {
+                    if ($status_ketrima === 'null') {
+                        $q->whereNull('status_ketrima');
+                    } else {
+                        $q->where('status_ketrima', $status_ketrima);
+                    }
+                });
         })
-            ->with(['user' => function ($query) use ($searchString) {
-                $query->where('nik', 'like', '%' . $searchString . '%');
+            ->with(['user' => function ($query) use ($searchString, $status_ketrima) {
+                $query->where('nik', 'like', '%' . $searchString . '%')
+                    ->when($status_ketrima !== null && $status_ketrima !== '', function ($q) use ($status_ketrima) {
+                        if ($status_ketrima === 'null') {
+                            $q->whereNull('status_ketrima');
+                        } else {
+                            $q->where('status_ketrima', $status_ketrima);
+                        }
+                    });
             }])->latest()->paginate(10);
 
-        $kesras->appends(['search' => request()->search]);
+        $kesras->appends(['search' => request()->search, 'status_ketrima' => request()->status_ketrima]);
 
         //return with Api Resource
         return new KesraResource(true, 'List Data kesra', $kesras);
@@ -73,15 +103,30 @@ class KesraController extends Controller
     public function getDataKesra3()
     {
         $searchString = request()->search;
+        $status_ketrima = request()->status_ketrima;
 
-        $kesras = Kesra::where('tipe_kesra', '3')->whereHas('user', function ($query) use ($searchString) {
-            $query->where('nik', 'like', '%' . $searchString . '%');
+        $kesras = Kesra::where('tipe_kesra', '3')->whereHas('user', function ($query) use ($searchString, $status_ketrima) {
+            $query->where('nik', 'like', '%' . $searchString . '%')
+                ->when($status_ketrima !== null && $status_ketrima !== '', function ($q) use ($status_ketrima) {
+                    if ($status_ketrima === 'null') {
+                        $q->whereNull('status_ketrima');
+                    } else {
+                        $q->where('status_ketrima', $status_ketrima);
+                    }
+                });
         })
-            ->with(['user' => function ($query) use ($searchString) {
-                $query->where('nik', 'like', '%' . $searchString . '%');
+            ->with(['user' => function ($query) use ($searchString, $status_ketrima) {
+                $query->where('nik', 'like', '%' . $searchString . '%')
+                    ->when($status_ketrima !== null && $status_ketrima !== '', function ($q) use ($status_ketrima) {
+                        if ($status_ketrima === 'null') {
+                            $q->whereNull('status_ketrima');
+                        } else {
+                            $q->where('status_ketrima', $status_ketrima);
+                        }
+                    });
             }])->latest()->paginate(10);
 
-        $kesras->appends(['search' => request()->search]);
+        $kesras->appends(['search' => request()->search, 'status_ketrima' => request()->status_ketrima]);
 
         //return with Api Resource
         return new KesraResource(true, 'List Data kesra', $kesras);
@@ -90,15 +135,30 @@ class KesraController extends Controller
     public function getDataKesra4()
     {
         $searchString = request()->search;
+        $status_ketrima = request()->status_ketrima;
 
-        $kesras = Kesra::where('tipe_kesra', '4')->whereHas('user', function ($query) use ($searchString) {
-            $query->where('nik', 'like', '%' . $searchString . '%');
+        $kesras = Kesra::where('tipe_kesra', '4')->whereHas('user', function ($query) use ($searchString, $status_ketrima) {
+            $query->where('nik', 'like', '%' . $searchString . '%')
+                ->when($status_ketrima !== null && $status_ketrima !== '', function ($q) use ($status_ketrima) {
+                    if ($status_ketrima === 'null') {
+                        $q->whereNull('status_ketrima');
+                    } else {
+                        $q->where('status_ketrima', $status_ketrima);
+                    }
+                });
         })
-            ->with(['user' => function ($query) use ($searchString) {
-                $query->where('nik', 'like', '%' . $searchString . '%');
+            ->with(['user' => function ($query) use ($searchString, $status_ketrima) {
+                $query->where('nik', 'like', '%' . $searchString . '%')
+                    ->when($status_ketrima !== null && $status_ketrima !== '', function ($q) use ($status_ketrima) {
+                        if ($status_ketrima === 'null') {
+                            $q->whereNull('status_ketrima');
+                        } else {
+                            $q->where('status_ketrima', $status_ketrima);
+                        }
+                    });
             }])->latest()->paginate(10);
 
-        $kesras->appends(['search' => request()->search]);
+        $kesras->appends(['search' => request()->search, 'status_ketrima' => request()->status_ketrima]);
 
         //return with Api Resource
         return new KesraResource(true, 'List Data kesra', $kesras);

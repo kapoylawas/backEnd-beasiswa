@@ -17,8 +17,14 @@ class UserManagementController extends Controller
     public function index(Request $request): JsonResponse
     {
         try {
-            // Query dasar dengan status 1
-            $query = User::where('status', 1)
+            // Query dasar dengan status 1 DAN status 2 dengan status_ketrima = 1
+            $query = User::where(function ($q) {
+                    $q->where('status', 1)
+                        ->orWhere(function ($q2) {
+                            $q2->where('status', 2)
+                                ->whereIn('status_ketrima', [true, 1, '1', 'true', 'diterima']);
+                        });
+                })
                 ->with(['roles']); // Load relasi roles jika diperlukan
 
             // Filter berdasarkan search (opsional)
@@ -44,12 +50,12 @@ class UserManagementController extends Controller
             // Format response
             return response()->json([
                 'success' => true,
-                'message' => 'Data user dengan status 1 berhasil diambil',
+                'message' => 'Data user dengan status 1 dan status 2 (status_ketrima = true) berhasil diambil',
                 'data' => $users,
                 'count' => $users->total()
             ], 200);
         } catch (\Exception $e) {
-            Log::error('Get Users with Status 1 Failed:', [
+            Log::error('Get Users Failed:', [
                 'message' => $e->getMessage(),
                 'file' => $e->getFile(),
                 'line' => $e->getLine()
