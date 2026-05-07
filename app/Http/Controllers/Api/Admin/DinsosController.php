@@ -88,15 +88,30 @@ class DinsosController extends Controller
     public function getDataDinsosDtks()
     {
         $searchString = request()->search;
+        $status_ketrima = request()->status_ketrima;
 
-        $kesras = Dinsos::where('tipe_daftar', '1')->whereHas('user', function ($query) use ($searchString) {
-            $query->where('nik', 'like', '%' . $searchString . '%');
+        $kesras = Dinsos::where('tipe_daftar', '1')->whereHas('user', function ($query) use ($searchString, $status_ketrima) {
+            $query->where('nik', 'like', '%' . $searchString . '%')
+                ->when($status_ketrima !== null && $status_ketrima !== '', function ($q) use ($status_ketrima) {
+                    if ($status_ketrima === 'null') {
+                        $q->whereNull('status_ketrima');
+                    } else {
+                        $q->where('status_ketrima', $status_ketrima);
+                    }
+                });
         })
-            ->with(['user' => function ($query) use ($searchString) {
-                $query->where('nik', 'like', '%' . $searchString . '%');
+            ->with(['user' => function ($query) use ($searchString, $status_ketrima) {
+                $query->where('nik', 'like', '%' . $searchString . '%')
+                    ->when($status_ketrima !== null && $status_ketrima !== '', function ($q) use ($status_ketrima) {
+                        if ($status_ketrima === 'null') {
+                            $q->whereNull('status_ketrima');
+                        } else {
+                            $q->where('status_ketrima', $status_ketrima);
+                        }
+                    });
             }])->latest()->paginate(10);
 
-        $kesras->appends(['search' => request()->search]);
+        $kesras->appends(['search' => request()->search, 'status_ketrima' => request()->status_ketrima]);
 
         //return with Api Resource
         return new DinsosResource(true, 'List Data Luar Negeri', $kesras);
@@ -105,15 +120,30 @@ class DinsosController extends Controller
     public function getDataDinsosNoDtks()
     {
         $searchString = request()->search;
+        $status_ketrima = request()->status_ketrima;
 
-        $kesras = Dinsos::where('tipe_daftar', '2')->whereHas('user', function ($query) use ($searchString) {
-            $query->where('nik', 'like', '%' . $searchString . '%');
+        $kesras = Dinsos::where('tipe_daftar', '2')->whereHas('user', function ($query) use ($searchString, $status_ketrima) {
+            $query->where('nik', 'like', '%' . $searchString . '%')
+                ->when($status_ketrima !== null && $status_ketrima !== '', function ($q) use ($status_ketrima) {
+                    if ($status_ketrima === 'null') {
+                        $q->whereNull('status_ketrima');
+                    } else {
+                        $q->where('status_ketrima', $status_ketrima);
+                    }
+                });
         })
-            ->with(['user' => function ($query) use ($searchString) {
-                $query->where('nik', 'like', '%' . $searchString . '%');
+            ->with(['user' => function ($query) use ($searchString, $status_ketrima) {
+                $query->where('nik', 'like', '%' . $searchString . '%')
+                    ->when($status_ketrima !== null && $status_ketrima !== '', function ($q) use ($status_ketrima) {
+                        if ($status_ketrima === 'null') {
+                            $q->whereNull('status_ketrima');
+                        } else {
+                            $q->where('status_ketrima', $status_ketrima);
+                        }
+                    });
             }])->latest()->paginate(10);
 
-        $kesras->appends(['search' => request()->search]);
+        $kesras->appends(['search' => request()->search, 'status_ketrima' => request()->status_ketrima]);
 
         //return with Api Resource
         return new DinsosResource(true, 'List Data Luar Negeri', $kesras);
