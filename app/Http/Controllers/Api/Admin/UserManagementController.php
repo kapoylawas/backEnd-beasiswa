@@ -259,8 +259,8 @@ class UserManagementController extends Controller
                 ], 404);
             }
 
-            // Password default yang akan di-reset
-            $defaultPassword = 'password';
+            // Generate password yang lebih kuat
+            $defaultPassword = $this->generateStrongPassword();
             
             // Update password dengan bcrypt
             $user->update([
@@ -269,12 +269,13 @@ class UserManagementController extends Controller
 
             return response()->json([
                 'success' => true,
-                'message' => 'Password berhasil direset menjadi ' . $defaultPassword,
+                'message' => 'Password berhasil direset',
                 'data' => [
                     'user_id' => $user->id,
                     'name' => $user->name,
                     'email' => $user->email,
-                    'default_password' => $defaultPassword
+                    'default_password' => $defaultPassword,
+                    'password_info' => 'Password terdiri dari kombinasi huruf besar, huruf kecil, dan angka'
                 ]
             ], 200);
         } catch (\Exception $e) {
@@ -290,5 +291,23 @@ class UserManagementController extends Controller
                 'error' => $e->getMessage()
             ], 500);
         }
+    }
+
+    /**
+     * Generate password yang kuat secara acak
+     * Format: Kombinasi huruf besar, huruf kecil, dan angka
+     */
+    private function generateStrongPassword(): string
+    {
+        // Generate password dengan kombinasi huruf dan angka
+        $uppercase = substr(str_shuffle('ABCDEFGHIJKLMNOPQRSTUVWXYZ'), 0, 2);
+        $lowercase = substr(str_shuffle('abcdefghijklmnopqrstuvwxyz'), 0, 5);
+        $numbers = substr(str_shuffle('0123456789'), 0, 3);
+        
+        // Gabungkan semua karakter
+        $password = $uppercase . $lowercase . $numbers;
+        
+        // Shuffle untuk mengacak posisi karakter
+        return str_shuffle($password);
     }
 }
