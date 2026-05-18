@@ -72,6 +72,17 @@ class YatimPiatuController extends Controller
                 }
             }
 
+            // Filter berdasarkan punya_rekening (status kepemilikan rekening)
+            if ($request->has('punya_rekening') && $request->punya_rekening != '') {
+                $punyaRekening = $request->punya_rekening;
+
+                if ($punyaRekening === 'null' || $punyaRekening === '') {
+                    $query->whereNull('punya_rekening');
+                } else {
+                    $query->where('punya_rekening', $punyaRekening);
+                }
+            }
+
             // Hitung total counts untuk semua status (SEBELUM pagination)
             $totalCounts = [
                 'total' => (clone $query)->count(),
@@ -94,6 +105,7 @@ class YatimPiatuController extends Controller
                 'status' => $request->status,
                 'status_kk' => $request->status_kk,
                 'status_ketrima' => $request->status_ketrima,
+                'punya_rekening' => $request->punya_rekening,
                 'per_page' => $perPage
             ]);
 
