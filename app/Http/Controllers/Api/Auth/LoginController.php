@@ -67,18 +67,22 @@ class LoginController extends Controller
                     'status_ketrima' => $user->status_ketrima
                 ]);
                 
-                if ($user->status_ketrima != true && $user->status_ketrima != 1 && $user->status_ketrima != '1' && $user->status_ketrima != 'true' && $user->status_ketrima != 'diterima') {
-                    // Logout user jika status_ketrima tidak true
+                // Status_ketrima = 1 sudah tidak bisa login (hanya yang belum approve yang bisa)
+                if ($user->status_ketrima == true || $user->status_ketrima == 1 || $user->status_ketrima == '1' || $user->status_ketrima == 'true' || $user->status_ketrima == 'diterima') {
+                    // Logout user jika status_ketrima sudah approve
                     auth()->guard('api')->logout();
                     
                     return response()->json([
                         'success' => false,
-                        'message' => 'Akun Anda belum mendapat persetujuan beasiswa.',
+                        'message' => 'Akun Anda sudah mendapat persetujuan beasiswa dan tidak dapat login lagi.',
                         'show_modal' => true,
-                        'modal_type' => 'warning',
-                        'modal_title' => 'Pendaftaran Belum Disetujui',
-                        'modal_message' => 'Akun Anda belum mendapat persetujuan beasiswa. Silakan hubungi administrator untuk informasi lebih lanjut.'
+                        'modal_type' => 'info',
+                        'modal_title' => 'Sudah Mendapat Persetujuan',
+                        'modal_message' => 'Akun Anda sudah mendapat persetujuan beasiswa dan sudah tidak dapat login lagi. Terima kasih atas partisipasi Anda.'
                     ], 403);
+                } else {
+                    // Status_ketrima belum approve, bisa login
+                    // Continue login
                 }
             } else {
                 // Logout user dengan status selain 1 dan 2
