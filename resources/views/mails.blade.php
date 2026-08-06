@@ -149,13 +149,13 @@
                 </div>
 
                 <!-- Notice / Security Warning -->
-                <div className="warning-box">
+                <div class="warning-box">
                     <strong>Penting Demi Keamanan:</strong> Mohon untuk segera login dan mengganti kata sandi ini dengan password pribadi Anda melalui menu Pengaturan Profil setelah masuk.
                 </div>
 
                 <!-- CTA Button -->
-                <div className="btn-container">
-                    <a href="http://localhost:5173/login" className="btn-login" target="_blank">
+                <div class="btn-container">
+                    <a href="https://beasiswa.sidoarjokab.go.id/login" class="btn-login" target="_blank">
                         Login Ke Akun Beasiswa &rarr;
                     </a>
                 </div>
