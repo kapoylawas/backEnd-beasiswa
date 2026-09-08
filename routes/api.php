@@ -19,8 +19,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+//route generate captcha mandiri
+Route::get('/captcha', [App\Http\Controllers\Api\Auth\LoginController::class, 'generateCaptcha']);
+
 //route login
-Route::post('/login', [App\Http\Controllers\Api\Auth\LoginController::class, 'index']);
+Route::post('/login', [App\Http\Controllers\Api\Auth\LoginController::class, 'index'])->middleware('throttle:login');
 
 //route lupa password
 Route::post('/lupaPassword', [App\Http\Controllers\Api\Auth\LupaPassword::class, 'index']);
