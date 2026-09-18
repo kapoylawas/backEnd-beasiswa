@@ -20,20 +20,21 @@ use Illuminate\Support\Facades\Route;
 */
 
 //route generate captcha mandiri
-Route::get('/captcha', [App\Http\Controllers\Api\Auth\LoginController::class, 'generateCaptcha']);
+Route::get('/captcha', [App\Http\Controllers\Api\Auth\LoginController::class, 'generateCaptcha'])->middleware('throttle:captcha');
 
 //route login
 Route::post('/login', [App\Http\Controllers\Api\Auth\LoginController::class, 'index'])->middleware('throttle:login');
 
 //route lupa password
-Route::post('/lupaPassword', [App\Http\Controllers\Api\Auth\LupaPassword::class, 'index']);
+Route::post('/lupaPassword', [App\Http\Controllers\Api\Auth\LupaPassword::class, 'index'])->middleware('throttle:password-reset');
 
 //ganti password
-Route::put('/changePassword/{user}', [App\Http\Controllers\Api\Auth\LupaPassword::class, 'update']);
+Route::put('/changePassword/{user}', [App\Http\Controllers\Api\Auth\LupaPassword::class, 'update'])->middleware('throttle:password-reset');
 
-Route::apiResource('/users', App\Http\Controllers\Api\Admin\UserController::class);
+Route::post('/users', [App\Http\Controllers\Api\Admin\UserController::class, 'store'])->middleware('throttle:registration');
+Route::apiResource('/users', App\Http\Controllers\Api\Admin\UserController::class)->except(['store']);
 
-Route::post('/adminOpd', [App\Http\Controllers\Api\Admin\UserController::class, 'storeAdmin']);
+Route::post('/adminOpd', [App\Http\Controllers\Api\Admin\UserController::class, 'storeAdmin'])->middleware('throttle:registration');
 
 //permissions all
 Route::get('/permissions/all', [\App\Http\Controllers\Api\Admin\PermissionController::class, 'all']);
@@ -48,7 +49,7 @@ Route::get('/kelurahan/byid', [\App\Http\Controllers\Api\Admin\UserController::c
 Route::get('/tanggalBatas', [\App\Http\Controllers\Api\Admin\UserController::class, 'tanggalBatas']);
 
 //reset password
-Route::post('/send-welcome-email', [LoginController::class, 'sendWelcomeEmail']);
+Route::post('/send-welcome-email', [LoginController::class, 'sendWelcomeEmail'])->middleware('throttle:sensitive-action');
 
 // ✅ TAMBAHKAN INI - Route tanpa middleware untuk testing
 Route::get('/admin/usersManagement-test', [UserManagementController::class, 'testConnection']);

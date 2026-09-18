@@ -429,6 +429,11 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
+        // 0. Honeypot check anti-bot
+        if ($request->filled('website') || $request->filled('bot_check')) {
+            return response()->json(['message' => 'Permintaan tidak dapat diproses.'], 422);
+        }
+
         // 1. Cek jika NIK sudah ada di database (Terdaftar 2026 atau sebelumnya)
         $existingUser = User::where('nik', $request->nik)->first();
         if ($existingUser) {
@@ -441,6 +446,13 @@ class UserController extends Controller
                 // KUNCI PERIODE TAHUN 2027: Ditolak jika mendaftar 2x di tahun 2027 yang sama
                 return response()->json([
                     'nik' => ['NIK ' . $request->nik . ' sudah terdaftar pada Periode Beasiswa Tahun 2027. Anda tidak diperbolehkan mendaftar 2 kali pada tahun yang sama!']
+                ], 422);
+            }
+
+            // Keamanan: Validasi kepemilikan akun lama dengan mencocokkan NoKK
+            if ($request->filled('nokk') && !empty($existingUser->nokk) && (string)$request->nokk !== (string)$existingUser->nokk) {
+                return response()->json([
+                    'nik' => ['NIK ini sudah terdaftar di sistem. Nomor Kartu Keluarga (KK) tidak cocok dengan data pendaftaran sebelumnya. Silakan login atau gunakan menu Lupa Password.']
                 ], 422);
             }
         }
@@ -541,6 +553,11 @@ class UserController extends Controller
 
     public function storeAdmin(Request $request)
     {
+        // 0. Honeypot check anti-bot
+        if ($request->filled('website') || $request->filled('bot_check')) {
+            return response()->json(['message' => 'Permintaan tidak dapat diproses.'], 422);
+        }
+
         $validator = Validator::make(
             $request->all(),
             [

@@ -37,6 +37,42 @@ class RouteServiceProvider extends ServiceProvider
             });
         });
 
+        RateLimiter::for('captcha', function (Request $request) {
+            return Limit::perMinute(20)->by($request->ip())->response(function (Request $request, array $headers) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Terlalu banyak permintaan captcha dari IP ini. Silakan coba beberapa saat lagi.',
+                ], 429, $headers);
+            });
+        });
+
+        RateLimiter::for('password-reset', function (Request $request) {
+            return Limit::perMinute(5)->by($request->ip())->response(function (Request $request, array $headers) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Terlalu banyak permintaan reset password. Silakan coba lagi setelah 1 menit.',
+                ], 429, $headers);
+            });
+        });
+
+        RateLimiter::for('registration', function (Request $request) {
+            return Limit::perMinute(10)->by($request->ip())->response(function (Request $request, array $headers) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Terlalu banyak permintaan registrasi dari IP ini. Silakan tunggu sebentar.',
+                ], 429, $headers);
+            });
+        });
+
+        RateLimiter::for('sensitive-action', function (Request $request) {
+            return Limit::perMinute(3)->by($request->ip())->response(function (Request $request, array $headers) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Terlalu banyak permintaan tindakan sensitif. Silakan coba lagi setelah 1 menit.',
+                ], 429, $headers);
+            });
+        });
+
         $this->routes(function () {
             Route::middleware('api')
                 ->prefix('api')

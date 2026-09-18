@@ -28,19 +28,35 @@ class LoginController extends Controller
      */
     public function generateCaptcha()
     {
-        // Operasi matematika penjumlahan dan pengurangan sederhana
+        // Operasi matematika penjumlahan dan pengurangan dengan variasi pola soal
         $type = rand(0, 1) === 0 ? 'add' : 'subtract';
+        $num1 = rand(2, 15);
+        $num2 = rand(1, 9);
 
         if ($type === 'add') {
-            $num1 = rand(1, 10);
-            $num2 = rand(1, 10);
-            $question = "{$num1} + {$num2} = ?";
             $answer = $num1 + $num2;
+            $templates = [
+                "{$num1} + {$num2} = ?",
+                "Berapa hasil dari {$num1} + {$num2}?",
+                "Hitung: {$num1} ditambah {$num2} = ?",
+                "Berapa jumlah {$num1} + {$num2}?"
+            ];
+            $question = $templates[array_rand($templates)];
         } else {
-            $num1 = rand(6, 15);
-            $num2 = rand(1, 5);
-            $question = "{$num1} - {$num2} = ?";
+            // Pastikan angka pertama selalu lebih besar
+            if ($num1 < $num2) {
+                $temp = $num1;
+                $num1 = $num2;
+                $num2 = $temp;
+            }
             $answer = $num1 - $num2;
+            $templates = [
+                "{$num1} - {$num2} = ?",
+                "Berapa hasil dari {$num1} - {$num2}?",
+                "Hitung: {$num1} dikurangi {$num2} = ?",
+                "Berapa selisih {$num1} - {$num2}?"
+            ];
+            $question = $templates[array_rand($templates)];
         }
 
         // Generate unique key
@@ -64,6 +80,14 @@ class LoginController extends Controller
      */
     public function index(Request $request)
     {
+        // 0. Honeypot check anti-bot
+        if ($request->filled('website') || $request->filled('bot_check')) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Permintaan tidak dapat diproses.'
+            ], 422);
+        }
+
         $nikInput = $request->input('nik') ?? $request->input('nisn');
 
         // 1. Throttle Lockout Key (Kombinasi NIK + IP)
@@ -265,12 +289,27 @@ class LoginController extends Controller
 
     public function sendWelcomeEmail(Request $request)
     {
-        // Validasi email tidak boleh kosong
+        // 1. Honeypot check anti-bot
+        if ($request->filled('website') || $request->filled('bot_check')) {
+            return response()->json(['message' => 'Permintaan tidak dapat diproses.'], 422);
+        }
+
+        // 2. Validasi email tidak boleh kosong
         $request->validate([
             'email' => 'required|email',
         ]);
 
-        $email = $request->input('email'); // Ambil email dari request
+        $email = $request->input('email');
+
+        // 3. Rate limiter lockout per email/IP
+        $throttleKey = 'send_email|' . Str::lower((string)$email) . '|' . $request->ip();
+        if (RateLimiter::tooManyAttempts($throttleKey, 3)) {
+            $seconds = RateLimiter::availableIn($throttleKey);
+            return response()->json([
+                'message' => "Terlalu banyak permintaan reset email. Silakan coba lagi dalam {$seconds} detik."
+            ], 429);
+        }
+        RateLimiter::hit($throttleKey, 300); // 5 menit lockout jika spam 3x
 
         // Cek apakah email terdaftar di tabel users
         $user = User::where('email', $email)->first();
